@@ -1,5 +1,5 @@
 //
-//  PostscriptViewController.swift
+//  PostViewController.swift
 //  SeoulCulturalEvents
 //
 //  Created by 김성민 on 8/14/24.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class PostscriptViewController: UIViewController {
+final class PostViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
