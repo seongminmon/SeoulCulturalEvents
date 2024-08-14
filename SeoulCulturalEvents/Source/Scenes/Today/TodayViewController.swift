@@ -7,12 +7,9 @@
 
 import UIKit
 
-final class TodayViewController: UIViewController {
+final class TodayViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let cultureParameter = CultureParameter(startDate: 1, endDate: 10, codeName: .lecture, title: nil, date: nil)
-        CultureAPIManager.shared.callRequest(cultureParameter)
     }
 }

@@ -10,10 +10,15 @@ import RxSwift
 
 class BaseViewController: UIViewController {
     
+    let disposeBag = DisposeBag()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        setLayout()
+        bind()
     }
     
-    private let disposeBag = DisposeBag()
+    func setLayout() {}
+    func bind() {}
 }

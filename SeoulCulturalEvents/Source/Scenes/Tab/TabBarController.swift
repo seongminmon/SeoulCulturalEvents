@@ -21,13 +21,13 @@ final class TabBarController: UITabBarController {
         let search = UINavigationController(rootViewController: SearchViewController())
         search.tabBarItem = UITabBarItem(title: "검색", image: nil, tag: 1)
         
-        let postscript = UINavigationController(rootViewController: PostscriptViewController())
-        postscript.tabBarItem = UITabBarItem(title: "후기", image: nil, tag: 2)
+        let post = UINavigationController(rootViewController: PostViewController())
+        post.tabBarItem = UITabBarItem(title: "후기", image: nil, tag: 2)
         
         let profile = UINavigationController(rootViewController: ProfileViewController())
         profile.tabBarItem = UITabBarItem(title: "설정", image: nil, tag: 3)
  
-        setViewControllers([today, search, postscript, profile], animated: true)
+        setViewControllers([today, search, post, profile], animated: true)
         
         tabBar.items?.forEach { $0.imageInsets = UIEdgeInsets(top: 0, left: 0, bottom: -20, right: 0) }
     }

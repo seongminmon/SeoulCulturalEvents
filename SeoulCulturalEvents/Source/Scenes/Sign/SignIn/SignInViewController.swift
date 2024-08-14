@@ -10,83 +10,85 @@ import RxSwift
 import RxCocoa
 import SnapKit
 
-final class SignInViewController: UIViewController {
+final class SignInViewController: BaseViewController {
     
-    let emailTextField = SignTextField(placeholderText: "이메일을 입력해주세요")
-    let passwordTextField = SignTextField(placeholderText: "비밀번호를 입력해주세요")
-    let signInButton = PointButton(title: "로그인")
-    let signUpButton = UIButton()
+    private let mainLabel = UILabel().then {
+        $0.text = "서울시 문화 행사"
+        $0.font = .bold36
+        $0.textColor = .systemMint
+        $0.textAlignment = .center
+    }
+    private let emailTextField = SignTextField(placeholderText: "이메일을 입력해주세요")
+    private let passwordTextField = SignTextField(placeholderText: "비밀번호를 입력해주세요")
+    private let signInButton = PointButton(title: "로그인")
+    private let signUpButton = UIButton().then {
+        $0.setTitle("이메일로 회원가입", for: .normal)
+        $0.setTitleColor(.systemBlue, for: .normal)
+    }
     
-    let viewModel = SignInViewModel()
-    let disposeBag = DisposeBag()
+    private let viewModel = SignInViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = Color.white
-        configureLayout()
-        configure()
-        bind()
     }
     
-    func bind() {
+    override func bind() {
         let input = SignInViewModel.Input(
-            signInTap: signInButton.rx.tap
+            emailText: emailTextField.rx.text,
+            passwordText: passwordTextField.rx.text,
+            signInTap: signInButton.rx.tap,
+            signUpTap: signUpButton.rx.tap
         )
         let output = viewModel.transform(input: input)
         
-        // Driver >> drive
-        // 스트림 공유(share 내장), 메인쓰레드 보장, 오류 허용 X
-        
-        // Observable<String>: next, complete, error 다 전달 가능 >> asDriver에서 매개변수로 에러가 들어왔을 때 처리 필요
-        output.emailText
-            .map { $0.joke }
-            .drive(emailTextField.rx.text)
+        output.signUpTap
+            .bind(with: self) { owner, _ in
+                let vc = SignUpViewController()
+                let nav = UINavigationController(rootViewController: vc)
+                nav.navigationBar.tintColor = .black
+                nav.modalPresentationStyle = .fullScreen
+                owner.present(nav, animated: true)
+            }
             .disposed(by: disposeBag)
-        
-        output.emailText
-            .map { "농담: \($0.id)" }
-            .drive(navigationItem.rx.title)
-            .disposed(by: disposeBag)
-        
-        // (탭 같은 경우엔 에러가 안 들어와서 에러 처리를 위한 매개변수가 필요 없음)
-//        let tap = signInButton.rx.tap
-//            .asDriver()
     }
     
-    func configure() {
-        signUpButton.setTitle("회원이 아니십니까?", for: .normal)
-        signUpButton.setTitleColor(Color.black, for: .normal)
-    }
-    
-    func configureLayout() {
-        view.addSubview(emailTextField)
-        view.addSubview(passwordTextField)
-        view.addSubview(signInButton)
-        view.addSubview(signUpButton)
+    override func setLayout() {
+        [
+            mainLabel,
+            emailTextField,
+            passwordTextField,
+            signInButton,
+            signUpButton
+        ].forEach { view.addSubview($0) }
+        
+        mainLabel.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(30)
+            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(20)
+            make.height.equalTo(200)
+        }
         
         emailTextField.snp.makeConstraints { make in
-            make.height.equalTo(50)
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(200)
+            make.top.equalTo(mainLabel.snp.bottom).offset(30)
             make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(20)
+            make.height.equalTo(50)
         }
         
         passwordTextField.snp.makeConstraints { make in
-            make.height.equalTo(50)
             make.top.equalTo(emailTextField.snp.bottom).offset(30)
             make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(20)
+            make.height.equalTo(50)
         }
         
         signInButton.snp.makeConstraints { make in
-            make.height.equalTo(50)
             make.top.equalTo(passwordTextField.snp.bottom).offset(30)
             make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(20)
+            make.height.equalTo(50)
         }
         
         signUpButton.snp.makeConstraints { make in
-            make.height.equalTo(50)
             make.top.equalTo(signInButton.snp.bottom).offset(30)
             make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(20)
+            make.height.equalTo(50)
         }
     }
-    
 }
