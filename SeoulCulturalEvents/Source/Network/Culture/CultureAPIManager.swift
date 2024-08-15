@@ -20,11 +20,13 @@ final class CultureAPIManager {
             provider.request(.cultures(parameter)) { result in
                 switch result {
                 case .success(let response):
-                    if let data = try? response.map(CultureResponse.self) {
+                    do {
+                        let data = try response.map(CultureResponse.self)
                         observer(.success(.success(data)))
-                    } else {
+                    } catch {
                         observer(.success(.failure(.jsonMapping(response))))
                     }
+                    
                 case .failure(let error):
                     observer(.success(.failure(error)))
                 }

@@ -19,11 +19,13 @@ final class LSLPAPIManager {
             provider.request(api) { result in
                 switch result {
                 case .success(let response):
-                    if let data = try? response.map(T.self) {
+                    do {
+                        let data = try response.map(T.self)
                         observer(.success(.success(data)))
-                    } else {
+                    } catch {
                         observer(.success(.failure(.jsonMapping(response))))
                     }
+                    
                 case .failure(let error):
                     observer(.success(.failure(error)))
                 }
