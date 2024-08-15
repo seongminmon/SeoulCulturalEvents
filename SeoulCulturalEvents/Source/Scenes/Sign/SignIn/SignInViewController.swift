@@ -75,31 +75,31 @@ final class SignInViewController: BaseViewController {
         ].forEach { view.addSubview($0) }
         
         mainLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(30)
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(20)
             make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(20)
             make.height.equalTo(200)
         }
         
         emailTextField.snp.makeConstraints { make in
-            make.top.equalTo(mainLabel.snp.bottom).offset(30)
+            make.top.equalTo(mainLabel.snp.bottom).offset(20)
             make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(20)
             make.height.equalTo(50)
         }
         
         passwordTextField.snp.makeConstraints { make in
-            make.top.equalTo(emailTextField.snp.bottom).offset(30)
+            make.top.equalTo(emailTextField.snp.bottom).offset(20)
             make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(20)
             make.height.equalTo(50)
         }
         
         signInButton.snp.makeConstraints { make in
-            make.top.equalTo(passwordTextField.snp.bottom).offset(30)
+            make.top.equalTo(passwordTextField.snp.bottom).offset(20)
             make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(20)
             make.height.equalTo(50)
         }
         
         signUpButton.snp.makeConstraints { make in
-            make.top.equalTo(signInButton.snp.bottom).offset(30)
+            make.top.equalTo(signInButton.snp.bottom).offset(20)
             make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(20)
             make.height.equalTo(50)
         }
