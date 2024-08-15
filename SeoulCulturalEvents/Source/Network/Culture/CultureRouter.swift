@@ -39,21 +39,21 @@ extension CultureRouter: TargetType {
     
     var method: Moya.Method {
         switch self {
-        case .cultures(_):
+        case .cultures:
             return .get
         }
     }
     
     var task: Task {
         switch self {
-        case .cultures(_):
+        case .cultures:
             return .requestPlain
         }
     }
     
     var headers: [String : String]? {
         switch self {
-        case .cultures(_):
+        case .cultures:
             return nil
         }
     }

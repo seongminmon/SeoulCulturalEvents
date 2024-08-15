@@ -34,12 +34,25 @@ final class SignInViewController: BaseViewController {
     
     override func bind() {
         let input = SignInViewModel.Input(
-            emailText: emailTextField.rx.text,
-            passwordText: passwordTextField.rx.text,
+            emailText: emailTextField.rx.text.orEmpty,
+            passwordText: passwordTextField.rx.text.orEmpty,
             signInTap: signInButton.rx.tap,
             signUpTap: signUpButton.rx.tap
         )
         let output = viewModel.transform(input: input)
+        
+        output.signInSuccess
+            .bind(with: self) { owner, _ in
+                let tab = TabBarController()
+                owner.changeWindow(tab)
+            }
+            .disposed(by: disposeBag)
+        
+        output.signInFailure
+            .bind(with: self) { owner, value in
+                owner.makeNetworkFailureToast()
+            }
+            .disposed(by: disposeBag)
         
         output.signUpTap
             .bind(with: self) { owner, _ in
