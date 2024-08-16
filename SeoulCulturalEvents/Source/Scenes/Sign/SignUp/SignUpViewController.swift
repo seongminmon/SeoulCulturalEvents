@@ -15,7 +15,9 @@ final class SignUpViewController: BaseViewController {
     
     private let closeButton = UIBarButtonItem(title: "닫기")
     private let emailTextField = SignTextField(placeholderText: "이메일을 입력해주세요")
-    private let passwordTextField = SignTextField(placeholderText: "비밀번호를 입력해주세요")
+    private let passwordTextField = SignTextField(placeholderText: "비밀번호를 입력해주세요")//.then {
+//        $0.isSecureTextEntry = true
+//    }
     private let nicknameTextField = SignTextField(placeholderText: "닉네임을 입력해주세요")
     
     // MARK: - 선택 사항
@@ -24,19 +26,41 @@ final class SignUpViewController: BaseViewController {
     
     private let signUpButton = PointButton(title: "가입하기")
     
+    private let viewModel = SignUpViewModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "회원가입"
         navigationItem.leftBarButtonItem = closeButton
-        closeButton.rx.tap
+    }
+    
+    override func bind() {
+        let input = SignUpViewModel.Input(
+            closeButtonTap: closeButton.rx.tap,
+            emailText: emailTextField.rx.text.orEmpty,
+            passwordText: passwordTextField.rx.text.orEmpty,
+            nicknameText: nicknameTextField.rx.text.orEmpty,
+            signUpTap: signUpButton.rx.tap
+        )
+        let output = viewModel.transform(input: input)
+        
+        output.closeButtonTap
             .bind(with: self) { owner, _ in
                 owner.dismiss(animated: true)
             }
             .disposed(by: disposeBag)
-    }
-    
-    override func bind() {
-        //
+        
+        output.signUpSuccess
+            .bind(with: self) { owner, _ in
+                owner.changeWindow(TabBarController())
+            }
+            .disposed(by: disposeBag)
+        
+        output.signUpFailure
+            .bind(with: self) { owner, value in
+                owner.makeNetworkFailureToast(value)
+            }
+            .disposed(by: disposeBag)
     }
     
     override func setLayout() {

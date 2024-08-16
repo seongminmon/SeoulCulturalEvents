@@ -46,13 +46,13 @@ final class SignInViewModel: ViewModelType {
                 case .success(let data):
                     dump(data)
                     // 토큰 저장
-                    UserDefaultsManager.shared.token = data.access
+                    UserDefaultsManager.shared.accessToken = data.access
                     UserDefaultsManager.shared.refreshToken = data.refresh
                     signInSuccess.onNext(())
                     
                 case .failure(let error):
                     print(error.localizedDescription)
-                    signInFailure.onNext(error.localizedDescription)
+                    signInFailure.onNext("로그인 실패")
                 }
             }
             .disposed(by: disposeBag)

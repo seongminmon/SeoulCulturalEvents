@@ -9,6 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import SnapKit
+import Then
 
 final class SignInViewController: BaseViewController {
     
@@ -19,7 +20,9 @@ final class SignInViewController: BaseViewController {
         $0.textAlignment = .center
     }
     private let emailTextField = SignTextField(placeholderText: "이메일을 입력해주세요")
-    private let passwordTextField = SignTextField(placeholderText: "비밀번호를 입력해주세요")
+    private let passwordTextField = SignTextField(placeholderText: "비밀번호를 입력해주세요")//.then {
+//        $0.isSecureTextEntry = true
+//    }
     private let signInButton = PointButton(title: "로그인")
     private let signUpButton = UIButton().then {
         $0.setTitle("이메일로 회원가입", for: .normal)
@@ -50,7 +53,7 @@ final class SignInViewController: BaseViewController {
         
         output.signInFailure
             .bind(with: self) { owner, value in
-                owner.makeNetworkFailureToast()
+                owner.makeNetworkFailureToast(value)
             }
             .disposed(by: disposeBag)
         
