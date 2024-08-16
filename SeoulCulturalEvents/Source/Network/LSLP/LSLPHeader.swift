@@ -8,10 +8,10 @@
 import Foundation
 
 enum LSLPHeader: String {
-    case authorization = "Authorization"
     case sesacKey = "SesacKey"
-    case refresh = "Refresh"
     case contentType = "Content-Type"
     case json = "application/json"
     case multipart = "multipart/form-data"
+    case authorization = "Authorization"
+    case refresh = "Refresh"
 }

@@ -7,6 +7,7 @@
 
 import Foundation
 
+// 로그인
 struct SignInModel: Decodable {
     let id: String
     let email: String

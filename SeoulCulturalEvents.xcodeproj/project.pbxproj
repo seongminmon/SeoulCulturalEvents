@@ -49,6 +49,11 @@
 		24B2B6A52C6CEB9F00190BFC /* LSLPHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B6A42C6CEB9F00190BFC /* LSLPHeader.swift */; };
 		24B2B6A82C6DBF0300190BFC /* SignInModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B6A72C6DBF0300190BFC /* SignInModel.swift */; };
 		24B2B6AD2C6DBF1D00190BFC /* SignInQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B6AC2C6DBF1D00190BFC /* SignInQuery.swift */; };
+		24B2B6AF2C6E130600190BFC /* SignUpQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B6AE2C6E130600190BFC /* SignUpQuery.swift */; };
+		24B2B6B12C6E14B100190BFC /* SignUpModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B6B02C6E14B100190BFC /* SignUpModel.swift */; };
+		24B2B6B32C6EEB9200190BFC /* RefreshModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B6B22C6EEB9200190BFC /* RefreshModel.swift */; };
+		24B2B6B52C6EF33600190BFC /* EditProfileQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B6B42C6EF33600190BFC /* EditProfileQuery.swift */; };
+		24B2B6B72C6EF43200190BFC /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B6B62C6EF43200190BFC /* ProfileModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -87,6 +92,11 @@
 		24B2B6A42C6CEB9F00190BFC /* LSLPHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LSLPHeader.swift; sourceTree = "<group>"; };
 		24B2B6A72C6DBF0300190BFC /* SignInModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInModel.swift; sourceTree = "<group>"; };
 		24B2B6AC2C6DBF1D00190BFC /* SignInQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInQuery.swift; sourceTree = "<group>"; };
+		24B2B6AE2C6E130600190BFC /* SignUpQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpQuery.swift; sourceTree = "<group>"; };
+		24B2B6B02C6E14B100190BFC /* SignUpModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpModel.swift; sourceTree = "<group>"; };
+		24B2B6B22C6EEB9200190BFC /* RefreshModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshModel.swift; sourceTree = "<group>"; };
+		24B2B6B42C6EF33600190BFC /* EditProfileQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileQuery.swift; sourceTree = "<group>"; };
+		24B2B6B62C6EF43200190BFC /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -346,6 +356,9 @@
 			isa = PBXGroup;
 			children = (
 				24B2B6A72C6DBF0300190BFC /* SignInModel.swift */,
+				24B2B6B02C6E14B100190BFC /* SignUpModel.swift */,
+				24B2B6B22C6EEB9200190BFC /* RefreshModel.swift */,
+				24B2B6B62C6EF43200190BFC /* ProfileModel.swift */,
 			);
 			path = ResponseModel;
 			sourceTree = "<group>";
@@ -354,6 +367,8 @@
 			isa = PBXGroup;
 			children = (
 				24B2B6AC2C6DBF1D00190BFC /* SignInQuery.swift */,
+				24B2B6AE2C6E130600190BFC /* SignUpQuery.swift */,
+				24B2B6B42C6EF33600190BFC /* EditProfileQuery.swift */,
 			);
 			path = RequestModel;
 			sourceTree = "<group>";
@@ -463,16 +478,21 @@
 				24B2B64A2C6CA08200190BFC /* CultureResponse.swift in Sources */,
 				24B2B6732C6CCEF700190BFC /* SignTextField.swift in Sources */,
 				24B2B64E2C6CA0D500190BFC /* CultureAPIManager.swift in Sources */,
+				24B2B6B72C6EF43200190BFC /* ProfileModel.swift in Sources */,
 				24B2B65F2C6CCA7000190BFC /* SignUpViewController.swift in Sources */,
 				24B2B67D2C6CD17C00190BFC /* Font.swift in Sources */,
 				24B2B68E2C6CDD7100190BFC /* LSLPAPIManager.swift in Sources */,
 				24B2B6432C6C956700190BFC /* PostViewController.swift in Sources */,
+				24B2B6B12C6E14B100190BFC /* SignUpModel.swift in Sources */,
+				24B2B6B52C6EF33600190BFC /* EditProfileQuery.swift in Sources */,
 				24B2B63F2C6C948100190BFC /* TabBarController.swift in Sources */,
 				24B2B6782C6CCFDF00190BFC /* SignInViewModel.swift in Sources */,
 				24B2B6452C6C957300190BFC /* ProfileViewController.swift in Sources */,
 				24B2B67A2C6CD01E00190BFC /* ViewModelType.swift in Sources */,
+				24B2B6AF2C6E130600190BFC /* SignUpQuery.swift in Sources */,
 				24B2B6582C6CB05B00190BFC /* String+.swift in Sources */,
 				24B2B6A82C6DBF0300190BFC /* SignInModel.swift in Sources */,
+				24B2B6B32C6EEB9200190BFC /* RefreshModel.swift in Sources */,
 				24B2B6A22C6CEA5C00190BFC /* UserDefaultsManager.swift in Sources */,
 				24B2B6A52C6CEB9F00190BFC /* LSLPHeader.swift in Sources */,
 				24B2B6862C6CD60000190BFC /* SignUpViewModel.swift in Sources */,

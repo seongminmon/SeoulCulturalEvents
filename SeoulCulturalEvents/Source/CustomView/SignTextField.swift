@@ -14,6 +14,7 @@ final class SignTextField: UITextField {
         textColor = .black
         placeholder = placeholderText
         textAlignment = .center
+        autocapitalizationType = .none
         borderStyle = .none
         layer.cornerRadius = 10
         layer.borderWidth = 1

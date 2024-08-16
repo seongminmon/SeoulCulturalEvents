@@ -29,8 +29,8 @@ class BaseViewController: UIViewController {
 
 extension BaseViewController {
     
-    func makeNetworkFailureToast() {
-        view.makeToast("네트워크 통신에 실패하였습니다.", duration: 1, position: .center)
+    func makeNetworkFailureToast(_ message: String = "네트워크 통신에 실패하였습니다.") {
+        view.makeToast(message, duration: 1, position: .center)
     }
     
     func changeWindow(_ vc: UIViewController) {

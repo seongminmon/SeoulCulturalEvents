@@ -16,7 +16,7 @@ final class UserDefaultsManager {
         case refresh
     }
     
-    var token: String {
+    var accessToken: String {
         get { UserDefaults.standard.string(forKey: Key.access.rawValue) ?? "" }
         set { UserDefaults.standard.set(newValue, forKey: Key.access.rawValue) }
     }

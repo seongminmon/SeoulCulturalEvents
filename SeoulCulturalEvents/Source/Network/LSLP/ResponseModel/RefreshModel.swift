@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+// 엑세스 토큰 갱신
+struct RefreshModel: Decodable {
+    let accessToken: String
+}
