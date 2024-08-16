@@ -21,14 +21,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         LSLPAPIManager.shared.callRequest(api: .refresh, model: RefreshModel.self)
             .subscribe(with: self) { owner, result in
                 switch result {
-                case .success(let data):
+                case .success(_):
                     print("토큰 갱신 성공 (리프레시 토큰 유효)")
                     let tab = TabBarController()
                     owner.window?.rootViewController = tab
                     owner.window?.makeKeyAndVisible()
                     
-                case .failure(let error):
-                    print("토큰 갱신 실패 (리프레시 토큰 없음 or 만료")
+                case .failure(_):
+                    print("토큰 갱신 실패 (리프레시 토큰 없음 or 만료)")
                     let vc = SignInViewController()
                     let nav = UINavigationController(rootViewController: vc)
                     owner.window?.rootViewController = nav

@@ -30,8 +30,6 @@ final class SignUpViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = "회원가입"
-        navigationItem.leftBarButtonItem = closeButton
     }
     
     override func bind() {
@@ -61,6 +59,11 @@ final class SignUpViewController: BaseViewController {
                 owner.makeNetworkFailureToast(value)
             }
             .disposed(by: disposeBag)
+    }
+    
+    override func setNavigationBar() {
+        navigationItem.title = "회원가입"
+        navigationItem.leftBarButtonItem = closeButton
     }
     
     override func setLayout() {

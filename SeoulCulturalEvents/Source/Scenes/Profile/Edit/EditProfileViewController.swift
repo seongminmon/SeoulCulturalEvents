@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import PhotosUI
 import RxSwift
 import RxCocoa
 import SnapKit
@@ -24,7 +25,7 @@ final class EditProfileViewController: BaseViewController {
     }
     
     override func setNavigationBar() {
-        
+        navigationItem.title = "프로필 수정"
     }
     
     override func setLayout() {

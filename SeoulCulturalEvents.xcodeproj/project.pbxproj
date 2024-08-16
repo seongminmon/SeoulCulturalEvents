@@ -54,6 +54,17 @@
 		24B2B6B32C6EEB9200190BFC /* RefreshModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B6B22C6EEB9200190BFC /* RefreshModel.swift */; };
 		24B2B6B52C6EF33600190BFC /* EditProfileQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B6B42C6EF33600190BFC /* EditProfileQuery.swift */; };
 		24B2B6B72C6EF43200190BFC /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B6B62C6EF43200190BFC /* ProfileModel.swift */; };
+		24B2B6B92C6EF6B700190BFC /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B6B82C6EF6B700190BFC /* ProfileViewModel.swift */; };
+		24B2B6BB2C6EFB4500190BFC /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B6BA2C6EFB4500190BFC /* ProfileImageView.swift */; };
+		24B2B6BD2C6EFBF900190BFC /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B6BC2C6EFBF900190BFC /* Image.swift */; };
+		24B2B6C12C6F0F9100190BFC /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B6C02C6F0F9100190BFC /* ProfileTableViewCell.swift */; };
+		24B2B6C32C6F0F9F00190BFC /* ReuseIdentifierProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B6C22C6F0F9F00190BFC /* ReuseIdentifierProtocol.swift */; };
+		24B2B6C52C6F107000190BFC /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B6C42C6F107000190BFC /* BaseTableViewCell.swift */; };
+		24B2B6C82C6F138700190BFC /* Differentiator in Frameworks */ = {isa = PBXBuildFile; productRef = 24B2B6C72C6F138700190BFC /* Differentiator */; };
+		24B2B6CA2C6F138700190BFC /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = 24B2B6C92C6F138700190BFC /* RxDataSources */; };
+		24B2B6CC2C6F25AC00190BFC /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B6CB2C6F25AC00190BFC /* EditProfileViewController.swift */; };
+		24B2B6CE2C6F25F600190BFC /* EditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B6CD2C6F25F600190BFC /* EditProfileViewModel.swift */; };
+		24B2B6D12C6F2C2000190BFC /* Reactive+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B6D02C6F2C2000190BFC /* Reactive+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -97,6 +108,15 @@
 		24B2B6B22C6EEB9200190BFC /* RefreshModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshModel.swift; sourceTree = "<group>"; };
 		24B2B6B42C6EF33600190BFC /* EditProfileQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileQuery.swift; sourceTree = "<group>"; };
 		24B2B6B62C6EF43200190BFC /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
+		24B2B6B82C6EF6B700190BFC /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		24B2B6BA2C6EFB4500190BFC /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
+		24B2B6BC2C6EFBF900190BFC /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
+		24B2B6C02C6F0F9100190BFC /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
+		24B2B6C22C6F0F9F00190BFC /* ReuseIdentifierProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReuseIdentifierProtocol.swift; sourceTree = "<group>"; };
+		24B2B6C42C6F107000190BFC /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
+		24B2B6CB2C6F25AC00190BFC /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
+		24B2B6CD2C6F25F600190BFC /* EditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewModel.swift; sourceTree = "<group>"; };
+		24B2B6D02C6F2C2000190BFC /* Reactive+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,7 +129,9 @@
 				24B2B66D2C6CCAD700190BFC /* RxSwift in Frameworks */,
 				24B2B66B2C6CCAD700190BFC /* RxCocoa in Frameworks */,
 				24B2B6842C6CD50F00190BFC /* Toast in Frameworks */,
+				24B2B6CA2C6F138700190BFC /* RxDataSources in Frameworks */,
 				24B2B6992C6CE0CD00190BFC /* ReactiveMoya in Frameworks */,
+				24B2B6C82C6F138700190BFC /* Differentiator in Frameworks */,
 				24B2B69B2C6CE0CD00190BFC /* RxMoya in Frameworks */,
 				24B2B6972C6CE0CD00190BFC /* Moya in Frameworks */,
 				24B2B6652C6CCAB200190BFC /* Then in Frameworks */,
@@ -233,6 +255,9 @@
 			isa = PBXGroup;
 			children = (
 				24B2B6442C6C957300190BFC /* ProfileViewController.swift */,
+				24B2B6B82C6EF6B700190BFC /* ProfileViewModel.swift */,
+				24B2B6C02C6F0F9100190BFC /* ProfileTableViewCell.swift */,
+				24B2B6CF2C6F264700190BFC /* Edit */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -250,6 +275,7 @@
 			children = (
 				24B2B6552C6CB05700190BFC /* Date+.swift */,
 				24B2B6572C6CB05B00190BFC /* String+.swift */,
+				24B2B6D02C6F2C2000190BFC /* Reactive+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -268,6 +294,7 @@
 			children = (
 				24B2B6722C6CCEF700190BFC /* SignTextField.swift */,
 				24B2B6742C6CCF0A00190BFC /* PointButton.swift */,
+				24B2B6BA2C6EFB4500190BFC /* ProfileImageView.swift */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -286,6 +313,7 @@
 			children = (
 				24B2B67C2C6CD17C00190BFC /* Font.swift */,
 				24B2B67E2C6CD21B00190BFC /* Color.swift */,
+				24B2B6BC2C6EFBF900190BFC /* Image.swift */,
 			);
 			path = Design;
 			sourceTree = "<group>";
@@ -294,6 +322,7 @@
 			isa = PBXGroup;
 			children = (
 				24B2B6792C6CD01E00190BFC /* ViewModelType.swift */,
+				24B2B6C22C6F0F9F00190BFC /* ReuseIdentifierProtocol.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -319,6 +348,7 @@
 			isa = PBXGroup;
 			children = (
 				24B2B6882C6CD6FA00190BFC /* BaseViewController.swift */,
+				24B2B6C42C6F107000190BFC /* BaseTableViewCell.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -373,6 +403,15 @@
 			path = RequestModel;
 			sourceTree = "<group>";
 		};
+		24B2B6CF2C6F264700190BFC /* Edit */ = {
+			isa = PBXGroup;
+			children = (
+				24B2B6CB2C6F25AC00190BFC /* EditProfileViewController.swift */,
+				24B2B6CD2C6F25F600190BFC /* EditProfileViewModel.swift */,
+			);
+			path = Edit;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -399,6 +438,8 @@
 				24B2B6962C6CE0CD00190BFC /* Moya */,
 				24B2B6982C6CE0CD00190BFC /* ReactiveMoya */,
 				24B2B69A2C6CE0CD00190BFC /* RxMoya */,
+				24B2B6C72C6F138700190BFC /* Differentiator */,
+				24B2B6C92C6F138700190BFC /* RxDataSources */,
 			);
 			productName = SeoulCulturalEvents;
 			productReference = 240E0A8E2C6C7E8B003A212B /* SeoulCulturalEvents.app */;
@@ -435,6 +476,7 @@
 				24B2B6692C6CCAD700190BFC /* XCRemoteSwiftPackageReference "RxSwift" */,
 				24B2B6822C6CD50F00190BFC /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 				24B2B6952C6CE0CD00190BFC /* XCRemoteSwiftPackageReference "Moya" */,
+				24B2B6C62C6F138700190BFC /* XCRemoteSwiftPackageReference "RxDataSources" */,
 			);
 			productRefGroup = 240E0A8F2C6C7E8B003A212B /* Products */;
 			projectDirPath = "";
@@ -472,27 +514,36 @@
 				24B2B69D2C6CE67F00190BFC /* CultureRouter.swift in Sources */,
 				24B2B6412C6C951C00190BFC /* SearchViewController.swift in Sources */,
 				24B2B6752C6CCF0A00190BFC /* PointButton.swift in Sources */,
+				24B2B6C12C6F0F9100190BFC /* ProfileTableViewCell.swift in Sources */,
 				240E0A962C6C7E8B003A212B /* TodayViewController.swift in Sources */,
 				240E0A922C6C7E8B003A212B /* AppDelegate.swift in Sources */,
 				240E0AA82C6C7F83003A212B /* APIInfo.swift in Sources */,
 				24B2B64A2C6CA08200190BFC /* CultureResponse.swift in Sources */,
+				24B2B6BD2C6EFBF900190BFC /* Image.swift in Sources */,
 				24B2B6732C6CCEF700190BFC /* SignTextField.swift in Sources */,
 				24B2B64E2C6CA0D500190BFC /* CultureAPIManager.swift in Sources */,
 				24B2B6B72C6EF43200190BFC /* ProfileModel.swift in Sources */,
 				24B2B65F2C6CCA7000190BFC /* SignUpViewController.swift in Sources */,
 				24B2B67D2C6CD17C00190BFC /* Font.swift in Sources */,
+				24B2B6CC2C6F25AC00190BFC /* EditProfileViewController.swift in Sources */,
 				24B2B68E2C6CDD7100190BFC /* LSLPAPIManager.swift in Sources */,
 				24B2B6432C6C956700190BFC /* PostViewController.swift in Sources */,
 				24B2B6B12C6E14B100190BFC /* SignUpModel.swift in Sources */,
 				24B2B6B52C6EF33600190BFC /* EditProfileQuery.swift in Sources */,
 				24B2B63F2C6C948100190BFC /* TabBarController.swift in Sources */,
+				24B2B6C32C6F0F9F00190BFC /* ReuseIdentifierProtocol.swift in Sources */,
 				24B2B6782C6CCFDF00190BFC /* SignInViewModel.swift in Sources */,
 				24B2B6452C6C957300190BFC /* ProfileViewController.swift in Sources */,
 				24B2B67A2C6CD01E00190BFC /* ViewModelType.swift in Sources */,
 				24B2B6AF2C6E130600190BFC /* SignUpQuery.swift in Sources */,
+				24B2B6CE2C6F25F600190BFC /* EditProfileViewModel.swift in Sources */,
+				24B2B6D12C6F2C2000190BFC /* Reactive+.swift in Sources */,
 				24B2B6582C6CB05B00190BFC /* String+.swift in Sources */,
 				24B2B6A82C6DBF0300190BFC /* SignInModel.swift in Sources */,
 				24B2B6B32C6EEB9200190BFC /* RefreshModel.swift in Sources */,
+				24B2B6C52C6F107000190BFC /* BaseTableViewCell.swift in Sources */,
+				24B2B6BB2C6EFB4500190BFC /* ProfileImageView.swift in Sources */,
+				24B2B6B92C6EF6B700190BFC /* ProfileViewModel.swift in Sources */,
 				24B2B6A22C6CEA5C00190BFC /* UserDefaultsManager.swift in Sources */,
 				24B2B6A52C6CEB9F00190BFC /* LSLPHeader.swift in Sources */,
 				24B2B6862C6CD60000190BFC /* SignUpViewModel.swift in Sources */,
@@ -772,6 +823,14 @@
 				minimumVersion = 15.0.3;
 			};
 		};
+		24B2B6C62C6F138700190BFC /* XCRemoteSwiftPackageReference "RxDataSources" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxDataSources.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -819,6 +878,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 24B2B6952C6CE0CD00190BFC /* XCRemoteSwiftPackageReference "Moya" */;
 			productName = RxMoya;
+		};
+		24B2B6C72C6F138700190BFC /* Differentiator */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 24B2B6C62C6F138700190BFC /* XCRemoteSwiftPackageReference "RxDataSources" */;
+			productName = Differentiator;
+		};
+		24B2B6C92C6F138700190BFC /* RxDataSources */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 24B2B6C62C6F138700190BFC /* XCRemoteSwiftPackageReference "RxDataSources" */;
+			productName = RxDataSources;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

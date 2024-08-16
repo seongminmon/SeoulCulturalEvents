@@ -9,12 +9,16 @@ import Foundation
 import Moya
 
 enum LSLPRouter {
+    // MARK: - 유저
     case signIn(query: SignInQuery)
     case signUp(query: SignUpQuery)
     case refresh
     case withdraw
     case fetchProfile
     case editProfile(query: EditProfileQuery)
+    
+    // MARK: - 포스트
+    
 }
 
 extension LSLPRouter: TargetType {
@@ -104,12 +108,17 @@ extension LSLPRouter: TargetType {
                 LSLPHeader.contentType.rawValue: LSLPHeader.json.rawValue,
                 LSLPHeader.authorization.rawValue: UserDefaultsManager.shared.accessToken
             ]
-        case .editProfile(query: let query):
+        case .editProfile:
             return [
                 LSLPHeader.sesacKey.rawValue: APIKey.lslpKey,
-                LSLPHeader.contentType.rawValue: LSLPHeader.json.rawValue,
+                LSLPHeader.contentType.rawValue: LSLPHeader.multipart.rawValue,
                 LSLPHeader.authorization.rawValue: UserDefaultsManager.shared.accessToken
             ]
         }
+    }
+    
+    // MARK: - retry 동작 위함
+    var validationType: ValidationType {
+        return .successCodes
     }
 }

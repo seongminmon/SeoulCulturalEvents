@@ -14,7 +14,7 @@ struct ProfileModel: Decodable {
     let nick: String
     
     let phoneNum: String?
-    let birhDay: String?
+    let birthDay: String?
     let profileImage: String?
     
     let followers: [UserModel]
@@ -23,7 +23,7 @@ struct ProfileModel: Decodable {
     
     enum CodingKeys: String, CodingKey {
         case id = "user_id"
-        case email, nick, phoneNum, birhDay, profileImage, followers, following, posts
+        case email, nick, phoneNum, birthDay, profileImage, followers, following, posts
     }
 }
 
