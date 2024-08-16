@@ -6,7 +6,11 @@
 //
 
 import Foundation
+import Then
 
 enum Formatter {
-    static let dateFormatter = DateFormatter()
+    static let dateFormatter = DateFormatter().then {
+        $0.locale = Locale(identifier: "ko_KR")
+        $0.timeZone = TimeZone(identifier: "KST")
+    }
 }
