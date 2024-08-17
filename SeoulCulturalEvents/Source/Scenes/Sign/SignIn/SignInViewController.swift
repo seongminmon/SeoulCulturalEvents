@@ -47,7 +47,7 @@ final class SignInViewController: BaseViewController {
         output.signInSuccess
             .bind(with: self) { owner, _ in
                 let tab = TabBarController()
-                owner.changeWindow(tab)
+                SceneDelegate.changeWindow(tab)
             }
             .disposed(by: disposeBag)
         

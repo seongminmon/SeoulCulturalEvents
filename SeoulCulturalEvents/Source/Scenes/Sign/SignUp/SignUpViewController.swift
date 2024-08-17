@@ -50,7 +50,7 @@ final class SignUpViewController: BaseViewController {
         
         output.signUpSuccess
             .bind(with: self) { owner, _ in
-                owner.changeWindow(TabBarController())
+                SceneDelegate.changeWindow(TabBarController())
             }
             .disposed(by: disposeBag)
         

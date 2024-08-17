@@ -104,7 +104,7 @@ final class ProfileViewController: BaseViewController {
         
         output.withdrawActionSuccess
             .bind(with: self) { owner, _ in
-                owner.changeWindow(SignInViewController())
+                SceneDelegate.changeWindow(SignInViewController())
             }
             .disposed(by: disposeBag)
     }

@@ -58,7 +58,6 @@ final class ProfileViewModel: ViewModelType {
     }
     
     private let disposeBag = DisposeBag()
-//    var profile: ProfileModel?
     
     func transform(input: Input) -> Output {
         
@@ -77,7 +76,6 @@ final class ProfileViewModel: ViewModelType {
                 case .success(let data):
                     print("프로필 조회 성공")
                     dump(data)
-//                    owner.profile = data
                     profile.onNext(data)
                 case .failure(let error):
                     print("프로필 조회 실패")

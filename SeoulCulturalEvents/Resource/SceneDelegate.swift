@@ -6,35 +6,49 @@
 //
 
 import UIKit
-import RxSwift
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-    
-    let disposeBag = DisposeBag()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         
-        LSLPAPIManager.shared.callRequest(api: .refresh, model: RefreshModel.self)
-            .subscribe(with: self) { owner, result in
-                switch result {
-                case .success(_):
-                    print("토큰 갱신 성공 (리프레시 토큰 유효)")
-                    let tab = TabBarController()
-                    owner.window?.rootViewController = tab
-                    owner.window?.makeKeyAndVisible()
-                    
-                case .failure(_):
-                    print("토큰 갱신 실패 (리프레시 토큰 없음 or 만료)")
-                    let vc = SignInViewController()
-                    let nav = UINavigationController(rootViewController: vc)
-                    owner.window?.rootViewController = nav
-                    owner.window?.makeKeyAndVisible()
-                }
+        // MARK: - 첫 화면 분기처리
+        LSLPAPIManager.shared.refresh { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success(_):
+                print("토큰 갱신 성공 (리프레시 토큰 유효)")
+                let tab = TabBarController()
+                window?.rootViewController = tab
+                window?.makeKeyAndVisible()
+                
+            case .failure(_):
+                print("토큰 갱신 실패 (리프레시 토큰 없음 or 만료)")
+                let vc = SignInViewController()
+                let nav = UINavigationController(rootViewController: vc)
+                window?.rootViewController = nav
+                window?.makeKeyAndVisible()
             }
-            .disposed(by: disposeBag)
+        }
+    }
+    
+    static func changeWindow(_ vc: UIViewController) {
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let sceneDelegate = windowScene.delegate as? SceneDelegate,
+              let window = sceneDelegate.window else { return }
+        
+        window.rootViewController = vc
+        window.makeKeyAndVisible()
+        
+        UIView.transition(
+            with: window,
+            duration: 0.2,
+            options: [.transitionCrossDissolve],
+            animations: nil,
+            completion: nil
+        )
     }
 }

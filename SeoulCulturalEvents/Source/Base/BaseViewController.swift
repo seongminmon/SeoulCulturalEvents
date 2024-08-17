@@ -52,21 +52,4 @@ extension BaseViewController {
         alert.addAction(cancel)
         present(alert, animated: true)
     }
-    
-    func changeWindow(_ vc: UIViewController) {
-        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-              let sceneDelegate = windowScene.delegate as? SceneDelegate,
-              let window = sceneDelegate.window else { return }
-        
-        window.rootViewController = vc
-        window.makeKeyAndVisible()
-        
-        UIView.transition(
-            with: window,
-            duration: 0.2,
-            options: [.transitionCrossDissolve],
-            animations: nil,
-            completion: nil
-        )
-    }
 }

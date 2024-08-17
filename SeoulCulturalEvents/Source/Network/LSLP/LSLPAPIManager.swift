@@ -10,8 +10,8 @@ import Alamofire
 import Moya
 import RxSwift
 
-enum LSLPError: Int, Error {
-    case accessToken = 419
+enum LSLPError: Error {
+    case accessToken
     case refreshToken
     case decoding
     case unknown
@@ -61,21 +61,6 @@ final class LSLPAPIManager {
                         observer(.success(.failure(.decoding)))
                     }
                     
-//                    switch response.statusCode {
-//                    case 419:
-//                        observer(.success(.failure(.accessToken)))
-//                        
-//                    case 200:
-//                        do {
-//                            let data = try response.map(T.self)
-//                            observer(.success(.success(data)))
-//                        } catch {
-//                            observer(.success(.failure(.decoding)))
-//                        }
-//                    default:
-//                        observer(.success(.failure(.unknown)))
-//                    }
-                    
                 case .failure(_):
                     observer(.success(.failure(.unknown)))
                 }
@@ -115,19 +100,20 @@ final class AuthInterceptor: RequestInterceptor {
     static let shared = AuthInterceptor()
     private init() {}
     
+    // TODO: - 계속 토큰 재발급하는 문제 해결하기
+    
     // Request가 전송되기 전
     func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
-//        guard urlRequest.url?.absoluteString.hasPrefix(APIURL.lslpURL) == true,
-//              UserDefaultsManager.shared.accessToken != "",
-//              UserDefaultsManager.shared.refreshToken != ""
-//        else {
-//            completion(.success(urlRequest))
-//            return
-//        }
+        guard urlRequest.url?.absoluteString.hasPrefix(APIURL.lslpURL) == true,
+              UserDefaultsManager.shared.accessToken != "",
+              UserDefaultsManager.shared.refreshToken != ""
+        else {
+            completion(.success(urlRequest))
+            return
+        }
         
-//        var urlRequest = urlRequest
-//        urlRequest.setValue(UserDefaultsManager.shared.accessToken, forHTTPHeaderField: "accessToken")
-//        urlRequest.setValue(UserDefaultsManager.shared.refreshToken, forHTTPHeaderField: LSLPHeader.refresh.rawValue)
+        var urlRequest = urlRequest
+        urlRequest.setValue(UserDefaultsManager.shared.accessToken, forHTTPHeaderField: LSLPHeader.authorization.rawValue)
         
         print("adator")
         completion(.success(urlRequest))
@@ -137,8 +123,7 @@ final class AuthInterceptor: RequestInterceptor {
     func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
         print("retry 진입")
         guard let response = request.task?.response as? HTTPURLResponse,
-              response.statusCode == 419
-        else {
+                response.statusCode == 419 else {
             completion(.doNotRetryWithError(error))
             return
         }
@@ -146,12 +131,13 @@ final class AuthInterceptor: RequestInterceptor {
         // 토큰 갱신 API 호출
         LSLPAPIManager.shared.refresh { result in
             switch result {
-            case .success(let data):
+            case .success(_):
                 print("Retry - 토큰 재발급 성공")
-                UserDefaultsManager.shared.accessToken = data.accessToken
                 completion(.retry)
             case .failure(let error):
+                print("Retry - 토큰 재발급 실패")
                 // 갱신 실패 -> 로그인 화면으로 전환
+//                SceneDelegate.changeWindow(SignInViewController())
                 completion(.doNotRetryWithError(error))
             }
         }
