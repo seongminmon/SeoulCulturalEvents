@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 import RxSwift
 import RxCocoa
 import RxDataSources
@@ -15,9 +16,7 @@ import Then
 final class ProfileViewController: BaseViewController {
     
     private let profileContainerView = UIView()
-    private let profileImageView = ProfileImageView().then {
-        $0.image = .person
-    }
+    private let profileImageView = ProfileImageView()
     private let nicknameLabel = UILabel().then {
         $0.font = .bold16
     }
@@ -81,6 +80,14 @@ final class ProfileViewController: BaseViewController {
         
         output.profile
             .bind(with: self) { owner, profile in
+                let url = URL(string: APIURL.lslpURL + "v1/" + (profile.profileImage ?? ""))
+                let modifier = AnyModifier { request in
+                    var requestBody = request
+                    requestBody.setValue(APIKey.lslpKey, forHTTPHeaderField: LSLPHeader.sesacKey.rawValue)
+                    requestBody.setValue(UserDefaultsManager.shared.accessToken, forHTTPHeaderField: LSLPHeader.authorization.rawValue)
+                    return requestBody
+                }
+                owner.profileImageView.kf.setImage(with: url, placeholder: UIImage.person, options: [.requestModifier(modifier)])
                 owner.nicknameLabel.text = profile.nick
                 owner.followerButton.setTitle("팔로워 \(profile.followers.count)", for: .normal)
                 owner.followingButton.setTitle("팔로잉 \(profile.following.count)", for: .normal)
@@ -88,8 +95,10 @@ final class ProfileViewController: BaseViewController {
             .disposed(by: disposeBag)
         
         output.editButtonTap
-            .bind(with: self) { owner, _ in
-                let vc = EditProfileViewController()
+            .withLatestFrom(output.profile)
+            .bind(with: self) { owner, value in
+                let vm = EditProfileViewModel(profile: value)
+                let vc = EditProfileViewController(viewModel: vm)
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
@@ -110,7 +119,7 @@ final class ProfileViewController: BaseViewController {
     }
     
     override func setNavigationBar() {
-        navigationItem.title = "닉네임"
+        navigationItem.title = "프로필"
     }
 
     override func setLayout() {

@@ -37,7 +37,8 @@ final class LSLPAPIManager {
                         observer(.success(.failure(.decoding)))
                     }
                     
-                case .failure(_):
+                case .failure(let error):
+                    print("에러코드: \(error.response?.statusCode ?? -1)")
                     observer(.success(.failure(.unknown)))
                 }
             }
@@ -61,7 +62,8 @@ final class LSLPAPIManager {
                         observer(.success(.failure(.decoding)))
                     }
                     
-                case .failure(_):
+                case .failure(let error):
+                    print("에러코드: \(error.response?.statusCode ?? -1)")
                     observer(.success(.failure(.unknown)))
                 }
             }
@@ -100,8 +102,6 @@ final class AuthInterceptor: RequestInterceptor {
     static let shared = AuthInterceptor()
     private init() {}
     
-    // TODO: - 계속 토큰 재발급하는 문제 해결하기
-    
     // Request가 전송되기 전
     func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
         guard urlRequest.url?.absoluteString.hasPrefix(APIURL.lslpURL) == true,
@@ -114,14 +114,11 @@ final class AuthInterceptor: RequestInterceptor {
         
         var urlRequest = urlRequest
         urlRequest.setValue(UserDefaultsManager.shared.accessToken, forHTTPHeaderField: LSLPHeader.authorization.rawValue)
-        
-        print("adator")
         completion(.success(urlRequest))
     }
     
     // Request가 전송된 후
     func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
-        print("retry 진입")
         guard let response = request.task?.response as? HTTPURLResponse,
                 response.statusCode == 419 else {
             completion(.doNotRetryWithError(error))
@@ -137,7 +134,6 @@ final class AuthInterceptor: RequestInterceptor {
             case .failure(let error):
                 print("Retry - 토큰 재발급 실패")
                 // 갱신 실패 -> 로그인 화면으로 전환
-//                SceneDelegate.changeWindow(SignInViewController())
                 completion(.doNotRetryWithError(error))
             }
         }

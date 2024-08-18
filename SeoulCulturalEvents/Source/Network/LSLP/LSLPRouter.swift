@@ -73,7 +73,30 @@ extension LSLPRouter: TargetType {
         case .fetchProfile:
             return .requestPlain
         case .editProfile(let query):
-            return .requestJSONEncodable(query)
+            var multipartData = [MultipartFormData]()
+            
+            // JSON 데이터를 개별 필드로 추가
+            if let nick = query.nick {
+                let nickFormData = MultipartFormData(provider: .data(nick.data(using: .utf8)!), name: "nick")
+                multipartData.append(nickFormData)
+            }
+            if let phoneNum = query.phoneNum {
+                let phoneNumFormData = MultipartFormData(provider: .data(phoneNum.data(using: .utf8)!), name: "phoneNum")
+                multipartData.append(phoneNumFormData)
+            }
+            if let birthDay = query.birthDay {
+                let birthDayFormData = MultipartFormData(provider: .data(birthDay.data(using: .utf8)!), name: "birthDay")
+                multipartData.append(birthDayFormData)
+            }
+            
+            // 프로필 이미지 추가
+            if let profileData = query.profile {
+                let uniqueFileName = UUID().uuidString + ".png"
+                let profileFormData = MultipartFormData(provider: .data(profileData), name: "profile", fileName: uniqueFileName, mimeType: "image/png")
+                multipartData.append(profileFormData)
+            }
+            
+            return .uploadCompositeMultipart(multipartData, urlParameters: [:])
         }
     }
     

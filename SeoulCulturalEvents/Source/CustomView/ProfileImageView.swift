@@ -11,7 +11,7 @@ final class ProfileImageView: UIImageView {
     
     init() {
         super.init(frame: .zero)
-        contentMode = .scaleAspectFit
+        contentMode = .scaleAspectFill
         tintColor = .systemGray4
         layer.borderWidth = 1
         layer.borderColor = UIColor.systemGray6.cgColor
