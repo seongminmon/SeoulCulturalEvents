@@ -7,6 +7,7 @@
 
 import UIKit
 import PhotosUI
+import Kingfisher
 import RxSwift
 import RxCocoa
 import SnapKit
@@ -14,9 +15,10 @@ import Then
 
 final class EditProfileViewController: BaseViewController {
     
-    private let confirmButton = UIBarButtonItem(title: "저장")
+    private let saveButton = UIBarButtonItem(title: "저장")
     private let profileImageView = UIImageView().then {
-        $0.contentMode = .scaleAspectFit
+        $0.contentMode = .scaleAspectFill
+        $0.clipsToBounds = true
         $0.backgroundColor = .lightGray
     }
     private let profileSelectButton = UIButton().then {
@@ -29,26 +31,68 @@ final class EditProfileViewController: BaseViewController {
 //    private let phoneNumberTextField = SignTextField(placeholderText: "전화번호를 입력해주세요")
 //    private let birthDayTextField = SignTextField(placeholderText: "생일을 입력해주세요")
     
-    private let viewModel = EditProfileViewModel()
-    private var itemProviders: [NSItemProvider] = []
+    init(viewModel: EditProfileViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private let viewModel: EditProfileViewModel
+    private let profileImageData = BehaviorSubject<Data?>(value: nil)
     
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
     override func bind() {
-//        closeButton.rx.tap
-//        confirmButton.rx.tap
-        profileSelectButton.rx.tap
+        let input = EditProfileViewModel.Input(
+            nickname: nicknameTextField.rx.text.orEmpty,
+            profileImageData: profileImageData,
+            profileSelectButtonTap: profileSelectButton.rx.tap,
+            saveButtonTap: saveButton.rx.tap
+        )
+        let output = viewModel.transform(input: input)
+        
+        output.profile
+            .subscribe(with: self) { owner, value in
+                let url = URL(string: APIURL.lslpURL + "v1/" + (value.profileImage ?? ""))
+                let modifier = AnyModifier { request in
+                    var requestBody = request
+                    requestBody.setValue(APIKey.lslpKey, forHTTPHeaderField: LSLPHeader.sesacKey.rawValue)
+                    requestBody.setValue(UserDefaultsManager.shared.accessToken, forHTTPHeaderField: LSLPHeader.authorization.rawValue)
+                    return requestBody
+                }
+                owner.profileImageView.kf.setImage(with: url, placeholder: UIImage.person, options: [.requestModifier(modifier)])
+                owner.nicknameTextField.text = value.nick
+                owner.nicknameTextField.sendActions(for: .editingChanged)
+            }
+            .disposed(by: disposeBag)
+        
+        output.profileSelectButtonTap
             .bind(with: self) { owner, _ in
                 owner.presentPicker()
+            }
+            .disposed(by: disposeBag)
+        
+        output.editProfileSuccess
+            .bind(with: self) { owner, _ in
+                owner.navigationController?.popViewController(animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        output.editProfileFailure
+            .bind(with: self) { owner, _ in
+                SceneDelegate.changeWindow(SignInViewController())
             }
             .disposed(by: disposeBag)
     }
     
     override func setNavigationBar() {
         navigationItem.title = "프로필 수정"
-        navigationItem.rightBarButtonItem = confirmButton
+        navigationItem.rightBarButtonItem = saveButton
     }
     
     override func setLayout() {
@@ -89,16 +133,18 @@ final class EditProfileViewController: BaseViewController {
 extension EditProfileViewController: PHPickerViewControllerDelegate {
     
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        dismiss(animated: true)
+        picker.dismiss(animated: true)
         
-        itemProviders = results.map(\.itemProvider)
+        guard let itemProvider = results.first?.itemProvider,
+              itemProvider.canLoadObject(ofClass: UIImage.self) else {
+            return
+        }
         
-        if let result = results.first {
-            result.itemProvider.loadObject(ofClass: UIImage.self) { [weak self] (object, error) in
-                if let image = object as? UIImage {
-                    DispatchQueue.main.async {
-                        self?.profileImageView.image = image
-                    }
+        itemProvider.loadObject(ofClass: UIImage.self) { [weak self] object, error in
+            if let image = object as? UIImage {
+                DispatchQueue.main.async {
+                    self?.profileImageView.image = image
+                    self?.profileImageData.onNext(image.pngData())
                 }
             }
         }
