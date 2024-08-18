@@ -9,8 +9,8 @@ import Foundation
 import Moya
 
 struct CultureParameter {
-    let startDate: Int
-    let endDate: Int
+    let startIndex: Int
+    let endIndex: Int
     let codeName: CodeName?
     let title: String?
     let date: Date?
@@ -28,8 +28,8 @@ extension CultureRouter: TargetType {
     var path: String {
         switch self {
         case .cultures(let parameter):
-            let startDate = "\(parameter.startDate)"
-            let endDate = "\(parameter.endDate)"
+            let startDate = "\(parameter.startIndex)"
+            let endDate = "\(parameter.endIndex)"
             let codeName = "\(parameter.codeName?.rawValue ?? "%20")"
             let title = "\(parameter.title ?? "%20")"
             let dateStr = parameter.date?.toString() ?? "%20"

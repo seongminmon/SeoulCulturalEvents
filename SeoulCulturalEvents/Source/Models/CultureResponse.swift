@@ -8,7 +8,7 @@
 import Foundation
 
 struct CultureResponse: Decodable {
-    let culturalEventInfo: CulturalEventInfo
+    var culturalEventInfo: CulturalEventInfo
 }
 
 struct CulturalEventInfo: Decodable {
@@ -40,6 +40,14 @@ struct CulturalEvent: Decodable {
     let useTarget: String
     
     let link: String
+    
+    var startDateString: String {
+        return startDate.split(separator: " ").map { String($0) }.first ?? ""
+    }
+    
+    var endDateString: String {
+        return endDate.split(separator: " ").map { String($0) }.first ?? ""
+    }
     
     enum CodingKeys: String, CodingKey {
         case mainImage = "MAIN_IMG"
