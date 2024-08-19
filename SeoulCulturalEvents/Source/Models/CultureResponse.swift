@@ -66,3 +66,24 @@ struct CulturalEvent: Decodable {
         case link = "ORG_LINK"
     }
 }
+
+extension CulturalEvent {
+    func toString() -> String {
+        var ret = ""
+        ret += self.mainImage + "$$$"
+        ret += self.title + "$$$"
+        ret += self.codeName + "$$$"
+        ret += self.startDate + "$$$"
+        ret += self.endDate + "$$$"
+        ret += self.place + "$$$"
+        ret += self.organizationName + "$$$"
+        ret += self.guName + "$$$"
+        ret += self.longitude + "$$$"
+        ret += self.latitude + "$$$"
+        ret += self.price + "$$$"
+        ret += self.isFree + "$$$"
+        ret += self.useTarget + "$$$"
+        ret += self.link
+        return ret
+    }
+}
