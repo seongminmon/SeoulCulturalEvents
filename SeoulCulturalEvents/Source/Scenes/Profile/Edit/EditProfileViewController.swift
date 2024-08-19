@@ -58,14 +58,12 @@ final class EditProfileViewController: BaseViewController {
         
         output.profile
             .subscribe(with: self) { owner, value in
-                let url = URL(string: APIURL.lslpURL + "v1/" + (value.profileImage ?? ""))
-                let modifier = AnyModifier { request in
-                    var requestBody = request
-                    requestBody.setValue(APIKey.lslpKey, forHTTPHeaderField: LSLPHeader.sesacKey.rawValue)
-                    requestBody.setValue(UserDefaultsManager.shared.accessToken, forHTTPHeaderField: LSLPHeader.authorization.rawValue)
-                    return requestBody
-                }
-                owner.profileImageView.kf.setImage(with: url, placeholder: UIImage.person, options: [.requestModifier(modifier)])
+                let parameter = (value.profileImage ?? "").getKFParameter()
+                owner.profileImageView.kf.setImage(
+                    with: parameter.url,
+                    placeholder: UIImage.person,
+                    options: [.requestModifier(parameter.modifier)]
+                )
                 owner.nicknameTextField.text = value.nick
                 owner.nicknameTextField.sendActions(for: .editingChanged)
             }

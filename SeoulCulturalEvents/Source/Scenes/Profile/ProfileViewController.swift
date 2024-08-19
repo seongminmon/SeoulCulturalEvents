@@ -80,14 +80,12 @@ final class ProfileViewController: BaseViewController {
         
         output.profile
             .bind(with: self) { owner, profile in
-                let url = URL(string: APIURL.lslpURL + "v1/" + (profile.profileImage ?? ""))
-                let modifier = AnyModifier { request in
-                    var requestBody = request
-                    requestBody.setValue(APIKey.lslpKey, forHTTPHeaderField: LSLPHeader.sesacKey.rawValue)
-                    requestBody.setValue(UserDefaultsManager.shared.accessToken, forHTTPHeaderField: LSLPHeader.authorization.rawValue)
-                    return requestBody
-                }
-                owner.profileImageView.kf.setImage(with: url, placeholder: UIImage.person, options: [.requestModifier(modifier)])
+                let parameter = (profile.profileImage ?? "").getKFParameter()
+                owner.profileImageView.kf.setImage(
+                    with: parameter.url,
+                    placeholder: UIImage.person,
+                    options: [.requestModifier(parameter.modifier)]
+                )
                 owner.nicknameLabel.text = profile.nick
                 owner.followerButton.setTitle("팔로워 \(profile.followers.count)", for: .normal)
                 owner.followingButton.setTitle("팔로잉 \(profile.following.count)", for: .normal)
