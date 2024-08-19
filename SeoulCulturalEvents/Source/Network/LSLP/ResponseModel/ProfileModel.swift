@@ -26,13 +26,3 @@ struct ProfileModel: Decodable {
         case email, nick, phoneNum, birthDay, profileImage, followers, following, posts
     }
 }
-
-struct UserModel: Decodable {
-    let id: String
-    let nick: String
-    
-    enum CodingKeys: String, CodingKey {
-        case id = "user_id"
-        case nick
-    }
-}

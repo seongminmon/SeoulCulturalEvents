@@ -19,7 +19,6 @@ final class TodayTableViewCell: BaseTableViewCell {
     private let genreLabel = UILabel().then {
         $0.font = .bold14
     }
-    
     private let shadowView = UIView().then {
         $0.layer.shadowColor = UIColor.black.cgColor
         $0.layer.shadowOffset = .zero
@@ -45,6 +44,9 @@ final class TodayTableViewCell: BaseTableViewCell {
         $0.textColor = .white
         $0.backgroundColor = .systemIndigo
         $0.textAlignment = .center
+    }
+    private let priceView = UIView().then {
+        $0.backgroundColor = .white
     }
     private let priceLabel = UILabel().then {
         $0.font = .regular14
@@ -100,12 +102,13 @@ final class TodayTableViewCell: BaseTableViewCell {
             mainImageView,
             shareButton,
             priceTitleLabel,
-            priceLabel,
+            priceView,
             descriptionView
         ].forEach {
             containerView.addSubview($0)
         }
         
+        priceView.addSubview(priceLabel)
         shadowView.addSubview(containerView)
         
         dateLabel.snp.makeConstraints { make in
@@ -146,11 +149,15 @@ final class TodayTableViewCell: BaseTableViewCell {
             make.height.equalTo(20)
         }
         
-        priceLabel.snp.makeConstraints { make in
+        priceView.snp.makeConstraints { make in
             make.leading.equalTo(priceTitleLabel.snp.trailing)
             make.bottom.equalTo(priceTitleLabel)
-            make.width.equalTo(40)
             make.height.equalTo(20)
+        }
+        
+        priceLabel.snp.makeConstraints { make in
+            make.horizontalEdges.equalToSuperview().inset(8)
+            make.centerY.equalToSuperview()
         }
         
         descriptionView.snp.makeConstraints { make in
@@ -192,7 +199,7 @@ final class TodayTableViewCell: BaseTableViewCell {
         genreLabel.text = "# \(data.codeName)"
         let imageURL = URL(string: data.mainImage)
         mainImageView.kf.setImage(with: imageURL)
-        priceLabel.text = data.price
+        priceLabel.text = data.price.isEmpty ? data.isFree : data.price
         titleLabel.text = data.title
         placeLabel.text = "\(data.place) | \(data.guName)"
     }

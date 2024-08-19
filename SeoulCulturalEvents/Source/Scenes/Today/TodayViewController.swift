@@ -25,7 +25,8 @@ final class TodayViewController: BaseViewController {
     
     override func bind() {
         let input = TodayViewModel.Input(
-            viewDidLoad: Observable.just(())
+            viewDidLoad: Observable.just(()),
+            cellTap: tableView.rx.itemSelected
         )
         let output = viewModel.transform(input: input)
         
@@ -38,6 +39,19 @@ final class TodayViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
+        output.networkFailure
+            .bind(with: self) { owner, value in
+                owner.makeNetworkFailureToast(value)
+            }
+            .disposed(by: disposeBag)
+        
+        output.cellTap
+            .bind(with: self) { owner, value in
+                let vm = CulturalEventViewModel(culturalEvent: value)
+                let vc = CulturalEventViewController(viewModel: vm)
+                owner.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disposeBag)
     }
     
     override func setNavigationBar() {

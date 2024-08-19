@@ -66,8 +66,7 @@ final class SignUpViewModel: ViewModelType {
                                 print("로그인 성공")
                                 dump(data)
                                 // 토큰 저장
-                                UserDefaultsManager.shared.accessToken = data.access
-                                UserDefaultsManager.shared.refreshToken = data.refresh
+                                UserDefaultsManager.shared.signIn(data.access, data.refresh, data.id)
                                 // 로그인까지 성공하면 성공
                                 signUpSuccess.onNext(())
                                 

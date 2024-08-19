@@ -67,6 +67,12 @@
 		24B2B6D12C6F2C2000190BFC /* Reactive+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B6D02C6F2C2000190BFC /* Reactive+.swift */; };
 		24B3C0D52C721E6E0008B597 /* TodayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B3C0D42C721E6E0008B597 /* TodayTableViewCell.swift */; };
 		24B3C0D72C7224520008B597 /* TodayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B3C0D62C7224520008B597 /* TodayViewModel.swift */; };
+		24B3C0E22C7327280008B597 /* CulturalEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B3C0E12C7327280008B597 /* CulturalEventViewController.swift */; };
+		24B3C0E42C7327460008B597 /* CulturalEventViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B3C0E32C7327460008B597 /* CulturalEventViewModel.swift */; };
+		24B3C0E62C7361A90008B597 /* PostQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B3C0E52C7361A90008B597 /* PostQuery.swift */; };
+		24B3C0E82C73649F0008B597 /* PostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B3C0E72C73649F0008B597 /* PostModel.swift */; };
+		24B3C0EA2C7365920008B597 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B3C0E92C7365920008B597 /* UserModel.swift */; };
+		24B3C0EC2C73659E0008B597 /* CommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B3C0EB2C73659E0008B597 /* CommentModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -121,6 +127,12 @@
 		24B2B6D02C6F2C2000190BFC /* Reactive+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive+.swift"; sourceTree = "<group>"; };
 		24B3C0D42C721E6E0008B597 /* TodayTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayTableViewCell.swift; sourceTree = "<group>"; };
 		24B3C0D62C7224520008B597 /* TodayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewModel.swift; sourceTree = "<group>"; };
+		24B3C0E12C7327280008B597 /* CulturalEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CulturalEventViewController.swift; sourceTree = "<group>"; };
+		24B3C0E32C7327460008B597 /* CulturalEventViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CulturalEventViewModel.swift; sourceTree = "<group>"; };
+		24B3C0E52C7361A90008B597 /* PostQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostQuery.swift; sourceTree = "<group>"; };
+		24B3C0E72C73649F0008B597 /* PostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostModel.swift; sourceTree = "<group>"; };
+		24B3C0E92C7365920008B597 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		24B3C0EB2C73659E0008B597 /* CommentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,6 +193,7 @@
 				24B2B6502C6CAA4200190BFC /* Search */,
 				24B2B6512C6CAA4D00190BFC /* Post */,
 				24B2B6522C6CAA5700190BFC /* Profile */,
+				24B3C0E02C7327070008B597 /* Detail */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -395,6 +408,9 @@
 				24B2B6B02C6E14B100190BFC /* SignUpModel.swift */,
 				24B2B6B22C6EEB9200190BFC /* RefreshModel.swift */,
 				24B2B6B62C6EF43200190BFC /* ProfileModel.swift */,
+				24B3C0E92C7365920008B597 /* UserModel.swift */,
+				24B3C0E72C73649F0008B597 /* PostModel.swift */,
+				24B3C0EB2C73659E0008B597 /* CommentModel.swift */,
 			);
 			path = ResponseModel;
 			sourceTree = "<group>";
@@ -405,6 +421,7 @@
 				24B2B6AC2C6DBF1D00190BFC /* SignInQuery.swift */,
 				24B2B6AE2C6E130600190BFC /* SignUpQuery.swift */,
 				24B2B6B42C6EF33600190BFC /* EditProfileQuery.swift */,
+				24B3C0E52C7361A90008B597 /* PostQuery.swift */,
 			);
 			path = RequestModel;
 			sourceTree = "<group>";
@@ -416,6 +433,15 @@
 				24B2B6CD2C6F25F600190BFC /* EditProfileViewModel.swift */,
 			);
 			path = Edit;
+			sourceTree = "<group>";
+		};
+		24B3C0E02C7327070008B597 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				24B3C0E12C7327280008B597 /* CulturalEventViewController.swift */,
+				24B3C0E32C7327460008B597 /* CulturalEventViewModel.swift */,
+			);
+			path = Detail;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -516,6 +542,7 @@
 				24B2B6562C6CB05700190BFC /* Date+.swift in Sources */,
 				24B2B67F2C6CD21B00190BFC /* Color.swift in Sources */,
 				24B3C0D52C721E6E0008B597 /* TodayTableViewCell.swift in Sources */,
+				24B3C0EC2C73659E0008B597 /* CommentModel.swift in Sources */,
 				24B2B6892C6CD6FA00190BFC /* BaseViewController.swift in Sources */,
 				24B2B65A2C6CC5C500190BFC /* Formatter.swift in Sources */,
 				24B2B69D2C6CE67F00190BFC /* CultureRouter.swift in Sources */,
@@ -532,18 +559,22 @@
 				24B2B6B72C6EF43200190BFC /* ProfileModel.swift in Sources */,
 				24B2B65F2C6CCA7000190BFC /* SignUpViewController.swift in Sources */,
 				24B2B67D2C6CD17C00190BFC /* Font.swift in Sources */,
+				24B3C0E82C73649F0008B597 /* PostModel.swift in Sources */,
 				24B2B6CC2C6F25AC00190BFC /* EditProfileViewController.swift in Sources */,
 				24B2B68E2C6CDD7100190BFC /* LSLPAPIManager.swift in Sources */,
 				24B2B6432C6C956700190BFC /* PostViewController.swift in Sources */,
+				24B3C0EA2C7365920008B597 /* UserModel.swift in Sources */,
 				24B2B6B12C6E14B100190BFC /* SignUpModel.swift in Sources */,
 				24B2B6B52C6EF33600190BFC /* EditProfileQuery.swift in Sources */,
 				24B3C0D72C7224520008B597 /* TodayViewModel.swift in Sources */,
+				24B3C0E62C7361A90008B597 /* PostQuery.swift in Sources */,
 				24B2B63F2C6C948100190BFC /* TabBarController.swift in Sources */,
 				24B2B6C32C6F0F9F00190BFC /* ReuseIdentifierProtocol.swift in Sources */,
 				24B2B6782C6CCFDF00190BFC /* SignInViewModel.swift in Sources */,
 				24B2B6452C6C957300190BFC /* ProfileViewController.swift in Sources */,
 				24B2B67A2C6CD01E00190BFC /* ViewModelType.swift in Sources */,
 				24B2B6AF2C6E130600190BFC /* SignUpQuery.swift in Sources */,
+				24B3C0E42C7327460008B597 /* CulturalEventViewModel.swift in Sources */,
 				24B2B6CE2C6F25F600190BFC /* EditProfileViewModel.swift in Sources */,
 				24B2B6D12C6F2C2000190BFC /* Reactive+.swift in Sources */,
 				24B2B6582C6CB05B00190BFC /* String+.swift in Sources */,
@@ -554,6 +585,7 @@
 				24B2B6B92C6EF6B700190BFC /* ProfileViewModel.swift in Sources */,
 				24B2B6A22C6CEA5C00190BFC /* UserDefaultsManager.swift in Sources */,
 				24B2B6A52C6CEB9F00190BFC /* LSLPHeader.swift in Sources */,
+				24B3C0E22C7327280008B597 /* CulturalEventViewController.swift in Sources */,
 				24B2B6862C6CD60000190BFC /* SignUpViewModel.swift in Sources */,
 				240E0A942C6C7E8B003A212B /* SceneDelegate.swift in Sources */,
 				24B2B6922C6CDDC800190BFC /* LSLPRouter.swift in Sources */,

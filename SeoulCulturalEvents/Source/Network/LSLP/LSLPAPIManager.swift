@@ -80,7 +80,7 @@ final class LSLPAPIManager {
                 do {
                     print("엑세스 토큰 갱신 성공")
                     let data = try response.map(RefreshModel.self)
-                    UserDefaultsManager.shared.accessToken = data.accessToken
+                    UserDefaultsManager.shared.refresh(data.accessToken)
                     handler(.success(data))
                 } catch {
                     print("엑세스 토큰 갱신 디코딩 실패")
@@ -89,8 +89,7 @@ final class LSLPAPIManager {
                 
             case .failure(_):
                 print("엑세스 토큰 갱신 실패")
-                UserDefaultsManager.shared.accessToken = ""
-                UserDefaultsManager.shared.refreshToken = ""
+                UserDefaultsManager.shared.removeAll()
                 handler(.failure(.refreshToken))
             }
         }
@@ -104,10 +103,7 @@ final class AuthInterceptor: RequestInterceptor {
     
     // Request가 전송되기 전
     func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
-        guard urlRequest.url?.absoluteString.hasPrefix(APIURL.lslpURL) == true,
-              UserDefaultsManager.shared.accessToken != "",
-              UserDefaultsManager.shared.refreshToken != ""
-        else {
+        guard urlRequest.url?.absoluteString.hasPrefix(APIURL.lslpURL) == true else {
             completion(.success(urlRequest))
             return
         }

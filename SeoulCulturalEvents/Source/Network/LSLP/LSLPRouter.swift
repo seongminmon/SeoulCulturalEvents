@@ -18,7 +18,7 @@ enum LSLPRouter {
     case editProfile(query: EditProfileQuery)
     
     // MARK: - 포스트
-    
+    case createPost(query: PostQuery)
 }
 
 extension LSLPRouter: TargetType {
@@ -40,6 +40,8 @@ extension LSLPRouter: TargetType {
             return "users/me/profile"
         case .editProfile:
             return "users/me/profile"
+        case .createPost:
+            return "posts"
         }
     }
     
@@ -57,6 +59,8 @@ extension LSLPRouter: TargetType {
             return .get
         case .editProfile:
             return .put
+        case .createPost:
+            return .post
         }
     }
     
@@ -97,6 +101,8 @@ extension LSLPRouter: TargetType {
             }
             
             return .uploadCompositeMultipart(multipartData, urlParameters: [:])
+        case .createPost(let query):
+            return .requestJSONEncodable(query)
         }
     }
     
@@ -135,6 +141,12 @@ extension LSLPRouter: TargetType {
             return [
                 LSLPHeader.sesacKey.rawValue: APIKey.lslpKey,
                 LSLPHeader.contentType.rawValue: LSLPHeader.multipart.rawValue,
+                LSLPHeader.authorization.rawValue: UserDefaultsManager.shared.accessToken
+            ]
+        case .createPost:
+            return [
+                LSLPHeader.sesacKey.rawValue: APIKey.lslpKey,
+                LSLPHeader.contentType.rawValue: LSLPHeader.json.rawValue,
                 LSLPHeader.authorization.rawValue: UserDefaultsManager.shared.accessToken
             ]
         }

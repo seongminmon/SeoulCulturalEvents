@@ -46,8 +46,7 @@ final class SignInViewModel: ViewModelType {
                 case .success(let data):
                     dump(data)
                     // 토큰 저장
-                    UserDefaultsManager.shared.accessToken = data.access
-                    UserDefaultsManager.shared.refreshToken = data.refresh
+                    UserDefaultsManager.shared.signIn(data.access, data.refresh, data.id)
                     signInSuccess.onNext(())
                     
                 case .failure(let error):
