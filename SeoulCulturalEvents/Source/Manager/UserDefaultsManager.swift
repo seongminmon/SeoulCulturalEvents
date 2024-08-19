@@ -14,6 +14,8 @@ final class UserDefaultsManager {
     private enum Key: String {
         case access
         case refresh
+        case userID
+        case likes
     }
     
     var accessToken: String {
@@ -24,5 +26,31 @@ final class UserDefaultsManager {
     var refreshToken: String {
         get { UserDefaults.standard.string(forKey: Key.refresh.rawValue) ?? "" }
         set { UserDefaults.standard.set(newValue, forKey: Key.refresh.rawValue) }
+    }
+    
+    var userID: String {
+        get { UserDefaults.standard.string(forKey: Key.userID.rawValue) ?? "" }
+        set { UserDefaults.standard.set(newValue, forKey: Key.userID.rawValue) }
+    }
+    
+    var likes: [String] {
+        get { UserDefaults.standard.object(forKey: Key.likes.rawValue) as? [String] ?? [] }
+        set { UserDefaults.standard.set(newValue, forKey: Key.likes.rawValue) }
+    }
+    
+    func refresh(_ access: String) {
+        accessToken = access
+    }
+    
+    func signIn(_ access: String, _ refresh: String, _ id: String) {
+        accessToken = access
+        refreshToken = refresh
+        userID = id
+    }
+    
+    func removeAll() {
+        accessToken = ""
+        refreshToken = ""
+        userID = ""
     }
 }
