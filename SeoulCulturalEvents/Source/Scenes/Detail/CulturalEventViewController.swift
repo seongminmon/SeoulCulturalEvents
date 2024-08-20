@@ -82,15 +82,7 @@ final class CulturalEventViewController: BaseViewController {
         
         output.data
             .bind(with: self) { owner, value in
-                owner.navigationItem.title = value.title
-                let url = URL(string: value.mainImage)
-                owner.posterImageView.kf.setImage(with: url)
-                owner.titleLabel.text = value.title
-                owner.codeNameLabel.text = value.codeName
-                owner.dateLabel.text = "\(value.startDateString) ~ \(value.endDateString)"
-                owner.placeLabel.text = "\(value.place) | \(value.guName)"
-                owner.priceLabel.text = value.price.isEmpty ? value.isFree : value.price
-                owner.useTargetLabel.text = value.useTarget
+                owner.configureView(value)
             }
             .disposed(by: disposeBag)
         
@@ -178,5 +170,17 @@ final class CulturalEventViewController: BaseViewController {
             make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
             make.height.equalTo(50)
         }
+    }
+    
+    private func configureView(_ value: CulturalEvent) {
+        navigationItem.title = value.title
+        let url = URL(string: value.mainImage)
+        posterImageView.kf.setImage(with: url)
+        titleLabel.text = value.title
+        codeNameLabel.text = value.codeName
+        dateLabel.text = "\(value.startDateString) ~ \(value.endDateString)"
+        placeLabel.text = "\(value.place) | \(value.guName)"
+        priceLabel.text = value.price.isEmpty ? value.isFree : value.price
+        useTargetLabel.text = value.useTarget
     }
 }

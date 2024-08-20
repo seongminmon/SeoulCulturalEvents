@@ -43,6 +43,9 @@ final class EditProfileViewController: BaseViewController {
     private let viewModel: EditProfileViewModel
     private let profileImageData = BehaviorSubject<Data?>(value: nil)
     
+    // 역값 전달
+    var sendData: ((ProfileModel) -> Void)?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -76,7 +79,8 @@ final class EditProfileViewController: BaseViewController {
             .disposed(by: disposeBag)
         
         output.editProfileSuccess
-            .bind(with: self) { owner, _ in
+            .bind(with: self) { owner, value in
+                owner.sendData?(value)
                 owner.navigationController?.popViewController(animated: true)
             }
             .disposed(by: disposeBag)

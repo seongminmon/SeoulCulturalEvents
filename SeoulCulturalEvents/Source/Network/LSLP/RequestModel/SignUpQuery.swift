@@ -11,6 +11,6 @@ struct SignUpQuery: Encodable {
     let email: String
     let password: String
     let nick: String
-//    var phoneNumber: String?
-//    var birthDay: String?
+    var phoneNum: String?
+    var birthDay: String?
 }

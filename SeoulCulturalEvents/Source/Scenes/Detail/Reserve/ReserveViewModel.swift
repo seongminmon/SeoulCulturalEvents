@@ -11,12 +11,12 @@ import RxCocoa
 
 final class ReserveViewModel: ViewModelType {
     
-//    private let link: String
-    let link: String
-    
     init(link: String) {
         self.link = link
     }
+    
+    private let link: String
+    private let disposeBag = DisposeBag()
     
     struct Input {
         let viewDidLoad: Observable<Void>
@@ -25,8 +25,6 @@ final class ReserveViewModel: ViewModelType {
     struct Output {
         let link: Observable<URL?>
     }
-    
-    private let disposeBag = DisposeBag()
     
     func transform(input: Input) -> Output {
         

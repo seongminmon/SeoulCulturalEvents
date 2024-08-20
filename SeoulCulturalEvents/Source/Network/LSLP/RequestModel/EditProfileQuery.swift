@@ -8,8 +8,8 @@
 import Foundation
 
 struct EditProfileQuery: Encodable {
-    let nick: String?
-    let phoneNum: String?
-    let birthDay: String?
-    let profile: Data?
+    var nick: String?
+    var phoneNum: String?
+    var birthDay: String?
+    var profile: Data?
 }

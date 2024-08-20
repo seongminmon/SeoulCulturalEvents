@@ -73,6 +73,8 @@
 		24B3C0E82C73649F0008B597 /* PostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B3C0E72C73649F0008B597 /* PostModel.swift */; };
 		24B3C0EA2C7365920008B597 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B3C0E92C7365920008B597 /* UserModel.swift */; };
 		24B3C0EC2C73659E0008B597 /* CommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B3C0EB2C73659E0008B597 /* CommentModel.swift */; };
+		24B3C0EE2C744E000008B597 /* ReserveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B3C0ED2C744E000008B597 /* ReserveViewController.swift */; };
+		24B3C0F12C744E2F0008B597 /* ReserveViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B3C0F02C744E2F0008B597 /* ReserveViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -133,6 +135,8 @@
 		24B3C0E72C73649F0008B597 /* PostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostModel.swift; sourceTree = "<group>"; };
 		24B3C0E92C7365920008B597 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		24B3C0EB2C73659E0008B597 /* CommentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentModel.swift; sourceTree = "<group>"; };
+		24B3C0ED2C744E000008B597 /* ReserveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReserveViewController.swift; sourceTree = "<group>"; };
+		24B3C0F02C744E2F0008B597 /* ReserveViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReserveViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -189,10 +193,6 @@
 			children = (
 				24B2B65B2C6CCA3D00190BFC /* Sign */,
 				24B2B6532C6CAA5E00190BFC /* Tab */,
-				24B2B64F2C6CAA3B00190BFC /* Today */,
-				24B2B6502C6CAA4200190BFC /* Search */,
-				24B2B6512C6CAA4D00190BFC /* Post */,
-				24B2B6522C6CAA5700190BFC /* Profile */,
 				24B3C0E02C7327070008B597 /* Detail */,
 			);
 			path = Scenes;
@@ -285,6 +285,10 @@
 			isa = PBXGroup;
 			children = (
 				24B2B63E2C6C948100190BFC /* TabBarController.swift */,
+				24B2B64F2C6CAA3B00190BFC /* Today */,
+				24B2B6502C6CAA4200190BFC /* Search */,
+				24B2B6512C6CAA4D00190BFC /* Post */,
+				24B2B6522C6CAA5700190BFC /* Profile */,
 			);
 			path = Tab;
 			sourceTree = "<group>";
@@ -440,8 +444,18 @@
 			children = (
 				24B3C0E12C7327280008B597 /* CulturalEventViewController.swift */,
 				24B3C0E32C7327460008B597 /* CulturalEventViewModel.swift */,
+				24B3C0EF2C744E070008B597 /* Reserve */,
 			);
 			path = Detail;
+			sourceTree = "<group>";
+		};
+		24B3C0EF2C744E070008B597 /* Reserve */ = {
+			isa = PBXGroup;
+			children = (
+				24B3C0ED2C744E000008B597 /* ReserveViewController.swift */,
+				24B3C0F02C744E2F0008B597 /* ReserveViewModel.swift */,
+			);
+			path = Reserve;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -559,6 +573,7 @@
 				24B2B6B72C6EF43200190BFC /* ProfileModel.swift in Sources */,
 				24B2B65F2C6CCA7000190BFC /* SignUpViewController.swift in Sources */,
 				24B2B67D2C6CD17C00190BFC /* Font.swift in Sources */,
+				24B3C0EE2C744E000008B597 /* ReserveViewController.swift in Sources */,
 				24B3C0E82C73649F0008B597 /* PostModel.swift in Sources */,
 				24B2B6CC2C6F25AC00190BFC /* EditProfileViewController.swift in Sources */,
 				24B2B68E2C6CDD7100190BFC /* LSLPAPIManager.swift in Sources */,
@@ -577,6 +592,7 @@
 				24B3C0E42C7327460008B597 /* CulturalEventViewModel.swift in Sources */,
 				24B2B6CE2C6F25F600190BFC /* EditProfileViewModel.swift in Sources */,
 				24B2B6D12C6F2C2000190BFC /* Reactive+.swift in Sources */,
+				24B3C0F12C744E2F0008B597 /* ReserveViewModel.swift in Sources */,
 				24B2B6582C6CB05B00190BFC /* String+.swift in Sources */,
 				24B2B6A82C6DBF0300190BFC /* SignInModel.swift in Sources */,
 				24B2B6B32C6EEB9200190BFC /* RefreshModel.swift in Sources */,

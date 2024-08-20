@@ -13,6 +13,13 @@ import Kingfisher
 
 final class EditProfileViewModel: ViewModelType {
     
+    init(profile: ProfileModel) {
+        self.profile = profile
+    }
+    
+    private var profile: ProfileModel
+    private let disposeBag = DisposeBag()
+    
     struct Input {
         let nickname: ControlProperty<String>
         let profileImageData: BehaviorSubject<Data?>
@@ -23,23 +30,17 @@ final class EditProfileViewModel: ViewModelType {
     struct Output {
         let profile: Observable<ProfileModel>
         let profileSelectButtonTap: ControlEvent<Void>
-        let editProfileSuccess: Observable<Void>
+        let editProfileSuccess: Observable<ProfileModel>
         let editProfileFailure: Observable<String>
     }
-    
-    init(profile: ProfileModel) {
-        self.profile = profile
-    }
-    
-    private var profile: ProfileModel
-    private let disposeBag = DisposeBag()
     
     func transform(input: Input) -> Output {
         
         let profile = BehaviorSubject(value: profile)
-        let editProfileSuccess = PublishSubject<Void>()
+        let editProfileSuccess = PublishSubject<ProfileModel>()
         let editProfileFailure = PublishSubject<String>()
         
+        // 프로필 수정 통신
         input.saveButtonTap
             .withLatestFrom(Observable.combineLatest(input.nickname, input.profileImageData))
             .flatMap { value in
@@ -53,11 +54,9 @@ final class EditProfileViewModel: ViewModelType {
                 switch result {
                 case .success(let data):
                     print("프로필 수정 성공")
-                    dump(data)
-                    editProfileSuccess.onNext(())
+                    editProfileSuccess.onNext(data)
                 case .failure(let error):
                     print("프로필 수정 실패")
-                    print(error)
                     editProfileFailure.onNext(error.localizedDescription)
                 }
             }

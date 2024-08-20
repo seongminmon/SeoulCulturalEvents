@@ -11,6 +11,12 @@ import RxCocoa
 
 final class TodayViewModel: ViewModelType {
     
+    // TODO: - 페이지 네이션 기능 구현하기
+    
+    private let disposeBag = DisposeBag()
+    private var cultureResponse: CultureResponse?
+    private var page = 1
+    
     struct Input {
         let viewDidLoad: Observable<Void>
         let cellTap: ControlEvent<IndexPath>
@@ -21,12 +27,6 @@ final class TodayViewModel: ViewModelType {
         let networkFailure: PublishSubject<String>
         let cellTap: PublishSubject<CulturalEvent>
     }
-    
-    private let disposeBag = DisposeBag()
-    private var cultureResponse: CultureResponse?
-    private var page = 1
-    
-    // TODO: - 페이지 네이션 기능
     
     func transform(input: Input) -> Output {
         
@@ -47,6 +47,7 @@ final class TodayViewModel: ViewModelType {
                     owner.cultureResponse = data
                     guard let list = owner.cultureResponse?.culturalEventInfo.list else { return }
                     cultureList.onNext(list)
+                    
                 case .failure(let error):
                     print("문화 행사 통신 실패")
                     networkFailure.onNext(error.localizedDescription)

@@ -11,6 +11,14 @@ import RxCocoa
 
 final class CulturalEventViewModel: ViewModelType {
     
+    init(culturalEvent: CulturalEvent) {
+        self.culturalEvent = culturalEvent
+    }
+    
+    private let culturalEvent: CulturalEvent
+    private var likeFlag: Bool = false
+    private let disposeBag = DisposeBag()
+    
     struct Input {
         let viewDidLoad: Observable<Void>
         let likeButtonTap: ControlEvent<Void>
@@ -23,14 +31,6 @@ final class CulturalEventViewModel: ViewModelType {
         let networkFailure: Observable<String>
         let reserveLink: Observable<String>
     }
-    
-    init(culturalEvent: CulturalEvent) {
-        self.culturalEvent = culturalEvent
-    }
-    
-    private let culturalEvent: CulturalEvent
-    private var likeFlag: Bool = false
-    private let disposeBag = DisposeBag()
     
     func transform(input: Input) -> Output {
         
@@ -74,7 +74,7 @@ final class CulturalEventViewModel: ViewModelType {
                 } else {
                     // 포스트 업로드
                     let content = owner.culturalEvent.toString()
-                    let query = PostQuery(title: owner.culturalEvent.title, content: content, content1: nil, content2: nil, content3: nil, content4: nil, content5: nil, productID: ProductID.cultural, files: [])
+                    let query = PostQuery(title: owner.culturalEvent.title, productID: ProductID.cultural, content: content, files: [])
                     LSLPAPIManager.shared.callRequestWithRetry(api: .createPost(query: query), model: PostModel.self)
                         .subscribe(with: self) { owner, result in
                             switch result {

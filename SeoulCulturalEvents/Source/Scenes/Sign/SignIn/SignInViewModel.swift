@@ -11,6 +11,8 @@ import RxCocoa
 
 final class SignInViewModel: ViewModelType {
     
+    private let disposeBag = DisposeBag()
+    
     struct Input {
         let emailText: ControlProperty<String>
         let passwordText: ControlProperty<String>
@@ -23,8 +25,6 @@ final class SignInViewModel: ViewModelType {
         let signInFailure: PublishSubject<String>
         let signUpTap: ControlEvent<Void>
     }
-    
-    private let disposeBag = DisposeBag()
     
     func transform(input: Input) -> Output {
         let signInSuccess = PublishSubject<Void>()

@@ -39,14 +39,16 @@ final class ProfileViewModel: ViewModelType {
     }
     
     let sectionData = [SettingSection(header: "보관함", items: SettingCellData.allCases.map { $0.rawValue })]
+    private let disposeBag = DisposeBag()
     
     struct Input {
-        let viewWillAppear: ControlEvent<Bool>
+        let viewDidLoad: Observable<Void>
         let editButtonTap: ControlEvent<Void>
         let followerButtonTap: ControlEvent<Void>
         let followingButtonTap: ControlEvent<Void>
         let cellTap: ControlEvent<IndexPath>
         let withdrawAction: PublishSubject<Void>
+        let newProfile: PublishSubject<ProfileModel>
     }
     
     struct Output {
@@ -57,8 +59,6 @@ final class ProfileViewModel: ViewModelType {
         let withdrawActionSuccess: PublishSubject<Void>
     }
     
-    private let disposeBag = DisposeBag()
-    
     func transform(input: Input) -> Output {
         
         let list = BehaviorSubject(value: sectionData)
@@ -67,7 +67,7 @@ final class ProfileViewModel: ViewModelType {
         let withdrawActionSuccess = PublishSubject<Void>()
         
         // 내 프로필 조회 통신하기
-        input.viewWillAppear
+        input.viewDidLoad
             .flatMap { _ in
                 LSLPAPIManager.shared.callRequestWithRetry(api: .fetchProfile, model: ProfileModel.self)
             }
@@ -108,6 +108,13 @@ final class ProfileViewModel: ViewModelType {
                     print("탈퇴 실패")
                     print(error.localizedDescription)
                 }
+            }
+            .disposed(by: disposeBag)
+        
+        // 프로필 수정 화면에서 받아온 데이터 넘겨주기
+        input.newProfile
+            .subscribe(with: self) { owner, value in
+                profile.onNext(value)
             }
             .disposed(by: disposeBag)
         

@@ -12,6 +12,8 @@ import RxCocoa
 
 final class SignUpViewModel: ViewModelType {
     
+    private let disposeBag = DisposeBag()
+    
     struct Input {
         let closeButtonTap: ControlEvent<Void>
         let emailText: ControlProperty<String>
@@ -26,16 +28,13 @@ final class SignUpViewModel: ViewModelType {
         let signUpFailure: PublishSubject<String>
     }
     
-    private let disposeBag = DisposeBag()
-    
     func transform(input: Input) -> Output {
         
         let signUpSuccess = PublishSubject<Void>()
         let signUpFailure = PublishSubject<String>()
         
-        // 가입하기 버튼 누를 시 사용자가 입력한 이메일, 패스워드, 닉네임으로 SignUp 통신
+        // 가입하기 버튼 누를 시 사용자가 입력한 이메일, 패스워드, 닉네임으로 회원가입 통신
         input.signUpTap
-            .debug("버튼탭")
             .debounce(.seconds(1), scheduler: MainScheduler.instance)
             .withLatestFrom(Observable.combineLatest(input.emailText, input.passwordText, input.nicknameText))
             .map { SignUpQuery(email: $0.0, password: $0.1, nick: $0.2) }
@@ -51,6 +50,8 @@ final class SignUpViewModel: ViewModelType {
                     print("회원 가입 성공")
                     dump(data)
                     
+                    // TODO: - flatMap으로 처리해보기
+                    
                     // 회원 가입 성공 시 로그인까지 처리
                     Observable.combineLatest(input.emailText, input.passwordText)
                         .map { SignInQuery(email: $0.0, password: $0.1) }
@@ -64,7 +65,6 @@ final class SignUpViewModel: ViewModelType {
                             switch result {
                             case .success(let data):
                                 print("로그인 성공")
-                                dump(data)
                                 // 토큰 저장
                                 UserDefaultsManager.shared.signIn(data.access, data.refresh, data.id)
                                 // 로그인까지 성공하면 성공
@@ -72,7 +72,6 @@ final class SignUpViewModel: ViewModelType {
                                 
                             case .failure(let error):
                                 print("로그인 실패")
-                                print(error.localizedDescription)
                                 signUpFailure.onNext("로그인 실패")
                             }
                         }
@@ -80,7 +79,6 @@ final class SignUpViewModel: ViewModelType {
                     
                 case .failure(let error):
                     print("회원 가입 실패")
-                    print(error.localizedDescription)
                     signUpFailure.onNext("회원 가입 실패")
                 }
             }

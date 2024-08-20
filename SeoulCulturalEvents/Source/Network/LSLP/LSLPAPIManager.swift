@@ -120,7 +120,6 @@ final class LSLPAPIManager {
             }
         }
     }
-    
 }
 
 // MARK: - 엑세스 토큰 갱신
@@ -135,6 +134,7 @@ final class AuthInterceptor: RequestInterceptor {
             return
         }
         
+        print("Adapt - 헤더 세팅")
         var urlRequest = urlRequest
         urlRequest.setValue(UserDefaultsManager.shared.accessToken, forHTTPHeaderField: LSLPHeader.authorization.rawValue)
         completion(.success(urlRequest))
@@ -155,8 +155,8 @@ final class AuthInterceptor: RequestInterceptor {
                 print("Retry - 토큰 재발급 성공")
                 completion(.retry)
             case .failure(let error):
-                print("Retry - 토큰 재발급 실패")
                 // 갱신 실패 -> 로그인 화면으로 전환
+                print("Retry - 토큰 재발급 실패")
                 completion(.doNotRetryWithError(error))
             }
         }
