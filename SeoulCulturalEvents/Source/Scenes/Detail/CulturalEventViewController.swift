@@ -28,31 +28,34 @@ final class CulturalEventViewController: BaseViewController {
         $0.clipsToBounds = true
     }
     private let titleLabel = UILabel().then {
-        $0.font = .regular14
+        $0.font = .bold15
+        $0.numberOfLines = 0
     }
     private let codeNameLabel = UILabel().then {
         $0.font = .regular14
+        $0.numberOfLines = 0
     }
     private let dateLabel = UILabel().then {
         $0.font = .regular14
+        $0.numberOfLines = 0
     }
     private let placeLabel = UILabel().then {
         $0.font = .regular14
+        $0.numberOfLines = 0
     }
     private let priceLabel = UILabel().then {
         $0.font = .regular14
+        $0.numberOfLines = 0
     }
     private let useTargetLabel = UILabel().then {
         $0.font = .regular14
+        $0.numberOfLines = 0
     }
     private let mapView = MKMapView().then {
         $0.clipsToBounds = true
         $0.layer.cornerRadius = 10
     }
     private let reserveButton = PointButton(title: "예매하기")
-    
-    // longitude, latitude -> 맵뷰
-    // link -> 예매하기, 웹뷰
     
     init(viewModel: CulturalEventViewModel) {
         self.viewModel = viewModel
@@ -72,7 +75,8 @@ final class CulturalEventViewController: BaseViewController {
     override func bind() {
         let input = CulturalEventViewModel.Input(
             viewDidLoad: Observable.just(()),
-            likeButtonTap: likeButton.rx.tap
+            likeButtonTap: likeButton.rx.tap,
+            reserveButtonTap: reserveButton.rx.tap
         )
         let output = viewModel.transform(input: input)
         
@@ -81,6 +85,12 @@ final class CulturalEventViewController: BaseViewController {
                 owner.navigationItem.title = value.title
                 let url = URL(string: value.mainImage)
                 owner.posterImageView.kf.setImage(with: url)
+                owner.titleLabel.text = value.title
+                owner.codeNameLabel.text = value.codeName
+                owner.dateLabel.text = "\(value.startDateString) ~ \(value.endDateString)"
+                owner.placeLabel.text = "\(value.place) | \(value.guName)"
+                owner.priceLabel.text = value.price.isEmpty ? value.isFree : value.price
+                owner.useTargetLabel.text = value.useTarget
             }
             .disposed(by: disposeBag)
         
@@ -89,8 +99,18 @@ final class CulturalEventViewController: BaseViewController {
             .bind(to: likeButton.rx.image)
             .disposed(by: disposeBag)
         
-        reserveButton.rx.tap
-            .bind(onNext: { print("예매하기 탭") })
+        output.networkFailure
+            .bind(with: self) { owner, value in
+                owner.makeNetworkFailureToast(value)
+            }
+            .disposed(by: disposeBag)
+        
+        output.reserveLink
+            .bind(with: self) { owner, link in
+                let vm = ReserveViewModel(link: link)
+                let vc = ReserveViewController(viewModel: vm)
+                owner.navigationController?.pushViewController(vc, animated: true)
+            }
             .disposed(by: disposeBag)
     }
     

@@ -15,7 +15,8 @@ final class UserDefaultsManager {
         case access
         case refresh
         case userID
-        case likes
+        case likeTitles
+        case likeIDs
     }
     
     var accessToken: String {
@@ -33,15 +34,21 @@ final class UserDefaultsManager {
         set { UserDefaults.standard.set(newValue, forKey: Key.userID.rawValue) }
     }
     
-    var likes: [String] {
-        get { UserDefaults.standard.object(forKey: Key.likes.rawValue) as? [String] ?? [] }
-        set { UserDefaults.standard.set(newValue, forKey: Key.likes.rawValue) }
+    var likeTitles: [String] {
+        get { UserDefaults.standard.object(forKey: Key.likeTitles.rawValue) as? [String] ?? [] }
+        set { UserDefaults.standard.set(newValue, forKey: Key.likeTitles.rawValue) }
+    }
+    
+    var likeIDs: [String] {
+        get { UserDefaults.standard.object(forKey: Key.likeIDs.rawValue) as? [String] ?? [] }
+        set { UserDefaults.standard.set(newValue, forKey: Key.likeIDs.rawValue) }
     }
     
     func refresh(_ access: String) {
         accessToken = access
     }
     
+    // TODO: - 새로 로그인 했을 때 좋아요한 행사 리스트 받아오기
     func signIn(_ access: String, _ refresh: String, _ id: String) {
         accessToken = access
         refreshToken = refresh
@@ -52,5 +59,7 @@ final class UserDefaultsManager {
         accessToken = ""
         refreshToken = ""
         userID = ""
+        likeTitles = []
+        likeIDs = []
     }
 }
