@@ -14,7 +14,7 @@ struct SettingSection {
     var header: String
     var items: [Item]
 }
-
+// TODO: - AnimatableSectionModel로 바꿔보기
 extension SettingSection: AnimatableSectionModelType {
     typealias Item = String
     

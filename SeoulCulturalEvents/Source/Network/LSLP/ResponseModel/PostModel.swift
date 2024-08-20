@@ -8,6 +8,10 @@
 import Foundation
 
 // 포스트 작성 / 포스트 조회 / 특정 포스트 조회
+struct PostModelList: Decodable {
+    var data: [PostModel]
+}
+
 struct PostModel: Decodable {
     let postID: String
     let productID: String?

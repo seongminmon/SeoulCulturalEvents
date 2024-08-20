@@ -10,13 +10,6 @@ import Alamofire
 import Moya
 import RxSwift
 
-enum LSLPError: Error {
-    case accessToken
-    case refreshToken
-    case decoding
-    case unknown
-}
-
 final class LSLPAPIManager {
     static let shared = LSLPAPIManager()
     private init() {}
@@ -25,7 +18,6 @@ final class LSLPAPIManager {
     func callRequest<T: Decodable>(api: LSLPRouter, model: T.Type) -> Single<Result<T, LSLPError>> {
         return Single<Result<T, LSLPError>>.create { observer in
             let provider = MoyaProvider<LSLPRouter>()
-            
             provider.request(api) { result in
                 switch result {
                 case .success(let response):

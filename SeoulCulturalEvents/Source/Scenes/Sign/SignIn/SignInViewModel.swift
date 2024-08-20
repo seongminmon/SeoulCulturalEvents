@@ -44,14 +44,14 @@ final class SignInViewModel: ViewModelType {
             .subscribe(with: self) { owner, result in
                 switch result {
                 case .success(let data):
-                    dump(data)
+                    print("로그인 성공")
                     // 토큰 저장
                     UserDefaultsManager.shared.signIn(data.access, data.refresh, data.id)
                     signInSuccess.onNext(())
                     
                 case .failure(let error):
-                    print(error.localizedDescription)
-                    signInFailure.onNext("로그인 실패")
+                    print("로그인 실패")
+                    signInFailure.onNext(error.localizedDescription)
                 }
             }
             .disposed(by: disposeBag)

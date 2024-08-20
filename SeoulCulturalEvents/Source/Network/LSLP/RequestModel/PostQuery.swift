@@ -24,8 +24,3 @@ struct PostQuery: Encodable {
         case title, content, content1, content2, content3, content4, content5, price, files
     }
 }
-
-enum ProductID {
-    static let cultural = "ksm_culturalEvent"
-    static let post = "ksm_post"
-}

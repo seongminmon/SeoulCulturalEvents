@@ -18,6 +18,7 @@ enum LSLPRouter {
     case editProfile(query: EditProfileQuery)
     
     // MARK: - 포스트
+    case fetchPost(query: PostFetchQuery)
     case createPost(query: PostQuery)
     case deletePost(postID: String)
 }
@@ -41,6 +42,8 @@ extension LSLPRouter: TargetType {
             return "users/me/profile"
         case .editProfile:
             return "users/me/profile"
+        case .fetchPost:
+            return "posts"
         case .createPost:
             return "posts"
         case .deletePost(let id):
@@ -62,6 +65,8 @@ extension LSLPRouter: TargetType {
             return .get
         case .editProfile:
             return .put
+        case .fetchPost:
+            return .get
         case .createPost:
             return .post
         case .deletePost:
@@ -107,6 +112,13 @@ extension LSLPRouter: TargetType {
             
             return .uploadCompositeMultipart(multipartData, urlParameters: [:])
             
+        case .fetchPost(let query):
+            let parameters: [String : Any] = [
+                "next": query.next ?? "",
+                "limit": query.limit,
+                "product_id": query.productID ?? ""
+            ]
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
         case .createPost(let query):
             return .requestJSONEncodable(query)
         case .deletePost:
@@ -149,6 +161,12 @@ extension LSLPRouter: TargetType {
             return [
                 LSLPHeader.sesacKey.rawValue: APIKey.lslpKey,
                 LSLPHeader.contentType.rawValue: LSLPHeader.multipart.rawValue,
+                LSLPHeader.authorization.rawValue: UserDefaultsManager.shared.accessToken
+            ]
+        case .fetchPost:
+            return [
+                LSLPHeader.sesacKey.rawValue: APIKey.lslpKey,
+                LSLPHeader.contentType.rawValue: LSLPHeader.json.rawValue,
                 LSLPHeader.authorization.rawValue: UserDefaultsManager.shared.accessToken
             ]
         case .createPost:

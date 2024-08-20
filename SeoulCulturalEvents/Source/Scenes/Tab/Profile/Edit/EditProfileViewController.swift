@@ -64,7 +64,6 @@ final class EditProfileViewController: BaseViewController {
                 let parameter = (value.profileImage ?? "").getKFParameter()
                 owner.profileImageView.kf.setImage(
                     with: parameter.url,
-                    placeholder: UIImage.person,
                     options: [.requestModifier(parameter.modifier)]
                 )
                 owner.nicknameTextField.text = value.nick

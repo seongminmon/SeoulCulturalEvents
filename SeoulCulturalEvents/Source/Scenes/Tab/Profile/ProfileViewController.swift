@@ -63,12 +63,12 @@ final class ProfileViewController: BaseViewController {
             followerButtonTap: followerButton.rx.tap,
             followingButtonTap: followingButton.rx.tap,
             cellTap: tableView.rx.itemSelected, 
-            withdrawAction: withdrawAction, 
+            withdrawAction: withdrawAction,
             newProfile: newProfile
         )
         let output = viewModel.transform(input: input)
         
-        let dataSource = RxTableViewSectionedReloadDataSource<SettingSection> { dataSource, tableView, indexPath, item in
+        let dataSource = RxTableViewSectionedAnimatedDataSource<SettingSection> { dataSource, tableView, indexPath, item in
             let cell = tableView.dequeueReusableCell(withIdentifier: ProfileTableViewCell.identifier, for: indexPath) as! ProfileTableViewCell
             cell.configureCell(title: item)
             return cell
