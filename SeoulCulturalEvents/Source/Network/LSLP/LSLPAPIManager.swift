@@ -21,6 +21,7 @@ final class LSLPAPIManager {
     static let shared = LSLPAPIManager()
     private init() {}
     
+    // 토큰 갱신 필요없는 경우(로그인, 회원가입)
     func callRequest<T: Decodable>(api: LSLPRouter, model: T.Type) -> Single<Result<T, LSLPError>> {
         return Single<Result<T, LSLPError>>.create { observer in
             let provider = MoyaProvider<LSLPRouter>()
@@ -46,6 +47,7 @@ final class LSLPAPIManager {
         }
     }
     
+    // 응답값 있는 경우
     func callRequestWithRetry<T: Decodable>(api: LSLPRouter, model: T.Type) -> Single<Result<T, LSLPError>> {
         return Single<Result<T, LSLPError>>.create { observer in
             let provider = MoyaProvider<LSLPRouter>(session: Session(interceptor: AuthInterceptor.shared))
@@ -60,6 +62,30 @@ final class LSLPAPIManager {
                         observer(.success(.success(data)))
                     } catch {
                         observer(.success(.failure(.decoding)))
+                    }
+                    
+                case .failure(let error):
+                    print("에러코드: \(error.response?.statusCode ?? -1)")
+                    observer(.success(.failure(.unknown)))
+                }
+            }
+            return Disposables.create()
+        }
+    }
+    
+    // 응답값이 없는 경우(포스트 삭제)
+    func callRequestWithRetry(api: LSLPRouter) -> Single<Result<Void, LSLPError>> {
+        return Single<Result<Void, LSLPError>>.create { observer in
+            let provider = MoyaProvider<LSLPRouter>(session: Session(interceptor: AuthInterceptor.shared))
+            
+            provider.request(api) { result in
+                switch result {
+                case .success(let response):
+                    print("상태코드: \(response.statusCode)")
+                    if response.statusCode == 200 {
+                        observer(.success(.success(())))
+                    } else {
+                        observer(.success(.failure(.unknown)))
                     }
                     
                 case .failure(let error):
@@ -94,6 +120,7 @@ final class LSLPAPIManager {
             }
         }
     }
+    
 }
 
 // MARK: - 엑세스 토큰 갱신
@@ -116,7 +143,7 @@ final class AuthInterceptor: RequestInterceptor {
     // Request가 전송된 후
     func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
         guard let response = request.task?.response as? HTTPURLResponse,
-                response.statusCode == 419 else {
+              response.statusCode == 419 else {
             completion(.doNotRetryWithError(error))
             return
         }
