@@ -74,7 +74,7 @@
 		24B2B6CC2C6F25AC00190BFC /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B6CB2C6F25AC00190BFC /* EditProfileViewController.swift */; };
 		24B2B6CE2C6F25F600190BFC /* EditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B6CD2C6F25F600190BFC /* EditProfileViewModel.swift */; };
 		24B2B6D12C6F2C2000190BFC /* Reactive+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B6D02C6F2C2000190BFC /* Reactive+.swift */; };
-		24B3C0D52C721E6E0008B597 /* TodayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B3C0D42C721E6E0008B597 /* TodayTableViewCell.swift */; };
+		24B3C0D52C721E6E0008B597 /* CulturalEventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B3C0D42C721E6E0008B597 /* CulturalEventTableViewCell.swift */; };
 		24B3C0D72C7224520008B597 /* TodayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B3C0D62C7224520008B597 /* TodayViewModel.swift */; };
 		24B3C0E22C7327280008B597 /* CulturalEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B3C0E12C7327280008B597 /* CulturalEventViewController.swift */; };
 		24B3C0E42C7327460008B597 /* CulturalEventViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B3C0E32C7327460008B597 /* CulturalEventViewModel.swift */; };
@@ -148,7 +148,7 @@
 		24B2B6CB2C6F25AC00190BFC /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		24B2B6CD2C6F25F600190BFC /* EditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewModel.swift; sourceTree = "<group>"; };
 		24B2B6D02C6F2C2000190BFC /* Reactive+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive+.swift"; sourceTree = "<group>"; };
-		24B3C0D42C721E6E0008B597 /* TodayTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayTableViewCell.swift; sourceTree = "<group>"; };
+		24B3C0D42C721E6E0008B597 /* CulturalEventTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CulturalEventTableViewCell.swift; sourceTree = "<group>"; };
 		24B3C0D62C7224520008B597 /* TodayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewModel.swift; sourceTree = "<group>"; };
 		24B3C0E12C7327280008B597 /* CulturalEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CulturalEventViewController.swift; sourceTree = "<group>"; };
 		24B3C0E32C7327460008B597 /* CulturalEventViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CulturalEventViewModel.swift; sourceTree = "<group>"; };
@@ -290,7 +290,7 @@
 			children = (
 				240E0A952C6C7E8B003A212B /* TodayViewController.swift */,
 				24B3C0D62C7224520008B597 /* TodayViewModel.swift */,
-				24B3C0D42C721E6E0008B597 /* TodayTableViewCell.swift */,
+				24B3C0D42C721E6E0008B597 /* CulturalEventTableViewCell.swift */,
 			);
 			path = Today;
 			sourceTree = "<group>";
@@ -607,7 +607,7 @@
 				24B2B6AD2C6DBF1D00190BFC /* SignInQuery.swift in Sources */,
 				24B2B6562C6CB05700190BFC /* Date+.swift in Sources */,
 				24B2B67F2C6CD21B00190BFC /* Color.swift in Sources */,
-				24B3C0D52C721E6E0008B597 /* TodayTableViewCell.swift in Sources */,
+				24B3C0D52C721E6E0008B597 /* CulturalEventTableViewCell.swift in Sources */,
 				245D38592C75A7CA006E282D /* BaseCollectionViewCell.swift in Sources */,
 				24B3C0EC2C73659E0008B597 /* CommentModel.swift in Sources */,
 				24B2B6892C6CD6FA00190BFC /* BaseViewController.swift in Sources */,

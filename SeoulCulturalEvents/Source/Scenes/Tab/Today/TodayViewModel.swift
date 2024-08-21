@@ -15,7 +15,7 @@ final class TodayViewModel: ViewModelType {
     
     private let disposeBag = DisposeBag()
     private var cultureResponse: CultureResponse?
-    private var page = 1
+    private var start = 1
     
     struct Input {
         let viewDidLoad: Observable<Void>
@@ -37,7 +37,7 @@ final class TodayViewModel: ViewModelType {
         input.viewDidLoad
             .withUnretained(self)
             .flatMap { _ in
-                let cultureParameter = CultureParameter(startIndex: self.page, endIndex: self.page + 20, codeName: nil, title: nil, date: Date())
+                let cultureParameter = CultureParameter(startIndex: self.start, endIndex: self.start + 20, codeName: nil, title: nil, date: Date())
                 return CultureAPIManager.shared.callRequest(cultureParameter)
             }
             .subscribe(with: self) { owner, result in

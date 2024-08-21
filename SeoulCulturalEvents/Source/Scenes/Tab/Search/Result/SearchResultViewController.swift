@@ -13,6 +13,11 @@ import Then
 
 final class SearchResultViewController: BaseViewController {
     
+    private let tableView = UITableView().then {
+        $0.register(CulturalEventTableViewCell.self, forCellReuseIdentifier: CulturalEventTableViewCell.identifier)
+        $0.separatorStyle = .none
+    }
+    
     private let viewModel: SearchResultViewModel
     
     init(viewModel: SearchResultViewModel) {
@@ -30,12 +35,36 @@ final class SearchResultViewController: BaseViewController {
     
     override func bind() {
         let input = SearchResultViewModel.Input(
-            viewDidLoad: Observable.just(())
+            viewDidLoad: Observable.just(()),
+            cellTap: tableView.rx.itemSelected
         )
         let output = viewModel.transform(input: input)
         
         output.navigationTitle
             .bind(to: navigationItem.rx.title)
+            .disposed(by: disposeBag)
+        
+        output.cultureList
+            .bind(to: tableView.rx.items(
+                    cellIdentifier: CulturalEventTableViewCell.identifier,
+                    cellType: CulturalEventTableViewCell.self
+            )) { row, element, cell in
+                cell.configureCell(data: element)
+            }
+            .disposed(by: disposeBag)
+        
+        output.networkFailure
+            .bind(with: self) { owner, value in
+                owner.makeNetworkFailureToast(value)
+            }
+            .disposed(by: disposeBag)
+        
+        output.cellTap
+            .bind(with: self) { owner, value in
+                let vm = CulturalEventViewModel(culturalEvent: value)
+                let vc = CulturalEventViewController(viewModel: vm)
+                owner.navigationController?.pushViewController(vc, animated: true)
+            }
             .disposed(by: disposeBag)
     }
     
@@ -44,6 +73,10 @@ final class SearchResultViewController: BaseViewController {
     }
     
     override func setLayout() {
+        view.addSubview(tableView)
         
+        tableView.snp.makeConstraints { make in
+            make.edges.equalTo(view.safeAreaLayoutGuide)
+        }
     }
 }

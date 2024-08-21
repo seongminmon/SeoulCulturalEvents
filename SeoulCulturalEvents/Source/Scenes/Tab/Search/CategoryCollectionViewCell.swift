@@ -15,7 +15,7 @@ final class CategoryCollectionViewCell: BaseCollectionViewCell {
     private let containerView = UIView().then {
         $0.backgroundColor = .white
         $0.clipsToBounds = true
-        $0.layer.cornerRadius = 14
+        $0.layer.cornerRadius = 15
         $0.layer.borderWidth = 1
         $0.layer.borderColor = UIColor.black.cgColor
     }
@@ -42,17 +42,5 @@ final class CategoryCollectionViewCell: BaseCollectionViewCell {
     
     func configureCell(_ text: String) {
         categoryLabel.text = text
-    }
-    
-    func toggleSelected(_ flag: Bool) {
-        if flag {
-            categoryLabel.textColor = .white
-            containerView.backgroundColor = .systemPink
-            containerView.layer.borderColor = UIColor.white.cgColor
-        } else {
-            categoryLabel.textColor = .black
-            containerView.backgroundColor = .white
-            containerView.layer.borderColor = UIColor.black.cgColor
-        }
     }
 }

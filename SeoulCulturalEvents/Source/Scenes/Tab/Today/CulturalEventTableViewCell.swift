@@ -1,5 +1,5 @@
 //
-//  TodayTableViewCell.swift
+//  CulturalEventTableViewCell.swift
 //  SeoulCulturalEvents
 //
 //  Created by 김성민 on 8/18/24.
@@ -10,7 +10,7 @@ import Kingfisher
 import SnapKit
 import Then
 
-final class TodayTableViewCell: BaseTableViewCell {
+final class CulturalEventTableViewCell: BaseTableViewCell {
     
     private let dateLabel = UILabel().then {
         $0.font = .regular13
@@ -38,21 +38,13 @@ final class TodayTableViewCell: BaseTableViewCell {
         $0.tintColor = .black
         $0.backgroundColor = .white
     }
-    private let priceTitleLabel = UILabel().then {
-        $0.text = "가격"
-        $0.font = .regular14
+    private let priceLabel = UILabel().then {
+        $0.font = .bold14
         $0.textColor = .white
-        $0.backgroundColor = .systemIndigo
-        $0.textAlignment = .center
+        $0.numberOfLines = 2
     }
     private let priceView = UIView().then {
-        $0.backgroundColor = .white
-    }
-    private let priceLabel = UILabel().then {
-        $0.font = .regular14
-        $0.textColor = .systemIndigo
-        $0.backgroundColor = .white
-        $0.textAlignment = .center
+        $0.backgroundColor = .systemIndigo
     }
     
     private let descriptionView = UIView().then {
@@ -101,7 +93,6 @@ final class TodayTableViewCell: BaseTableViewCell {
         [
             mainImageView,
             shareButton,
-            priceTitleLabel,
             priceView,
             descriptionView
         ].forEach {
@@ -143,21 +134,14 @@ final class TodayTableViewCell: BaseTableViewCell {
             make.size.equalTo(30)
         }
         
-        priceTitleLabel.snp.makeConstraints { make in
-            make.leading.bottom.equalTo(mainImageView).inset(16)
-            make.width.equalTo(40)
-            make.height.equalTo(20)
+        priceLabel.snp.makeConstraints { make in
+            make.verticalEdges.equalToSuperview().inset(4)
+            make.horizontalEdges.equalToSuperview().inset(8)
         }
         
         priceView.snp.makeConstraints { make in
-            make.leading.equalTo(priceTitleLabel.snp.trailing)
-            make.bottom.equalTo(priceTitleLabel)
-            make.height.equalTo(20)
-        }
-        
-        priceLabel.snp.makeConstraints { make in
-            make.horizontalEdges.equalToSuperview().inset(8)
-            make.centerY.equalToSuperview()
+            make.leading.bottom.equalTo(mainImageView).inset(16)
+            make.trailing.lessThanOrEqualTo(mainImageView).inset(100)
         }
         
         descriptionView.snp.makeConstraints { make in

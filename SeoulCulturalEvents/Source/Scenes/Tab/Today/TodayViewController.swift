@@ -14,7 +14,7 @@ import Then
 final class TodayViewController: BaseViewController {
     
     private let tableView = UITableView().then {
-        $0.register(TodayTableViewCell.self, forCellReuseIdentifier: TodayTableViewCell.identifier)
+        $0.register(CulturalEventTableViewCell.self, forCellReuseIdentifier: CulturalEventTableViewCell.identifier)
         $0.separatorStyle = .none
     }
     
@@ -33,8 +33,8 @@ final class TodayViewController: BaseViewController {
         
         output.cultureList
             .bind(to: tableView.rx.items(
-                    cellIdentifier: TodayTableViewCell.identifier,
-                    cellType: TodayTableViewCell.self
+                    cellIdentifier: CulturalEventTableViewCell.identifier,
+                    cellType: CulturalEventTableViewCell.self
             )) { row, element, cell in
                 cell.configureCell(data: element)
             }
