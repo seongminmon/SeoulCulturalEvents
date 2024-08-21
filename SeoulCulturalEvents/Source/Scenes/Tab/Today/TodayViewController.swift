@@ -55,7 +55,7 @@ final class TodayViewController: BaseViewController {
     }
     
     override func setNavigationBar() {
-        navigationItem.title = "오늘의 행사"
+        navigationItem.title = "오늘의 문화 행사"
     }
     
     override func setLayout() {

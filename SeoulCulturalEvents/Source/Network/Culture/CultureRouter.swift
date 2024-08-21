@@ -9,11 +9,11 @@ import Foundation
 import Moya
 
 struct CultureParameter {
-    let startIndex: Int
-    let endIndex: Int
-    let codeName: CodeName?
-    let title: String?
-    let date: Date?
+    var startIndex: Int
+    var endIndex: Int
+    var codeName: CodeName?
+    var title: String?
+    var date: Date?
 }
 
 enum CultureRouter {
