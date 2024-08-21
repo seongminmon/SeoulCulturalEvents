@@ -11,8 +11,8 @@ extension UICollectionViewLayout {
     
     static func categoryLayout() -> UICollectionViewLayout {
         let itemSize = NSCollectionLayoutSize(
-            widthDimension: .estimated(1),
-            heightDimension: .estimated(1)
+            widthDimension: .estimated(80),
+            heightDimension: .estimated(44)
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
