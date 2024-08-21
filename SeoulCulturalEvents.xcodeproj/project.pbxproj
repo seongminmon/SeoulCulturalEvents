@@ -22,6 +22,7 @@
 		245D385F2C75D7FB006E282D /* CategoryCollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245D385E2C75D7FB006E282D /* CategoryCollectionHeaderView.swift */; };
 		245D38622C75E061006E282D /* SearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245D38612C75E061006E282D /* SearchResultViewController.swift */; };
 		245D38642C75E079006E282D /* SearchResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245D38632C75E079006E282D /* SearchResultViewModel.swift */; };
+		245D38672C7601EF006E282D /* CultureParameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245D38662C7601EF006E282D /* CultureParameter.swift */; };
 		24B2B63F2C6C948100190BFC /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B63E2C6C948100190BFC /* TabBarController.swift */; };
 		24B2B6412C6C951C00190BFC /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B6402C6C951C00190BFC /* SearchViewController.swift */; };
 		24B2B6432C6C956700190BFC /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B6422C6C956700190BFC /* PostViewController.swift */; };
@@ -106,6 +107,7 @@
 		245D385E2C75D7FB006E282D /* CategoryCollectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionHeaderView.swift; sourceTree = "<group>"; };
 		245D38612C75E061006E282D /* SearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewController.swift; sourceTree = "<group>"; };
 		245D38632C75E079006E282D /* SearchResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewModel.swift; sourceTree = "<group>"; };
+		245D38662C7601EF006E282D /* CultureParameter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CultureParameter.swift; sourceTree = "<group>"; };
 		24B2B63E2C6C948100190BFC /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		24B2B6402C6C951C00190BFC /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		24B2B6422C6C956700190BFC /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
@@ -220,6 +222,22 @@
 			path = Result;
 			sourceTree = "<group>";
 		};
+		245D38652C7601E2006E282D /* RequestModel */ = {
+			isa = PBXGroup;
+			children = (
+				245D38662C7601EF006E282D /* CultureParameter.swift */,
+			);
+			path = RequestModel;
+			sourceTree = "<group>";
+		};
+		245D38682C7601FE006E282D /* ResponseModel */ = {
+			isa = PBXGroup;
+			children = (
+				24B2B6492C6CA08200190BFC /* CultureResponse.swift */,
+			);
+			path = ResponseModel;
+			sourceTree = "<group>";
+		};
 		24B2B6462C6C96FE00190BFC /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
@@ -233,7 +251,6 @@
 		24B2B6472C6C970F00190BFC /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				24B2B64B2C6CA08700190BFC /* Models */,
 				24B2B64C2C6CA0B900190BFC /* Network */,
 				24B2B6A32C6CEA7100190BFC /* Manager */,
 				24B2B68A2C6CD76800190BFC /* Base */,
@@ -257,14 +274,6 @@
 				240E0A9C2C6C7E8C003A212B /* LaunchScreen.storyboard */,
 			);
 			path = Resource;
-			sourceTree = "<group>";
-		};
-		24B2B64B2C6CA08700190BFC /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				24B2B6492C6CA08200190BFC /* CultureResponse.swift */,
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		24B2B64C2C6CA0B900190BFC /* Network */ = {
@@ -418,6 +427,8 @@
 		24B2B69E2C6CE95A00190BFC /* Culture */ = {
 			isa = PBXGroup;
 			children = (
+				245D38652C7601E2006E282D /* RequestModel */,
+				245D38682C7601FE006E282D /* ResponseModel */,
 				24B2B69C2C6CE67F00190BFC /* CultureRouter.swift */,
 				24B2B64D2C6CA0D500190BFC /* CultureAPIManager.swift */,
 			);
@@ -610,6 +621,7 @@
 				240E0A962C6C7E8B003A212B /* TodayViewController.swift in Sources */,
 				240E0A922C6C7E8B003A212B /* AppDelegate.swift in Sources */,
 				240E0AA82C6C7F83003A212B /* APIInfo.swift in Sources */,
+				245D38672C7601EF006E282D /* CultureParameter.swift in Sources */,
 				24B2B64A2C6CA08200190BFC /* CultureResponse.swift in Sources */,
 				24B2B6BD2C6EFBF900190BFC /* Image.swift in Sources */,
 				24B2B6732C6CCEF700190BFC /* SignTextField.swift in Sources */,

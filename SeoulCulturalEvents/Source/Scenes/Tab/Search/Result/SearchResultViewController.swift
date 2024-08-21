@@ -29,12 +29,18 @@ final class SearchResultViewController: BaseViewController {
     }
     
     override func bind() {
-        let input = SearchResultViewModel.Input()
+        let input = SearchResultViewModel.Input(
+            viewDidLoad: Observable.just(())
+        )
         let output = viewModel.transform(input: input)
+        
+        output.navigationTitle
+            .bind(to: navigationItem.rx.title)
+            .disposed(by: disposeBag)
     }
     
     override func setNavigationBar() {
-        navigationController?.navigationBar.prefersLargeTitles = true
+        
     }
     
     override func setLayout() {

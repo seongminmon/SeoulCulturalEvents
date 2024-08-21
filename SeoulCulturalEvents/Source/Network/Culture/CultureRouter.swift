@@ -8,16 +8,8 @@
 import Foundation
 import Moya
 
-struct CultureParameter {
-    var startIndex: Int
-    var endIndex: Int
-    var codeName: CodeName?
-    var title: String?
-    var date: Date?
-}
-
 enum CultureRouter {
-    case cultures(_ parameter: CultureParameter)
+    case fetchCulturalEvents(_ parameter: CultureParameter)
 }
 
 extension CultureRouter: TargetType {
@@ -27,10 +19,10 @@ extension CultureRouter: TargetType {
     
     var path: String {
         switch self {
-        case .cultures(let parameter):
+        case .fetchCulturalEvents(let parameter):
             let startDate = "\(parameter.startIndex)"
             let endDate = "\(parameter.endIndex)"
-            let codeName = "\(parameter.codeName?.rawValue ?? "%20")"
+            let codeName = "\(parameter.codeName?.query ?? "%20")"
             let title = "\(parameter.title ?? "%20")"
             let dateStr = parameter.date?.toString() ?? "%20"
             return "\(startDate)/\(endDate)/\(codeName)/\(title)/\(dateStr)"
@@ -39,21 +31,21 @@ extension CultureRouter: TargetType {
     
     var method: Moya.Method {
         switch self {
-        case .cultures:
+        case .fetchCulturalEvents:
             return .get
         }
     }
     
     var task: Task {
         switch self {
-        case .cultures:
+        case .fetchCulturalEvents:
             return .requestPlain
         }
     }
     
     var headers: [String : String]? {
         switch self {
-        case .cultures:
+        case .fetchCulturalEvents:
             return nil
         }
     }

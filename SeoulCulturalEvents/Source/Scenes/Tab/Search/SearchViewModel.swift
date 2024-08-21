@@ -19,7 +19,9 @@ final class SearchViewModel: ViewModelType {
     }
     
     struct Output {
-        let categoryList: BehaviorSubject<[Section]>
+        let categoryList: Observable<[Section]>
+        let categorySelected: PublishSubject<CultureParameter>
+        let searchButtonTap: PublishSubject<CultureParameter>
     }
     
     typealias Section = AnimatableSectionModel<String, String>
@@ -32,22 +34,30 @@ final class SearchViewModel: ViewModelType {
     private let disposeBag = DisposeBag()
     
     func transform(input: Input) -> Output {
-        let categoryList = BehaviorSubject(value: sections)
+        
+        let searchButtonTap = PublishSubject<CultureParameter>()
+        let categorySelected = PublishSubject<CultureParameter>()
         
         input.searchButtonTap
-            .subscribe(with: self) { owner, _ in
-                print("검색 버튼 탭")
+            .withLatestFrom(input.searchText)
+            .subscribe(with: self) { owner, query in
+                let parameter = CultureParameter(startIndex: 1, endIndex: 20, title: query)
+                categorySelected.onNext(parameter)
             }
             .disposed(by: disposeBag)
         
         input.categoryCellTap
             .subscribe(with: self) { owner, indexPath in
-                print("카테고리 셀 탭 \(indexPath)")
+                let codeName = CodeName.allCases[indexPath.item]
+                let parameter = CultureParameter(startIndex: 1, endIndex: 20, codeName: codeName)
+                categorySelected.onNext(parameter)
             }
             .disposed(by: disposeBag)
         
         return Output(
-            categoryList: categoryList
+            categoryList: Observable.just(sections),
+            categorySelected: categorySelected, 
+            searchButtonTap: searchButtonTap
         )
     }
 }

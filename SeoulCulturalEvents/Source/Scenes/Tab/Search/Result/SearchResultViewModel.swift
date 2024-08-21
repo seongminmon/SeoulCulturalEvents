@@ -12,6 +12,7 @@ import RxCocoa
 final class SearchResultViewModel: ViewModelType {
     
     private let cultureParameter: CultureParameter
+    private var cultureResponse: CultureResponse?
     private let disposeBag = DisposeBag()
     
     init(cultureParameter: CultureParameter) {
@@ -19,16 +20,49 @@ final class SearchResultViewModel: ViewModelType {
     }
     
     struct Input {
-        
+        let viewDidLoad: Observable<Void>
     }
     
     struct Output {
+        let navigationTitle: BehaviorSubject<String?>
         
     }
     
     func transform(input: Input) -> Output {
         
-        return Output()
+        let navigationTitle = BehaviorSubject<String?>(value: nil)
+        
+        // MARK: - 검색어/카테고리 진입 분기처리
+        if let title = cultureParameter.title {
+            navigationTitle.onNext(title)
+        } else {
+            navigationTitle.onNext(cultureParameter.codeName?.rawValue)
+        }
+        
+        input.viewDidLoad
+            .flatMap { _ in
+                print(self.cultureParameter)
+                return CultureAPIManager.shared.callRequest(self.cultureParameter)
+            }
+            .subscribe(with: self) { owner, result in
+                switch result {
+                case .success(let data):
+                    print("문화행사 검색 성공")
+                    dump(data)
+                    owner.cultureResponse = data
+                    
+                case .failure(let error):
+                    print("문화행사 검색 실패")
+                    print(error.errorDescription ?? "문화행사 검색 실패")
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        
+        
+        return Output(
+            navigationTitle: navigationTitle
+        )
     }
 }
 

@@ -17,7 +17,7 @@ final class CultureAPIManager {
     func callRequest(_ parameter: CultureParameter) -> Single<Result<CultureResponse, MoyaError>> {
         return Single<Result<CultureResponse, MoyaError>>.create { observer in
             let provider = MoyaProvider<CultureRouter>()
-            provider.request(.cultures(parameter)) { result in
+            provider.request(.fetchCulturalEvents(parameter)) { result in
                 switch result {
                 case .success(let response):
                     do {

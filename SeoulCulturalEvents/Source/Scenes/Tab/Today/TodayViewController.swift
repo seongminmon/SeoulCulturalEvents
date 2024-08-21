@@ -15,6 +15,7 @@ final class TodayViewController: BaseViewController {
     
     private let tableView = UITableView().then {
         $0.register(TodayTableViewCell.self, forCellReuseIdentifier: TodayTableViewCell.identifier)
+        $0.separatorStyle = .none
     }
     
     private let viewModel = TodayViewModel()

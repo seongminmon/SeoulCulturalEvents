@@ -29,12 +29,6 @@ final class SearchViewController: BaseViewController {
         )
         $0.showsHorizontalScrollIndicator = false
     }
-//    private let emptyView = UILabel().then {
-//        $0.text = "최근 검색 이력이 없습니다."
-//        $0.font = .regular15
-//        $0.textColor = .systemGray
-//        $0.textAlignment = .center
-//    }
     
     private let viewModel = SearchViewModel()
     
@@ -75,6 +69,23 @@ final class SearchViewController: BaseViewController {
         output.categoryList
             .bind(to: categoryCollectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
+        
+        // TODO: - 내용 같은 거 합치기
+        output.categorySelected
+            .subscribe(with: self) { owner, parameter in
+                let vm = SearchResultViewModel(cultureParameter: parameter)
+                let vc = SearchResultViewController(viewModel: vm)
+                owner.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        output.searchButtonTap
+            .subscribe(with: self) { owner, parameter in
+                let vm = SearchResultViewModel(cultureParameter: parameter)
+                let vc = SearchResultViewController(viewModel: vm)
+                owner.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disposeBag)
     }
     
     override func setNavigationBar() {
@@ -84,8 +95,7 @@ final class SearchViewController: BaseViewController {
     override func setLayout() {
         [
             searchBar,
-            categoryCollectionView,
-//            emptyView
+            categoryCollectionView
         ].forEach {
             view.addSubview($0)
         }
@@ -100,10 +110,5 @@ final class SearchViewController: BaseViewController {
             make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(16)
             make.bottom.equalTo(view.safeAreaLayoutGuide)
         }
-        
-//        emptyView.snp.makeConstraints { make in
-//            make.top.equalTo(categoryCollectionView.snp.bottom).offset(8)
-//            make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
-//        }
     }
 }
