@@ -40,7 +40,7 @@ final class CategoryCollectionViewCell: BaseCollectionViewCell {
         }
     }
     
-    func configureView(_ text: String) {
+    func configureCell(_ text: String) {
         categoryLabel.text = text
     }
     
