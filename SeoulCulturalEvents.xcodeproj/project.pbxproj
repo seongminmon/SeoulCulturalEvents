@@ -19,6 +19,9 @@
 		245D38592C75A7CA006E282D /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245D38582C75A7CA006E282D /* BaseCollectionViewCell.swift */; };
 		245D385B2C75B954006E282D /* UICollectionViewLayout+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245D385A2C75B954006E282D /* UICollectionViewLayout+.swift */; };
 		245D385D2C75BA25006E282D /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245D385C2C75BA25006E282D /* CategoryCollectionViewCell.swift */; };
+		245D385F2C75D7FB006E282D /* CategoryCollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245D385E2C75D7FB006E282D /* CategoryCollectionHeaderView.swift */; };
+		245D38622C75E061006E282D /* SearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245D38612C75E061006E282D /* SearchResultViewController.swift */; };
+		245D38642C75E079006E282D /* SearchResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245D38632C75E079006E282D /* SearchResultViewModel.swift */; };
 		24B2B63F2C6C948100190BFC /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B63E2C6C948100190BFC /* TabBarController.swift */; };
 		24B2B6412C6C951C00190BFC /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B6402C6C951C00190BFC /* SearchViewController.swift */; };
 		24B2B6432C6C956700190BFC /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B6422C6C956700190BFC /* PostViewController.swift */; };
@@ -100,6 +103,9 @@
 		245D38582C75A7CA006E282D /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		245D385A2C75B954006E282D /* UICollectionViewLayout+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewLayout+.swift"; sourceTree = "<group>"; };
 		245D385C2C75BA25006E282D /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
+		245D385E2C75D7FB006E282D /* CategoryCollectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionHeaderView.swift; sourceTree = "<group>"; };
+		245D38612C75E061006E282D /* SearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewController.swift; sourceTree = "<group>"; };
+		245D38632C75E079006E282D /* SearchResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewModel.swift; sourceTree = "<group>"; };
 		24B2B63E2C6C948100190BFC /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		24B2B6402C6C951C00190BFC /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		24B2B6422C6C956700190BFC /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
@@ -204,6 +210,16 @@
 			path = SeoulCulturalEvents;
 			sourceTree = "<group>";
 		};
+		245D38602C75E058006E282D /* Result */ = {
+			isa = PBXGroup;
+			children = (
+				245D38612C75E061006E282D /* SearchResultViewController.swift */,
+				245D38632C75E079006E282D /* SearchResultViewModel.swift */,
+				245D38562C75A7BB006E282D /* SearchCollectionViewCell.swift */,
+			);
+			path = Result;
+			sourceTree = "<group>";
+		};
 		24B2B6462C6C96FE00190BFC /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
@@ -275,8 +291,9 @@
 			children = (
 				24B2B6402C6C951C00190BFC /* SearchViewController.swift */,
 				245D38542C75A3B4006E282D /* SearchViewModel.swift */,
+				245D385E2C75D7FB006E282D /* CategoryCollectionHeaderView.swift */,
 				245D385C2C75BA25006E282D /* CategoryCollectionViewCell.swift */,
-				245D38562C75A7BB006E282D /* SearchCollectionViewCell.swift */,
+				245D38602C75E058006E282D /* Result */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -583,6 +600,7 @@
 				245D38592C75A7CA006E282D /* BaseCollectionViewCell.swift in Sources */,
 				24B3C0EC2C73659E0008B597 /* CommentModel.swift in Sources */,
 				24B2B6892C6CD6FA00190BFC /* BaseViewController.swift in Sources */,
+				245D38642C75E079006E282D /* SearchResultViewModel.swift in Sources */,
 				24B2B65A2C6CC5C500190BFC /* Formatter.swift in Sources */,
 				24B2B69D2C6CE67F00190BFC /* CultureRouter.swift in Sources */,
 				24B2B6412C6C951C00190BFC /* SearchViewController.swift in Sources */,
@@ -605,6 +623,7 @@
 				24B3C0E82C73649F0008B597 /* PostModel.swift in Sources */,
 				24B2B6CC2C6F25AC00190BFC /* EditProfileViewController.swift in Sources */,
 				24B2B68E2C6CDD7100190BFC /* LSLPAPIManager.swift in Sources */,
+				245D38622C75E061006E282D /* SearchResultViewController.swift in Sources */,
 				24B3C0F72C74B5AB0008B597 /* PostFetchQuery.swift in Sources */,
 				24B2B6432C6C956700190BFC /* PostViewController.swift in Sources */,
 				24B3C0EA2C7365920008B597 /* UserModel.swift in Sources */,
@@ -626,6 +645,7 @@
 				245D385D2C75BA25006E282D /* CategoryCollectionViewCell.swift in Sources */,
 				24B3C0F12C744E2F0008B597 /* ReserveViewModel.swift in Sources */,
 				24B2B6582C6CB05B00190BFC /* String+.swift in Sources */,
+				245D385F2C75D7FB006E282D /* CategoryCollectionHeaderView.swift in Sources */,
 				24B2B6A82C6DBF0300190BFC /* SignInModel.swift in Sources */,
 				24B2B6B32C6EEB9200190BFC /* RefreshModel.swift in Sources */,
 				24B2B6C52C6F107000190BFC /* BaseTableViewCell.swift in Sources */,
