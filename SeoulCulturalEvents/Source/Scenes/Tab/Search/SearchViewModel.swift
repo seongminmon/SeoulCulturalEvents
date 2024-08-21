@@ -20,8 +20,7 @@ final class SearchViewModel: ViewModelType {
     
     struct Output {
         let categoryList: Observable<[Section]>
-        let categorySelected: PublishSubject<CultureParameter>
-        let searchButtonTap: PublishSubject<CultureParameter>
+        let cultureParameter: Observable<CultureParameter>
     }
     
     typealias Section = AnimatableSectionModel<String, String>
@@ -56,8 +55,7 @@ final class SearchViewModel: ViewModelType {
         
         return Output(
             categoryList: Observable.just(sections),
-            categorySelected: categorySelected, 
-            searchButtonTap: searchButtonTap
+            cultureParameter: Observable.merge(categorySelected, searchButtonTap)
         )
     }
 }

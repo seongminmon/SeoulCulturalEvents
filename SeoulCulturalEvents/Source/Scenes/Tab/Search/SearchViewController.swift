@@ -70,16 +70,7 @@ final class SearchViewController: BaseViewController {
             .bind(to: categoryCollectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
-        // TODO: - 내용 같은 거 합치기
-        output.categorySelected
-            .subscribe(with: self) { owner, parameter in
-                let vm = SearchResultViewModel(cultureParameter: parameter)
-                let vc = SearchResultViewController(viewModel: vm)
-                owner.navigationController?.pushViewController(vc, animated: true)
-            }
-            .disposed(by: disposeBag)
-        
-        output.searchButtonTap
+        output.cultureParameter
             .subscribe(with: self) { owner, parameter in
                 let vm = SearchResultViewModel(cultureParameter: parameter)
                 let vc = SearchResultViewController(viewModel: vm)
