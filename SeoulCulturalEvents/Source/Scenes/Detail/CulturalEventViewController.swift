@@ -134,7 +134,6 @@ final class CulturalEventViewController: BaseViewController {
         }
         posterImageView.snp.makeConstraints { make in
             make.top.horizontalEdges.equalToSuperview()
-            make.height.equalTo(posterImageView.snp.width)
         }
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(posterImageView.snp.bottom).offset(8)
@@ -175,12 +174,36 @@ final class CulturalEventViewController: BaseViewController {
     private func configureView(_ value: CulturalEvent) {
         navigationItem.title = value.title
         let url = URL(string: value.mainImage)
-        posterImageView.kf.setImage(with: url)
+        posterImageView.kf.setImage(with: url) { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success(let value):
+                // 이미지의 크기에 맞게 높이 조정
+                let aspectRatio = value.image.size.height / value.image.size.width
+                posterImageView.snp.makeConstraints { make in
+                    make.height.equalTo(self.posterImageView.snp.width).multipliedBy(aspectRatio)
+                }
+            case .failure(let error):
+                print("KF Error: \(error)")
+            }
+        }
         titleLabel.text = value.title
         codeNameLabel.text = value.codeName
         dateLabel.text = "\(value.startDateString) ~ \(value.endDateString)"
         placeLabel.text = "\(value.place) | \(value.guName)"
         priceLabel.text = value.price.isEmpty ? value.isFree : value.price
         useTargetLabel.text = value.useTarget
+        
+        // MARK: - 통신에서 위경도 값 반대로 옴
+        let latitude = Double(value.longitude) ?? 37.5665
+        let longitude = Double(value.latitude) ?? 126.9780
+        let coordinate =  CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = coordinate
+        mapView.addAnnotation(annotation)
+        
+        let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
+        mapView.setRegion(region, animated: true)
     }
 }
