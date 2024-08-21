@@ -35,6 +35,14 @@ extension BaseViewController {
         view.makeToast(message, duration: 1, position: .center)
     }
     
+    func showLoadingToast() {
+        view.makeToastActivity(.center)
+    }
+    
+    func hideLoadingToast() {
+        view.hideToastActivity()
+    }
+    
     func showWithdrawAlert(
         title: String,
         message: String,

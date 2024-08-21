@@ -14,7 +14,9 @@ import Then
 
 final class ReserveViewController: BaseViewController {
     
-    private let webView = WKWebView()
+    private lazy var webView = WKWebView().then {
+        $0.navigationDelegate = self
+    }
     
     private let viewModel: ReserveViewModel
     
@@ -56,5 +58,24 @@ final class ReserveViewController: BaseViewController {
         webView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
+    }
+}
+
+extension ReserveViewController: WKNavigationDelegate {
+    func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
+        showLoadingToast()
+    }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        hideLoadingToast()
+    }
+    
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: any Error) {
+        hideLoadingToast()
+        makeNetworkFailureToast()
+    }
+    
+    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: any Error) {
+        makeNetworkFailureToast()
     }
 }

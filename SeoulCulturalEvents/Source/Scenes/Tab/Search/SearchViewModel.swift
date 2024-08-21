@@ -12,6 +12,8 @@ import RxDataSources
 
 final class SearchViewModel: ViewModelType {
     
+    // TODO: - 최근 검색어 기능 구현하기
+    
     struct Input {
         let searchText: ControlProperty<String>
         let searchButtonTap: ControlEvent<Void>

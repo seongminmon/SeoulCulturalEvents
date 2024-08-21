@@ -180,7 +180,7 @@ final class CulturalEventTableViewCell: BaseTableViewCell {
     
     func configureCell(data: CulturalEvent) {
         dateLabel.text = "\(data.startDateString) ~ \(data.endDateString)"
-        genreLabel.text = "# \(data.codeName)"
+        genreLabel.text = "#\(data.codeName)"
         let imageURL = URL(string: data.mainImage)
         mainImageView.kf.setImage(with: imageURL)
         priceLabel.text = data.price.isEmpty ? data.isFree : data.price
