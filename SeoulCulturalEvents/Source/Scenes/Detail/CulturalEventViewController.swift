@@ -124,8 +124,8 @@ final class CulturalEventViewController: BaseViewController {
         
         output.reserveLink
             .bind(with: self) { owner, link in
-                let vm = ReserveViewModel(link: link)
-                let vc = ReserveViewController(viewModel: vm)
+                let vm = ReservationViewModel(link: link)
+                let vc = ReservationViewController(viewModel: vm)
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)

@@ -82,8 +82,8 @@
 		24B3C0E82C73649F0008B597 /* PostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B3C0E72C73649F0008B597 /* PostModel.swift */; };
 		24B3C0EA2C7365920008B597 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B3C0E92C7365920008B597 /* UserModel.swift */; };
 		24B3C0EC2C73659E0008B597 /* CommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B3C0EB2C73659E0008B597 /* CommentModel.swift */; };
-		24B3C0EE2C744E000008B597 /* ReserveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B3C0ED2C744E000008B597 /* ReserveViewController.swift */; };
-		24B3C0F12C744E2F0008B597 /* ReserveViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B3C0F02C744E2F0008B597 /* ReserveViewModel.swift */; };
+		24B3C0EE2C744E000008B597 /* ReservationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B3C0ED2C744E000008B597 /* ReservationViewController.swift */; };
+		24B3C0F12C744E2F0008B597 /* ReservationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B3C0F02C744E2F0008B597 /* ReservationViewModel.swift */; };
 		24B3C0F32C74895C0008B597 /* ProductID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B3C0F22C74895C0008B597 /* ProductID.swift */; };
 		24B3C0F52C748A100008B597 /* LSLPError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B3C0F42C748A100008B597 /* LSLPError.swift */; };
 		24B3C0F72C74B5AB0008B597 /* PostFetchQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B3C0F62C74B5AB0008B597 /* PostFetchQuery.swift */; };
@@ -156,8 +156,8 @@
 		24B3C0E72C73649F0008B597 /* PostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostModel.swift; sourceTree = "<group>"; };
 		24B3C0E92C7365920008B597 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		24B3C0EB2C73659E0008B597 /* CommentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentModel.swift; sourceTree = "<group>"; };
-		24B3C0ED2C744E000008B597 /* ReserveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReserveViewController.swift; sourceTree = "<group>"; };
-		24B3C0F02C744E2F0008B597 /* ReserveViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReserveViewModel.swift; sourceTree = "<group>"; };
+		24B3C0ED2C744E000008B597 /* ReservationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationViewController.swift; sourceTree = "<group>"; };
+		24B3C0F02C744E2F0008B597 /* ReservationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationViewModel.swift; sourceTree = "<group>"; };
 		24B3C0F22C74895C0008B597 /* ProductID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductID.swift; sourceTree = "<group>"; };
 		24B3C0F42C748A100008B597 /* LSLPError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LSLPError.swift; sourceTree = "<group>"; };
 		24B3C0F62C74B5AB0008B597 /* PostFetchQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostFetchQuery.swift; sourceTree = "<group>"; };
@@ -512,18 +512,18 @@
 				24B3C0E12C7327280008B597 /* CulturalEventViewController.swift */,
 				24B3C0E32C7327460008B597 /* CulturalEventViewModel.swift */,
 				245D386A2C7621E3006E282D /* Map */,
-				24B3C0EF2C744E070008B597 /* Reserve */,
+				24B3C0EF2C744E070008B597 /* Reservation */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
 		};
-		24B3C0EF2C744E070008B597 /* Reserve */ = {
+		24B3C0EF2C744E070008B597 /* Reservation */ = {
 			isa = PBXGroup;
 			children = (
-				24B3C0ED2C744E000008B597 /* ReserveViewController.swift */,
-				24B3C0F02C744E2F0008B597 /* ReserveViewModel.swift */,
+				24B3C0ED2C744E000008B597 /* ReservationViewController.swift */,
+				24B3C0F02C744E2F0008B597 /* ReservationViewModel.swift */,
 			);
-			path = Reserve;
+			path = Reservation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -646,7 +646,7 @@
 				24B3C0F32C74895C0008B597 /* ProductID.swift in Sources */,
 				24B2B65F2C6CCA7000190BFC /* SignUpViewController.swift in Sources */,
 				24B2B67D2C6CD17C00190BFC /* Font.swift in Sources */,
-				24B3C0EE2C744E000008B597 /* ReserveViewController.swift in Sources */,
+				24B3C0EE2C744E000008B597 /* ReservationViewController.swift in Sources */,
 				24B3C0E82C73649F0008B597 /* PostModel.swift in Sources */,
 				24B2B6CC2C6F25AC00190BFC /* EditProfileViewController.swift in Sources */,
 				24B2B68E2C6CDD7100190BFC /* LSLPAPIManager.swift in Sources */,
@@ -670,7 +670,7 @@
 				24B2B6D12C6F2C2000190BFC /* Reactive+.swift in Sources */,
 				245D385B2C75B954006E282D /* UICollectionViewLayout+.swift in Sources */,
 				245D385D2C75BA25006E282D /* CategoryCollectionViewCell.swift in Sources */,
-				24B3C0F12C744E2F0008B597 /* ReserveViewModel.swift in Sources */,
+				24B3C0F12C744E2F0008B597 /* ReservationViewModel.swift in Sources */,
 				24B2B6582C6CB05B00190BFC /* String+.swift in Sources */,
 				245D385F2C75D7FB006E282D /* CategoryCollectionHeaderView.swift in Sources */,
 				24B2B6A82C6DBF0300190BFC /* SignInModel.swift in Sources */,

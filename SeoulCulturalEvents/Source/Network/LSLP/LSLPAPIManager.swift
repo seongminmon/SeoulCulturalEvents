@@ -135,7 +135,7 @@ final class AuthInterceptor: RequestInterceptor {
     // Request가 전송된 후
     func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
         guard let response = request.task?.response as? HTTPURLResponse,
-              response.statusCode == 419 else {
+              response.statusCode == LSLPError.accessToken.rawValue else {
             completion(.doNotRetryWithError(error))
             return
         }

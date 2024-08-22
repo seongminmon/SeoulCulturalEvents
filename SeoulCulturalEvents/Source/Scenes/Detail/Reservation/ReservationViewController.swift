@@ -1,5 +1,5 @@
 //
-//  ReserveViewController.swift
+//  ReservationViewController.swift
 //  SeoulCulturalEvents
 //
 //  Created by 김성민 on 8/20/24.
@@ -12,15 +12,15 @@ import RxCocoa
 import SnapKit
 import Then
 
-final class ReserveViewController: BaseViewController {
+final class ReservationViewController: BaseViewController {
     
     private lazy var webView = WKWebView().then {
         $0.navigationDelegate = self
     }
     
-    private let viewModel: ReserveViewModel
+    private let viewModel: ReservationViewModel
     
-    init(viewModel: ReserveViewModel) {
+    init(viewModel: ReservationViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -34,7 +34,7 @@ final class ReserveViewController: BaseViewController {
     }
     
     override func bind() {
-        let input = ReserveViewModel.Input(
+        let input = ReservationViewModel.Input(
             viewDidLoad: Observable.just(())
         )
         let output = viewModel.transform(input: input)
@@ -61,7 +61,7 @@ final class ReserveViewController: BaseViewController {
     }
 }
 
-extension ReserveViewController: WKNavigationDelegate {
+extension ReservationViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
         showLoadingToast()
     }

@@ -1,5 +1,5 @@
 //
-//  ReserveViewModel.swift
+//  ReservationViewModel.swift
 //  SeoulCulturalEvents
 //
 //  Created by 김성민 on 8/20/24.
@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-final class ReserveViewModel: ViewModelType {
+final class ReservationViewModel: ViewModelType {
     
     init(link: String) {
         self.link = link
