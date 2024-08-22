@@ -27,6 +27,10 @@ class BaseViewController: UIViewController {
     func setNavigationBar() {}
     func setLayout() {}
     func bind() {}
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
 }
 
 extension BaseViewController {

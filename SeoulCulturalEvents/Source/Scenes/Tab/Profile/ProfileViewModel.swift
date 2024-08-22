@@ -75,7 +75,6 @@ final class ProfileViewModel: ViewModelType {
                 switch result {
                 case .success(let data):
                     print("프로필 조회 성공")
-                    dump(data)
                     profile.onNext(data)
                 case .failure(let error):
                     print("프로필 조회 실패")
@@ -101,7 +100,6 @@ final class ProfileViewModel: ViewModelType {
                 switch result {
                 case .success(let data):
                     print("탈퇴 성공")
-                    dump(data)
                     withdrawActionSuccess.onNext(())
                     
                 case .failure(let error):

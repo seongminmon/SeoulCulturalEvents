@@ -37,6 +37,8 @@ final class CulturalEventTableViewCell: BaseTableViewCell {
         $0.setImage(.paperclip, for: .normal)
         $0.tintColor = .black
         $0.backgroundColor = .white
+        $0.clipsToBounds = true
+        $0.layer.cornerRadius = 15
     }
     private let priceLabel = UILabel().then {
         $0.font = .bold14
@@ -46,7 +48,6 @@ final class CulturalEventTableViewCell: BaseTableViewCell {
     private let priceView = UIView().then {
         $0.backgroundColor = .systemIndigo
     }
-    
     private let descriptionView = UIView().then {
         $0.backgroundColor = .white
     }
@@ -67,12 +68,6 @@ final class CulturalEventTableViewCell: BaseTableViewCell {
     private let detailButton = UIButton().then {
         $0.setImage(.chevron, for: .normal)
         $0.tintColor = .black
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        shareButton.clipsToBounds = true
-        shareButton.layer.cornerRadius = shareButton.frame.width / 2
     }
     
     override func setLayout() {

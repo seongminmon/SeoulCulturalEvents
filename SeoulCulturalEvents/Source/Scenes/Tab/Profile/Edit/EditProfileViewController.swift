@@ -86,7 +86,7 @@ final class EditProfileViewController: BaseViewController {
         
         output.editProfileFailure
             .bind(with: self) { owner, _ in
-                SceneDelegate.changeWindow(SignInViewController())
+                print("로그인 뷰로 이동")
             }
             .disposed(by: disposeBag)
     }

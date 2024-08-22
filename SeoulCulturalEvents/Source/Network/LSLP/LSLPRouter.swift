@@ -19,6 +19,7 @@ enum LSLPRouter {
     
     // MARK: - 포스트
     case fetchPost(query: PostFetchQuery)
+    case postImageFiles(files: [Data?])
     case createPost(query: PostQuery)
     case deletePost(postID: String)
 }
@@ -44,6 +45,8 @@ extension LSLPRouter: TargetType {
             return "users/me/profile"
         case .fetchPost:
             return "posts"
+        case .postImageFiles:
+            return "posts/files"
         case .createPost:
             return "posts"
         case .deletePost(let id):
@@ -67,6 +70,8 @@ extension LSLPRouter: TargetType {
             return .put
         case .fetchPost:
             return .get
+        case .postImageFiles:
+            return .post
         case .createPost:
             return .post
         case .deletePost:
@@ -119,6 +124,18 @@ extension LSLPRouter: TargetType {
                 "product_id": query.productID ?? ""
             ]
             return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
+        case .postImageFiles(let files):
+            var multipartData = [MultipartFormData]()
+            // 포스트 이미지 추가
+            for file in files {
+                if let data = file {
+                    let uniqueFileName = UUID().uuidString + ".png"
+                    let postFormData = MultipartFormData(provider: .data(data), name: "files", fileName: uniqueFileName, mimeType: "image/png")
+                    multipartData.append(postFormData)
+                }
+            }
+            return .uploadCompositeMultipart(multipartData, urlParameters: [:])
+            
         case .createPost(let query):
             return .requestJSONEncodable(query)
         case .deletePost:
@@ -167,6 +184,12 @@ extension LSLPRouter: TargetType {
             return [
                 LSLPHeader.sesacKey.rawValue: APIKey.lslpKey,
                 LSLPHeader.contentType.rawValue: LSLPHeader.json.rawValue,
+                LSLPHeader.authorization.rawValue: UserDefaultsManager.shared.accessToken
+            ]
+        case .postImageFiles:
+            return [
+                LSLPHeader.sesacKey.rawValue: APIKey.lslpKey,
+                LSLPHeader.contentType.rawValue: LSLPHeader.multipart.rawValue,
                 LSLPHeader.authorization.rawValue: UserDefaultsManager.shared.accessToken
             ]
         case .createPost:

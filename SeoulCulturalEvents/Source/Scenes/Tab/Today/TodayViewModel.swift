@@ -44,6 +44,7 @@ final class TodayViewModel: ViewModelType {
                 switch result {
                 case .success(let data):
                     print("문화 행사 통신 성공")
+//                    print(data)
                     owner.cultureResponse = data
                     guard let list = owner.cultureResponse?.culturalEventInfo.list else { return }
                     cultureList.onNext(list)

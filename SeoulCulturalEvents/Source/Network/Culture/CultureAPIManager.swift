@@ -35,16 +35,3 @@ final class CultureAPIManager {
         }
     }
 }
-
-// 사용 예시
-//let parameter = CultureParameter(startDate: 1, endDate: 5, codeName: nil, title: nil, date: nil)
-//CultureAPIManager.shared.callRequest(parameter)
-//    .subscribe(with: self) { owner, result in
-//        switch result {
-//        case .success(let data):
-//            dump(data)
-//        case .failure(let error):
-//            dump(error.localizedDescription)
-//        }
-//    }
-//    .disposed(by: disposeBag)

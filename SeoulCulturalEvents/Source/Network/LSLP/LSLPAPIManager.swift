@@ -150,6 +150,7 @@ final class AuthInterceptor: RequestInterceptor {
                 // 갱신 실패 -> 로그인 화면으로 전환
                 print("Retry - 토큰 재발급 실패")
                 completion(.doNotRetryWithError(error))
+                SceneDelegate.changeWindow(SignInViewController())
             }
         }
     }

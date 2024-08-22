@@ -48,7 +48,6 @@ final class SignUpViewModel: ViewModelType {
                 switch result {
                 case .success(let data):
                     print("회원 가입 성공")
-                    dump(data)
                     
                     // TODO: - flatMap으로 처리해보기
                     
