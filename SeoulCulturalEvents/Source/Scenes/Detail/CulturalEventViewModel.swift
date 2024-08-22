@@ -22,6 +22,7 @@ final class CulturalEventViewModel: ViewModelType {
     struct Input {
         let viewDidLoad: Observable<Void>
         let likeButtonTap: ControlEvent<Void>
+        let showMapButtonTap: ControlEvent<Void>
         let reserveButtonTap: ControlEvent<Void>
     }
     
@@ -29,6 +30,7 @@ final class CulturalEventViewModel: ViewModelType {
         let data: Observable<CulturalEvent>
         let likeFlag: Observable<Bool>
         let networkFailure: Observable<String>
+        let showMapButtonTap: PublishSubject<(lat: Double, lon: Double)>
         let reserveLink: Observable<String>
     }
     
@@ -37,6 +39,7 @@ final class CulturalEventViewModel: ViewModelType {
         let data = BehaviorSubject<CulturalEvent>(value: culturalEvent)
         let likeFlag = BehaviorSubject<Bool>(value: postID == nil)
         let networkFailure = PublishSubject<String>()
+        let showMapButtonTap = PublishSubject<(lat: Double, lon: Double)>()
         let reserveLink = PublishSubject<String>()
         
         input.viewDidLoad
@@ -162,6 +165,12 @@ final class CulturalEventViewModel: ViewModelType {
  //            }
  //            .disposed(by: disposeBag)
          */
+        
+        input.showMapButtonTap
+            .subscribe(with: self) { owner, _ in
+                showMapButtonTap.onNext((owner.culturalEvent.lat, owner.culturalEvent.lon))
+            }
+            .disposed(by: disposeBag)
 
         input.reserveButtonTap
             .subscribe(with: self) { owner, _ in
@@ -174,6 +183,7 @@ final class CulturalEventViewModel: ViewModelType {
             data: data,
             likeFlag: likeFlag,
             networkFailure: networkFailure,
+            showMapButtonTap: showMapButtonTap,
             reserveLink: reserveLink
         )
     }

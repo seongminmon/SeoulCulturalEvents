@@ -54,6 +54,22 @@ final class CulturalEventViewController: BaseViewController {
     private let mapView = MKMapView().then {
         $0.clipsToBounds = true
         $0.layer.cornerRadius = 10
+        $0.isScrollEnabled = false
+    }
+    private let showMapButton = UIButton().then {
+        var config = UIButton.Configuration.filled()
+        config.title = "지도 보기"
+        config.image = .arrow
+        config.imagePlacement = .trailing
+        config.imagePadding = 4
+        config.buttonSize = .mini
+        
+        config.baseBackgroundColor = .darkGray
+        config.baseForegroundColor = .white
+        config.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
+        $0.configuration = config
+        
+        $0.layer.cornerRadius = 10
     }
     private let reserveButton = PointButton(title: "예매하기")
     
@@ -76,6 +92,7 @@ final class CulturalEventViewController: BaseViewController {
         let input = CulturalEventViewModel.Input(
             viewDidLoad: Observable.just(()),
             likeButtonTap: likeButton.rx.tap,
+            showMapButtonTap: showMapButton.rx.tap,
             reserveButtonTap: reserveButton.rx.tap
         )
         let output = viewModel.transform(input: input)
@@ -94,6 +111,14 @@ final class CulturalEventViewController: BaseViewController {
         output.networkFailure
             .bind(with: self) { owner, value in
                 owner.makeNetworkFailureToast(value)
+            }
+            .disposed(by: disposeBag)
+        
+        output.showMapButtonTap
+            .bind(with: self) { owner, value in
+                let coordinate =  CLLocationCoordinate2D(latitude: value.lat, longitude: value.lon)
+                let vc = MapViewController(coordinate: coordinate)
+                owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
         
@@ -119,7 +144,8 @@ final class CulturalEventViewController: BaseViewController {
             placeLabel,
             priceLabel,
             useTargetLabel,
-            mapView
+            mapView,
+            showMapButton
         ].forEach { contentView.addSubview($0) }
         scrollView.addSubview(contentView)
         [scrollView, reserveButton].forEach {
@@ -162,8 +188,11 @@ final class CulturalEventViewController: BaseViewController {
         mapView.snp.makeConstraints { make in
             make.top.equalTo(useTargetLabel.snp.bottom).offset(16)
             make.horizontalEdges.equalToSuperview().inset(16)
-            make.height.equalTo(200)
+            make.height.equalTo(150)
             make.bottom.equalToSuperview().inset(80)
+        }
+        showMapButton.snp.makeConstraints { make in
+            make.trailing.bottom.equalTo(mapView).inset(8)
         }
         reserveButton.snp.makeConstraints { make in
             make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
@@ -194,10 +223,7 @@ final class CulturalEventViewController: BaseViewController {
         priceLabel.text = value.price.isEmpty ? value.isFree : value.price
         useTargetLabel.text = value.useTarget
         
-        // MARK: - 통신에서 위경도 값 반대로 옴
-        let latitude = Double(value.longitude) ?? 37.5665
-        let longitude = Double(value.latitude) ?? 126.9780
-        let coordinate =  CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        let coordinate =  CLLocationCoordinate2D(latitude: value.lat, longitude: value.lon)
         
         let annotation = MKPointAnnotation()
         annotation.coordinate = coordinate

@@ -13,6 +13,7 @@ extension UIImage {
     static let paperclip = UIImage(systemName: "paperclip")!
     static let emptyHeart = UIImage(systemName: "heart")!
     static let fillHeart = UIImage(systemName: "heart.fill")!
+    static let arrow = UIImage(systemName: "arrow.down.backward.and.arrow.up.forward")
 //    static let camera = UIImage(systemName: "camera.fill")!
 //    static let star = UIImage(systemName: "star.fill")!
 //    static let circle = UIImage(systemName: "circle.fill")!
