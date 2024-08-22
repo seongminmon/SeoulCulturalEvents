@@ -12,21 +12,51 @@ import Then
 
 final class UserInfoView: BaseView {
     
-    let profileImageView = ProfileImageView()
-    let nicknameLabel = UILabel().then {
+    private let profileImageView = ProfileImageView()
+    private let nicknameLabel = UILabel().then {
         $0.font = .bold15
     }
-    let dateLabel = UILabel().then {
+    private let dateLabel = UILabel().then {
         $0.font = .regular14
         $0.textColor = .gray
     }
     
     override func setLayout() {
+        [profileImageView, nicknameLabel, dateLabel].forEach {
+            addSubview($0)
+        }
         
+        profileImageView.snp.makeConstraints { make in
+            make.centerY.leading.equalToSuperview()
+            make.size.equalTo(40)
+        }
+        
+        nicknameLabel.snp.makeConstraints { make in
+            make.top.trailing.equalToSuperview()
+            make.leading.equalTo(profileImageView.snp.trailing).offset(8)
+            make.height.equalTo(20)
+        }
+        
+        dateLabel.snp.makeConstraints { make in
+            make.bottom.trailing.equalToSuperview()
+            make.leading.equalTo(profileImageView.snp.trailing).offset(8)
+            make.height.equalTo(20)
+        }
     }
     
-    func configureView(_ data: UserModel) {
+    func configureUserInfo(_ data: UserModel) {
         let parameter = (data.profileImage ?? "").getKFParameter()
-//        profileImageView.kf.setImage(with: <#T##Source?#>)
+        profileImageView.kf.setImage(
+            with: parameter.url,
+            placeholder: UIImage.person,
+            options: [.requestModifier(parameter.modifier)]
+        )
+        nicknameLabel.text = data.nick
+    }
+    
+    func configureDate(_ createdAt: String) {
+        if let date = createdAt.toISODate() {
+            dateLabel.text = date.toString()
+        }
     }
 }

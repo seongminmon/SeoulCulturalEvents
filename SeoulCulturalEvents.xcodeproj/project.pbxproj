@@ -26,6 +26,12 @@
 		24AB4BC22C7724C70030558A /* UserInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AB4BC12C7724C70030558A /* UserInfoView.swift */; };
 		24AB4BC42C7724FA0030558A /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AB4BC32C7724FA0030558A /* BaseView.swift */; };
 		24AB4BC62C7734890030558A /* PostImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AB4BC52C7734890030558A /* PostImageModel.swift */; };
+		24AB4BC82C7738690030558A /* PostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AB4BC72C7738690030558A /* PostViewModel.swift */; };
+		24AB4BCA2C7751D20030558A /* KFParameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AB4BC92C7751D20030558A /* KFParameter.swift */; };
+		24AB4BCE2C7753F50030558A /* DetailPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AB4BCD2C7753F50030558A /* DetailPostViewController.swift */; };
+		24AB4BD02C77540C0030558A /* DetailPostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AB4BCF2C77540C0030558A /* DetailPostViewModel.swift */; };
+		24AB4BD22C775D460030558A /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AB4BD12C775D460030558A /* ImageCollectionViewCell.swift */; };
+		24AB4BD42C7762DF0030558A /* PostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AB4BD32C7762DF0030558A /* PostCollectionViewCell.swift */; };
 		24B2B63F2C6C948100190BFC /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B63E2C6C948100190BFC /* TabBarController.swift */; };
 		24B2B6412C6C951C00190BFC /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B6402C6C951C00190BFC /* SearchViewController.swift */; };
 		24B2B6432C6C956700190BFC /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B6422C6C956700190BFC /* PostViewController.swift */; };
@@ -114,6 +120,12 @@
 		24AB4BC12C7724C70030558A /* UserInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoView.swift; sourceTree = "<group>"; };
 		24AB4BC32C7724FA0030558A /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		24AB4BC52C7734890030558A /* PostImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostImageModel.swift; sourceTree = "<group>"; };
+		24AB4BC72C7738690030558A /* PostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewModel.swift; sourceTree = "<group>"; };
+		24AB4BC92C7751D20030558A /* KFParameter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KFParameter.swift; sourceTree = "<group>"; };
+		24AB4BCD2C7753F50030558A /* DetailPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPostViewController.swift; sourceTree = "<group>"; };
+		24AB4BCF2C77540C0030558A /* DetailPostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPostViewModel.swift; sourceTree = "<group>"; };
+		24AB4BD12C775D460030558A /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		24AB4BD32C7762DF0030558A /* PostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCollectionViewCell.swift; sourceTree = "<group>"; };
 		24B2B63E2C6C948100190BFC /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		24B2B6402C6C951C00190BFC /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		24B2B6422C6C956700190BFC /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
@@ -250,6 +262,8 @@
 				245D385E2C75D7FB006E282D /* CategoryCollectionHeaderView.swift */,
 				245D385C2C75BA25006E282D /* CategoryCollectionViewCell.swift */,
 				24B2B6C02C6F0F9100190BFC /* ProfileTableViewCell.swift */,
+				24AB4BD32C7762DF0030558A /* PostCollectionViewCell.swift */,
+				24AB4BD12C775D460030558A /* ImageCollectionViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -260,6 +274,26 @@
 				245D386B2C76223C006E282D /* MapViewController.swift */,
 			);
 			path = Map;
+			sourceTree = "<group>";
+		};
+		24AB4BCB2C7753D10030558A /* CulturalEvent */ = {
+			isa = PBXGroup;
+			children = (
+				24B3C0E12C7327280008B597 /* CulturalEventViewController.swift */,
+				24B3C0E32C7327460008B597 /* CulturalEventViewModel.swift */,
+				245D386A2C7621E3006E282D /* Map */,
+				24B3C0EF2C744E070008B597 /* Reservation */,
+			);
+			path = CulturalEvent;
+			sourceTree = "<group>";
+		};
+		24AB4BCC2C7753DB0030558A /* Post */ = {
+			isa = PBXGroup;
+			children = (
+				24AB4BCD2C7753F50030558A /* DetailPostViewController.swift */,
+				24AB4BCF2C77540C0030558A /* DetailPostViewModel.swift */,
+			);
+			path = Post;
 			sourceTree = "<group>";
 		};
 		24B2B6462C6C96FE00190BFC /* Scenes */ = {
@@ -333,6 +367,7 @@
 			isa = PBXGroup;
 			children = (
 				24B2B6422C6C956700190BFC /* PostViewController.swift */,
+				24AB4BC72C7738690030558A /* PostViewModel.swift */,
 			);
 			path = Post;
 			sourceTree = "<group>";
@@ -502,6 +537,7 @@
 				24B2B6B42C6EF33600190BFC /* EditProfileQuery.swift */,
 				24B3C0F62C74B5AB0008B597 /* PostFetchQuery.swift */,
 				24B3C0E52C7361A90008B597 /* PostQuery.swift */,
+				24AB4BC92C7751D20030558A /* KFParameter.swift */,
 			);
 			path = RequestModel;
 			sourceTree = "<group>";
@@ -518,10 +554,8 @@
 		24B3C0E02C7327070008B597 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
-				24B3C0E12C7327280008B597 /* CulturalEventViewController.swift */,
-				24B3C0E32C7327460008B597 /* CulturalEventViewModel.swift */,
-				245D386A2C7621E3006E282D /* Map */,
-				24B3C0EF2C744E070008B597 /* Reservation */,
+				24AB4BCB2C7753D10030558A /* CulturalEvent */,
+				24AB4BCC2C7753DB0030558A /* Post */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -628,6 +662,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				24AB4BD02C77540C0030558A /* DetailPostViewModel.swift in Sources */,
 				24B2B65D2C6CCA5700190BFC /* SignInViewController.swift in Sources */,
 				24B2B6AD2C6DBF1D00190BFC /* SignInQuery.swift in Sources */,
 				24B2B6562C6CB05700190BFC /* Date+.swift in Sources */,
@@ -646,8 +681,11 @@
 				240E0A962C6C7E8B003A212B /* TodayViewController.swift in Sources */,
 				240E0A922C6C7E8B003A212B /* AppDelegate.swift in Sources */,
 				240E0AA82C6C7F83003A212B /* APIInfo.swift in Sources */,
+				24AB4BCA2C7751D20030558A /* KFParameter.swift in Sources */,
+				24AB4BD42C7762DF0030558A /* PostCollectionViewCell.swift in Sources */,
 				245D38672C7601EF006E282D /* CultureParameter.swift in Sources */,
 				24B2B64A2C6CA08200190BFC /* CultureResponse.swift in Sources */,
+				24AB4BD22C775D460030558A /* ImageCollectionViewCell.swift in Sources */,
 				24B2B6BD2C6EFBF900190BFC /* Image.swift in Sources */,
 				24B2B6732C6CCEF700190BFC /* SignTextField.swift in Sources */,
 				245D38552C75A3B4006E282D /* SearchViewModel.swift in Sources */,
@@ -668,6 +706,7 @@
 				24B2B6B12C6E14B100190BFC /* SignUpModel.swift in Sources */,
 				24B2B6B52C6EF33600190BFC /* EditProfileQuery.swift in Sources */,
 				24B3C0F52C748A100008B597 /* LSLPError.swift in Sources */,
+				24AB4BCE2C7753F50030558A /* DetailPostViewController.swift in Sources */,
 				24B3C0D72C7224520008B597 /* TodayViewModel.swift in Sources */,
 				24B3C0E62C7361A90008B597 /* PostQuery.swift in Sources */,
 				24B2B63F2C6C948100190BFC /* TabBarController.swift in Sources */,
@@ -678,6 +717,7 @@
 				24B2B6AF2C6E130600190BFC /* SignUpQuery.swift in Sources */,
 				24B3C0E42C7327460008B597 /* CulturalEventViewModel.swift in Sources */,
 				24B2B6CE2C6F25F600190BFC /* EditProfileViewModel.swift in Sources */,
+				24AB4BC82C7738690030558A /* PostViewModel.swift in Sources */,
 				24B2B6D12C6F2C2000190BFC /* Reactive+.swift in Sources */,
 				245D385B2C75B954006E282D /* UICollectionViewLayout+.swift in Sources */,
 				245D385D2C75BA25006E282D /* CategoryCollectionViewCell.swift in Sources */,

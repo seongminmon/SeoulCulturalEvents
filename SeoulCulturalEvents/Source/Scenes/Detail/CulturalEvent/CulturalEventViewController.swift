@@ -19,7 +19,6 @@ final class CulturalEventViewController: BaseViewController {
         $0.tintColor = .systemRed
     }
     private let scrollView = UIScrollView().then {
-        $0.showsVerticalScrollIndicator = false
         $0.showsHorizontalScrollIndicator = false
     }
     private let contentView = UIView()

@@ -116,7 +116,7 @@ final class ProfileViewController: BaseViewController {
         
         output.withdrawActionSuccess
             .bind(with: self) { owner, _ in
-                print("로그인 뷰로 이동")
+                SceneDelegate.changeWindow(SignInViewController())
             }
             .disposed(by: disposeBag)
     }

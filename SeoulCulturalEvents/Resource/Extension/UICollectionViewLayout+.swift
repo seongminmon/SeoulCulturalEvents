@@ -39,6 +39,47 @@ extension UICollectionViewLayout {
         return layout
     }
     
+    static func imageLayout() -> UICollectionViewLayout {
+        let layout = UICollectionViewFlowLayout()
+        
+        let sectionSpacing: CGFloat = 10
+        let cellSpacing: CGFloat = 10
+        let cellCount: CGFloat = 1
+        let rate: CGFloat = 1
+        
+        // 셀 사이즈
+        let totalWidth = UIScreen.main.bounds.width - 2 * sectionSpacing - (cellCount-1) * cellSpacing
+        let width = totalWidth / cellCount
+        let height = width * rate
+        layout.itemSize = CGSize(width: width, height: height)
+        layout.scrollDirection = .vertical
+        layout.minimumInteritemSpacing = cellSpacing
+        layout.minimumLineSpacing = cellSpacing
+        layout.sectionInset = UIEdgeInsets(top: sectionSpacing, left: sectionSpacing, bottom: sectionSpacing, right: sectionSpacing)
+        
+        return layout
+    }
+    
+    static func postLayout() -> UICollectionViewLayout {
+        let layout = UICollectionViewFlowLayout()
+        
+        let sectionSpacing: CGFloat = 10
+        let cellSpacing: CGFloat = 10
+        let cellCount: CGFloat = 1
+        
+        // 셀 사이즈
+        let totalWidth = UIScreen.main.bounds.width - 2 * sectionSpacing - (cellCount-1) * cellSpacing
+        let width = totalWidth / cellCount
+        let height: CGFloat = 80
+        layout.itemSize = CGSize(width: width, height: height)
+        layout.scrollDirection = .vertical
+        layout.minimumInteritemSpacing = cellSpacing
+        layout.minimumLineSpacing = cellSpacing
+        layout.sectionInset = UIEdgeInsets(top: sectionSpacing, left: sectionSpacing, bottom: sectionSpacing, right: sectionSpacing)
+        
+        return layout
+    }
+    
 //    static func createLayout() -> UICollectionViewLayout {
 //        let layout = UICollectionViewFlowLayout()
 //        layout.scrollDirection = .horizontal

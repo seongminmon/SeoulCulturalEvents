@@ -8,16 +8,15 @@
 import Foundation
 import Kingfisher
 
-struct KFParameter {
-    let url: URL?
-    let modifier: AnyModifier
-}
-
 extension String {
     
     func toDate(_ dateFormat: String = "yyyy-MM-dd HH:mm:ss.S") -> Date? {
         Formatter.dateFormatter.dateFormat = dateFormat
         return Formatter.dateFormatter.date(from: self)
+    }
+    
+    func toISODate() -> Date? {
+        return Formatter.isoDateFormatter.date(from: self)
     }
     
     func getKFParameter() -> KFParameter {

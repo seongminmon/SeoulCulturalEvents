@@ -13,4 +13,8 @@ enum Formatter {
         $0.locale = Locale(identifier: "ko_KR")
         $0.timeZone = TimeZone(identifier: "KST")
     }
+    
+    static let isoDateFormatter = ISO8601DateFormatter().then {
+        $0.timeZone = TimeZone(secondsFromGMT: 0)
+    }
 }
