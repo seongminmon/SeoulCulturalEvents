@@ -8,6 +8,11 @@
 import UIKit
 
 extension UIImage {
+    static let today = UIImage(systemName: "doc.text.image")!
+    static let search = UIImage(systemName: "magnifyingglass")!
+    static let profile = UIImage(systemName: "person")!
+    static let post = UIImage(systemName: "list.bullet")!
+    
     static let person = UIImage(systemName: "person.fill")!
     static let chevron = UIImage(systemName: "chevron.right")!
     static let paperclip = UIImage(systemName: "paperclip")!

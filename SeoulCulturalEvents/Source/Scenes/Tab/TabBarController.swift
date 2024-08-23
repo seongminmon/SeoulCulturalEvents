@@ -13,19 +13,19 @@ final class TabBarController: UITabBarController {
         super.viewDidLoad()
         
         view.backgroundColor = .white
-        tabBar.tintColor = .darkGray
+        tabBar.tintColor = .systemGreen
         
         let today = UINavigationController(rootViewController: TodayViewController())
-        today.tabBarItem = UITabBarItem(title: "투데이", image: nil, tag: 0)
+        today.tabBarItem = UITabBarItem(title: "투데이", image: .today, tag: 0)
         
         let search = UINavigationController(rootViewController: SearchViewController())
-        search.tabBarItem = UITabBarItem(title: "검색", image: nil, tag: 1)
+        search.tabBarItem = UITabBarItem(title: "검색", image: .search, tag: 1)
         
         let post = UINavigationController(rootViewController: PostViewController())
-        post.tabBarItem = UITabBarItem(title: "후기", image: nil, tag: 2)
+        post.tabBarItem = UITabBarItem(title: "후기", image: .post, tag: 2)
         
         let profile = UINavigationController(rootViewController: ProfileViewController())
-        profile.tabBarItem = UITabBarItem(title: "설정", image: nil, tag: 3)
+        profile.tabBarItem = UITabBarItem(title: "설정", image: .profile, tag: 3)
  
         setViewControllers([today, search, post, profile], animated: true)
         
