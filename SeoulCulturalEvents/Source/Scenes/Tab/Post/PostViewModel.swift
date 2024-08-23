@@ -32,7 +32,7 @@ final class PostViewModel: ViewModelType {
             .flatMap { _ in
                 let query = PostFetchQuery(next: nil, productID: ProductID.post)
                 return LSLPAPIManager.shared.callRequestWithRetry(
-                    api: .fetchPost(query: query),
+                    api: .fetchPostList(query: query),
                     model: PostModelList.self
                 )
             }
@@ -40,7 +40,7 @@ final class PostViewModel: ViewModelType {
                 switch result {
                 case .success(let data):
                     print("포스트 조회 성공")
-                    dump(data)
+//                    dump(data)
                     postList.onNext(data.data)
                     
                 case .failure(let error):

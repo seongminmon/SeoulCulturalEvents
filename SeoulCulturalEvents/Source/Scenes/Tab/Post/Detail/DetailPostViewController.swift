@@ -13,6 +13,9 @@ import Then
 
 final class DetailPostViewController: BaseViewController {
     
+    // TODO: - 댓글 화면 만들기 + 댓글화면으로 이동
+    // TODO: - 이미지 컬렉션뷰 페이징 넘버 표시 ex) 1/5
+    
     private let likeButton = UIBarButtonItem().then {
         $0.image = .emptyHeart
         $0.tintColor = .systemRed
@@ -33,7 +36,11 @@ final class DetailPostViewController: BaseViewController {
         frame: .zero,
         collectionViewLayout: .imageLayout()
     ).then {
-        $0.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: ImageCollectionViewCell.identifier)
+        $0.register(
+            ImageCollectionViewCell.self,
+            forCellWithReuseIdentifier: ImageCollectionViewCell.identifier
+        )
+        $0.isScrollEnabled = false
     }
     
     init(viewModel: DetailPostViewModel) {
@@ -52,7 +59,11 @@ final class DetailPostViewController: BaseViewController {
     }
     
     override func bind() {
-        let input = DetailPostViewModel.Input()
+        
+        let input = DetailPostViewModel.Input(
+            viewDidLoad: Observable.just(()),
+            likeButtonTap: likeButton.rx.tap
+        )
         let output = viewModel.transform(input: input)
         
         output.post
@@ -69,11 +80,15 @@ final class DetailPostViewController: BaseViewController {
                 cell.configureCell(element)
             }
             .disposed(by: disposeBag)
+        
+        output.isLike
+            .map { $0 ? UIImage.fillHeart : UIImage.emptyHeart }
+            .bind(to: likeButton.rx.image)
+            .disposed(by: disposeBag)
     }
     
     override func setNavigationBar() {
         navigationItem.rightBarButtonItem = likeButton
-        collectionView.backgroundColor = .lightGray
     }
     
     override func setLayout() {

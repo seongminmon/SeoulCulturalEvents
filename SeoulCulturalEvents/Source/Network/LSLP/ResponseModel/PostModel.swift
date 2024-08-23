@@ -7,11 +7,12 @@
 
 import Foundation
 
-// 포스트 작성 / 포스트 조회 / 특정 포스트 조회
+// 포스트 조회
 struct PostModelList: Decodable {
     var data: [PostModel]
 }
 
+// 특정 포스트 조회 / 포스트 작성
 struct PostModel: Decodable {
     let postID: String
     let productID: String?
@@ -35,7 +36,8 @@ struct PostModel: Decodable {
     enum CodingKeys: String, CodingKey {
         case postID = "post_id"
         case productID = "product_id"
-        case title, content, content1, content2, content3, content4, content5, files, price
-        case createdAt, creator, likes, likes2, hashTags, comments
+        case title, content, content1, createdAt, price
+        case files, creator, likes, likes2, hashTags, comments
+        case content2, content3, content4, content5
     }
 }

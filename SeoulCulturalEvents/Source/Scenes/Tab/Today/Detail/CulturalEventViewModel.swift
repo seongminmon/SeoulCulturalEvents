@@ -54,7 +54,7 @@ final class CulturalEventViewModel: ViewModelType {
             .flatMap { _ in
                 let productID = self.culturalEvent.title + UserDefaultsManager.shared.userID
                 let query = PostFetchQuery(productID: productID)
-                return LSLPAPIManager.shared.callRequestWithRetry(api: .fetchPost(query: query), model: PostModelList.self)
+                return LSLPAPIManager.shared.callRequestWithRetry(api: .fetchPostList(query: query), model: PostModelList.self)
             }
             .subscribe(with: self) { owner, result in
                 switch result {

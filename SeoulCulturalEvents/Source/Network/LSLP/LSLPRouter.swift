@@ -18,10 +18,12 @@ enum LSLPRouter {
     case editProfile(query: EditProfileQuery)
     
     // MARK: - 포스트
-    case fetchPost(query: PostFetchQuery)
+    case fetchPostList(query: PostFetchQuery)
+    case fetchPost(postID: String)
     case postImageFiles(files: [Data?])
     case createPost(query: PostQuery)
     case deletePost(postID: String)
+    case postLike(postID: String, query: LikeModel)
 }
 
 extension LSLPRouter: TargetType {
@@ -43,14 +45,19 @@ extension LSLPRouter: TargetType {
             return "users/me/profile"
         case .editProfile:
             return "users/me/profile"
-        case .fetchPost:
+            
+        case .fetchPostList:
             return "posts"
+        case .fetchPost(let id):
+            return "posts/\(id)"
         case .postImageFiles:
             return "posts/files"
         case .createPost:
             return "posts"
         case .deletePost(let id):
             return "posts/\(id)"
+        case .postLike(let id, _):
+            return "posts/\(id)/like"
         }
     }
     
@@ -68,6 +75,9 @@ extension LSLPRouter: TargetType {
             return .get
         case .editProfile:
             return .put
+            
+        case .fetchPostList:
+            return .get
         case .fetchPost:
             return .get
         case .postImageFiles:
@@ -76,6 +86,8 @@ extension LSLPRouter: TargetType {
             return .post
         case .deletePost:
             return .delete
+        case .postLike:
+            return .post
         }
     }
     
@@ -117,13 +129,15 @@ extension LSLPRouter: TargetType {
             
             return .uploadCompositeMultipart(multipartData, urlParameters: [:])
             
-        case .fetchPost(let query):
+        case .fetchPostList(let query):
             let parameters: [String : Any] = [
                 "next": query.next ?? "",
                 "limit": query.limit,
                 "product_id": query.productID ?? ""
             ]
             return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
+        case .fetchPost:
+            return .requestPlain
         case .postImageFiles(let files):
             var multipartData = [MultipartFormData]()
             // 포스트 이미지 추가
@@ -140,6 +154,8 @@ extension LSLPRouter: TargetType {
             return .requestJSONEncodable(query)
         case .deletePost:
             return .requestPlain
+        case .postLike(_, let query):
+            return .requestJSONEncodable(query)
         }
     }
     
@@ -180,6 +196,13 @@ extension LSLPRouter: TargetType {
                 LSLPHeader.contentType.rawValue: LSLPHeader.multipart.rawValue,
                 LSLPHeader.authorization.rawValue: UserDefaultsManager.shared.accessToken
             ]
+            
+        case .fetchPostList:
+            return [
+                LSLPHeader.sesacKey.rawValue: APIKey.lslpKey,
+                LSLPHeader.contentType.rawValue: LSLPHeader.json.rawValue,
+                LSLPHeader.authorization.rawValue: UserDefaultsManager.shared.accessToken
+            ]
         case .fetchPost:
             return [
                 LSLPHeader.sesacKey.rawValue: APIKey.lslpKey,
@@ -199,6 +222,12 @@ extension LSLPRouter: TargetType {
                 LSLPHeader.authorization.rawValue: UserDefaultsManager.shared.accessToken
             ]
         case .deletePost:
+            return [
+                LSLPHeader.sesacKey.rawValue: APIKey.lslpKey,
+                LSLPHeader.contentType.rawValue: LSLPHeader.json.rawValue,
+                LSLPHeader.authorization.rawValue: UserDefaultsManager.shared.accessToken
+            ]
+        case .postLike:
             return [
                 LSLPHeader.sesacKey.rawValue: APIKey.lslpKey,
                 LSLPHeader.contentType.rawValue: LSLPHeader.json.rawValue,
