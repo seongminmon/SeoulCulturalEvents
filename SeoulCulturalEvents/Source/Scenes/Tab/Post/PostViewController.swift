@@ -17,11 +17,11 @@ final class PostViewController: BaseViewController {
     // 항상 최신 데이터를 보장하는 것은 아님
     // ex) 디테일화면에서 댓글이나 좋아요를 하더라도 새로고침전엔 반영 X
     
-    // TODO: - 당겨서 새로고침 기능 구현하기
     // TODO: - 페이지네이션
     // TODO: - 글쓰기 버튼 만들기
     
-    private let collectionView = UICollectionView(
+    private let refreshControl = UIRefreshControl()
+    private lazy var collectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: .postLayout()
     ).then {
@@ -29,6 +29,20 @@ final class PostViewController: BaseViewController {
             PostCollectionViewCell.self,
             forCellWithReuseIdentifier: PostCollectionViewCell.identifier
         )
+        $0.refreshControl = refreshControl
+    }
+    private let writeButton = UIButton().then {
+        var config = UIButton.Configuration.filled()
+        config.title = "글쓰기"
+        config.image = .pencil
+        config.imagePlacement = .leading
+        config.imagePadding = 4
+        config.buttonSize = .mini
+        
+        config.baseBackgroundColor = .systemGreen
+        config.baseForegroundColor = .white
+        config.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12)
+        $0.configuration = config
     }
     
     private let viewModel = PostViewModel()
@@ -40,7 +54,8 @@ final class PostViewController: BaseViewController {
     override func bind() {
         let input = PostViewModel.Input(
             viewDidLoad: Observable.just(()),
-            cellTap: collectionView.rx.modelSelected(PostModel.self)
+            cellTap: collectionView.rx.modelSelected(PostModel.self),
+            refreshEvent: refreshControl.rx.controlEvent(.valueChanged)
         )
         let output = viewModel.transform(input: input)
         
@@ -60,6 +75,20 @@ final class PostViewController: BaseViewController {
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
+        
+        output.remainTime
+            .bind(with: self) { owner, value in
+                owner.view.makeToast("잠시 후 시도해주세요!", duration: 1, position: .center)
+                owner.refreshControl.endRefreshing()
+            }
+            .disposed(by: disposeBag)
+        
+        writeButton.rx.tap
+            .bind(with: self) { owner, _ in
+                let vc = WriteViewController()
+                owner.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disposeBag)
     }
     
     override func setNavigationBar() {
@@ -67,10 +96,15 @@ final class PostViewController: BaseViewController {
     }
     
     override func setLayout() {
-        view.addSubview(collectionView)
+        [collectionView, writeButton].forEach {
+            view.addSubview($0)
+        }
         
         collectionView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+        writeButton.snp.makeConstraints { make in
+            make.trailing.bottom.equalTo(view.safeAreaLayoutGuide).inset(16)
         }
     }
 }

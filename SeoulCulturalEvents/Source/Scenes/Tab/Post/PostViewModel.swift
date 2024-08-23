@@ -11,25 +11,35 @@ import RxCocoa
 
 final class PostViewModel: ViewModelType {
     
+    private var recentNetworkTime: DispatchTime?
     private let disposeBag = DisposeBag()
     
     struct Input {
         let viewDidLoad: Observable<Void>
         let cellTap: ControlEvent<PostModel>
+        let refreshEvent: ControlEvent<Void>
     }
     
     struct Output {
         let postList: BehaviorSubject<[PostModel]>
         let cellTap: ControlEvent<PostModel>
+        let remainTime: PublishSubject<Void>
     }
     
     func transform(input: Input) -> Output {
         
         let postList = BehaviorSubject<[PostModel]>(value: [])
+        let remainTime = PublishSubject<Void>()
         
         // 포스트 조회 통신
-        input.viewDidLoad
-            .flatMap { _ in
+        Observable.merge(input.viewDidLoad, input.refreshEvent.asObservable())
+            .flatMap { () -> Single<Result<PostModelList, LSLPError>> in
+                // 1분이 안 지났으면 통신 X
+                if let recentNetworkTime = self.recentNetworkTime, 
+                    recentNetworkTime + 60 > .now() {
+                    remainTime.onNext(())
+                    return Single.just(.failure(LSLPError.unknown))
+                }
                 let query = PostFetchQuery(next: nil, productID: ProductID.post)
                 return LSLPAPIManager.shared.callRequestWithRetry(
                     api: .fetchPostList(query: query),
@@ -40,7 +50,7 @@ final class PostViewModel: ViewModelType {
                 switch result {
                 case .success(let data):
                     print("포스트 조회 성공")
-//                    dump(data)
+                    owner.recentNetworkTime = .now()
                     postList.onNext(data.data)
                     
                 case .failure(let error):
@@ -52,7 +62,8 @@ final class PostViewModel: ViewModelType {
         
         return Output(
             postList: postList,
-            cellTap: input.cellTap
+            cellTap: input.cellTap,
+            remainTime: remainTime
         )
     }
 }

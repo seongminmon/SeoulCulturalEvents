@@ -33,6 +33,8 @@
 		24AB4BD22C775D460030558A /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AB4BD12C775D460030558A /* ImageCollectionViewCell.swift */; };
 		24AB4BD42C7762DF0030558A /* PostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AB4BD32C7762DF0030558A /* PostCollectionViewCell.swift */; };
 		24AB4BD62C7854750030558A /* LikeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AB4BD52C7854750030558A /* LikeModel.swift */; };
+		24AB4BD92C78732F0030558A /* WriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AB4BD82C78732F0030558A /* WriteViewController.swift */; };
+		24AB4BDB2C7873480030558A /* WriteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AB4BDA2C7873480030558A /* WriteViewModel.swift */; };
 		24B2B63F2C6C948100190BFC /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B63E2C6C948100190BFC /* TabBarController.swift */; };
 		24B2B6412C6C951C00190BFC /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B6402C6C951C00190BFC /* SearchViewController.swift */; };
 		24B2B6432C6C956700190BFC /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B6422C6C956700190BFC /* PostViewController.swift */; };
@@ -128,6 +130,8 @@
 		24AB4BD12C775D460030558A /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		24AB4BD32C7762DF0030558A /* PostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCollectionViewCell.swift; sourceTree = "<group>"; };
 		24AB4BD52C7854750030558A /* LikeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeModel.swift; sourceTree = "<group>"; };
+		24AB4BD82C78732F0030558A /* WriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteViewController.swift; sourceTree = "<group>"; };
+		24AB4BDA2C7873480030558A /* WriteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteViewModel.swift; sourceTree = "<group>"; };
 		24B2B63E2C6C948100190BFC /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		24B2B6402C6C951C00190BFC /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		24B2B6422C6C956700190BFC /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
@@ -287,6 +291,15 @@
 			path = Detail;
 			sourceTree = "<group>";
 		};
+		24AB4BD72C7873240030558A /* Write */ = {
+			isa = PBXGroup;
+			children = (
+				24AB4BD82C78732F0030558A /* WriteViewController.swift */,
+				24AB4BDA2C7873480030558A /* WriteViewModel.swift */,
+			);
+			path = Write;
+			sourceTree = "<group>";
+		};
 		24B2B6462C6C96FE00190BFC /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
@@ -360,6 +373,7 @@
 				24B2B6422C6C956700190BFC /* PostViewController.swift */,
 				24AB4BC72C7738690030558A /* PostViewModel.swift */,
 				24AB4BCC2C7753DB0030558A /* Detail */,
+				24AB4BD72C7873240030558A /* Write */,
 			);
 			path = Post;
 			sourceTree = "<group>";
@@ -687,10 +701,12 @@
 				24B2B64E2C6CA0D500190BFC /* CultureAPIManager.swift in Sources */,
 				24B2B6B72C6EF43200190BFC /* ProfileModel.swift in Sources */,
 				24B3C0F32C74895C0008B597 /* ProductID.swift in Sources */,
+				24AB4BDB2C7873480030558A /* WriteViewModel.swift in Sources */,
 				24AB4BC62C7734890030558A /* PostImageModel.swift in Sources */,
 				24B2B65F2C6CCA7000190BFC /* SignUpViewController.swift in Sources */,
 				24B2B67D2C6CD17C00190BFC /* Font.swift in Sources */,
 				24AB4BD62C7854750030558A /* LikeModel.swift in Sources */,
+				24AB4BD92C78732F0030558A /* WriteViewController.swift in Sources */,
 				24B3C0EE2C744E000008B597 /* ReservationViewController.swift in Sources */,
 				24B3C0E82C73649F0008B597 /* PostModel.swift in Sources */,
 				24B2B6CC2C6F25AC00190BFC /* EditProfileViewController.swift in Sources */,

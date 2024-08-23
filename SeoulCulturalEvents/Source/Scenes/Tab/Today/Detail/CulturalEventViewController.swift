@@ -67,8 +67,6 @@ final class CulturalEventViewController: BaseViewController {
         config.baseForegroundColor = .white
         config.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
         $0.configuration = config
-        
-        $0.layer.cornerRadius = 10
     }
     private let reserveButton = PointButton(title: "예매하기")
     

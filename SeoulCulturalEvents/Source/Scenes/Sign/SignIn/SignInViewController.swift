@@ -16,7 +16,7 @@ final class SignInViewController: BaseViewController {
     private let mainLabel = UILabel().then {
         $0.text = "서울시 문화 행사"
         $0.font = .bold36
-        $0.textColor = .systemMint
+        $0.textColor = .systemGreen
         $0.textAlignment = .center
     }
     private let emailTextField = SignTextField(placeholderText: "이메일을 입력해주세요")
