@@ -34,10 +34,18 @@ final class DetailPostViewController: BaseViewController {
         collectionViewLayout: .imageLayout()
     ).then {
         $0.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: ImageCollectionViewCell.identifier)
-        $0.isScrollEnabled = false
     }
     
-    private let viewModel = DetailPostViewModel()
+    init(viewModel: DetailPostViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private let viewModel: DetailPostViewModel
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,10 +55,25 @@ final class DetailPostViewController: BaseViewController {
         let input = DetailPostViewModel.Input()
         let output = viewModel.transform(input: input)
         
+        output.post
+            .bind(with: self) { owner, data in
+                owner.configureView(data)
+            }
+            .disposed(by: disposeBag)
+        
+        output.imageList
+            .bind(to: collectionView.rx.items(
+                cellIdentifier: ImageCollectionViewCell.identifier,
+                cellType: ImageCollectionViewCell.self
+            )) { row, element, cell in
+                cell.configureCell(element)
+            }
+            .disposed(by: disposeBag)
     }
     
     override func setNavigationBar() {
         navigationItem.rightBarButtonItem = likeButton
+        collectionView.backgroundColor = .lightGray
     }
     
     override func setLayout() {
@@ -84,8 +107,16 @@ final class DetailPostViewController: BaseViewController {
         }
         collectionView.snp.makeConstraints { make in
             make.top.equalTo(contentsLabel.snp.bottom).offset(8)
-            make.horizontalEdges.equalToSuperview().inset(8)
+            make.horizontalEdges.equalToSuperview()
+            make.height.equalTo(collectionView.snp.width)
             make.bottom.equalToSuperview().inset(16)
         }
+    }
+    
+    private func configureView(_ data: PostModel) {
+        userInfoView.configureUserInfo(data.creator)
+        userInfoView.configureDate(data.createdAt)
+        titleLabel.text = data.title
+        contentsLabel.text = data.content
     }
 }

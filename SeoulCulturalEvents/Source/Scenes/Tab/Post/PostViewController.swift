@@ -17,7 +17,10 @@ final class PostViewController: BaseViewController {
         frame: .zero,
         collectionViewLayout: .postLayout()
     ).then {
-        $0.register(PostCollectionViewCell.self, forCellWithReuseIdentifier: PostCollectionViewCell.identifier)
+        $0.register(
+            PostCollectionViewCell.self,
+            forCellWithReuseIdentifier: PostCollectionViewCell.identifier
+        )
     }
     
     private let viewModel = PostViewModel()
@@ -28,7 +31,8 @@ final class PostViewController: BaseViewController {
     
     override func bind() {
         let input = PostViewModel.Input(
-            viewDidLoad: Observable.just(())
+            viewDidLoad: Observable.just(()),
+            cellTap: collectionView.rx.modelSelected(PostModel.self)
         )
         let output = viewModel.transform(input: input)
         
@@ -38,6 +42,14 @@ final class PostViewController: BaseViewController {
                 cellType: PostCollectionViewCell.self
             )) { row, element, cell in
                 cell.configureCell(element)
+            }
+            .disposed(by: disposeBag)
+        
+        output.cellTap
+            .bind(with: self) { owner, value in
+                let vm = DetailPostViewModel(post: value)
+                let vc = DetailPostViewController(viewModel: vm)
+                owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
     }
@@ -54,4 +66,3 @@ final class PostViewController: BaseViewController {
         }
     }
 }
-

@@ -18,6 +18,11 @@ final class PostCollectionViewCell: BaseCollectionViewCell {
     private let contentsLabel = UILabel().then {
         $0.font = .regular14
         $0.textColor = .gray
+        $0.numberOfLines = 2
+    }
+    private let dateLabel = UILabel().then {
+        $0.font = .regular13
+        $0.textColor = .gray
     }
     private let imageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
@@ -26,23 +31,41 @@ final class PostCollectionViewCell: BaseCollectionViewCell {
         $0.layer.cornerRadius = 10
     }
     private let likeCountLabel = UILabel().then {
+        $0.text = "좋아요 0"
         $0.font = .regular14
         $0.textColor = .gray
     }
     private let commentCountLabel = UILabel().then {
+        $0.text = "댓글 0"
         $0.font = .regular14
         $0.textColor = .gray
     }
     
     override func setLayout() {
+        
         [
             titleLabel,
             contentsLabel,
+            dateLabel,
             imageView,
             likeCountLabel,
             commentCountLabel
         ].forEach { contentView.addSubview($0) }
         
+        imageView.snp.makeConstraints { make in
+            make.top.trailing.equalToSuperview()
+            make.size.equalTo(80)
+        }
+        likeCountLabel.snp.makeConstraints { make in
+            make.top.equalTo(imageView.snp.bottom)
+            make.trailing.equalTo(commentCountLabel.snp.leading).offset(-4)
+            make.bottom.equalToSuperview()
+        }
+        commentCountLabel.snp.makeConstraints { make in
+            make.top.equalTo(imageView.snp.bottom)
+            make.trailing.equalToSuperview().inset(4)
+            make.bottom.equalToSuperview()
+        }
         titleLabel.snp.makeConstraints { make in
             make.top.leading.equalToSuperview()
             make.trailing.equalTo(imageView.snp.leading).offset(-8)
@@ -50,20 +73,12 @@ final class PostCollectionViewCell: BaseCollectionViewCell {
         contentsLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(4)
             make.leading.equalToSuperview()
-            make.trailing.equalTo(titleLabel)
+            make.trailing.equalTo(imageView.snp.leading).offset(-8)
         }
-        imageView.snp.makeConstraints { make in
-            make.top.trailing.equalToSuperview()
-            make.bottom.equalTo(likeCountLabel.snp.top).offset(4)
-            make.width.equalTo(imageView.snp.height)
-        }
-        likeCountLabel.snp.makeConstraints { make in
-            make.trailing.equalTo(commentCountLabel.snp.leading).offset(-4)
-            make.bottom.equalToSuperview()
-        }
-        commentCountLabel.snp.makeConstraints { make in
-            make.trailing.equalTo(imageView)
-            make.bottom.equalToSuperview()
+        dateLabel.snp.makeConstraints { make in
+            make.top.equalTo(contentsLabel.snp.bottom).offset(4)
+            make.leading.bottom.equalToSuperview()
+            make.trailing.equalTo(likeCountLabel.snp.leading).offset(-8)
         }
     }
     
@@ -72,7 +87,8 @@ final class PostCollectionViewCell: BaseCollectionViewCell {
         contentsLabel.text = data.content
         let parameter = (data.files.first ?? "").getKFParameter()
         imageView.kf.setImage(with: parameter.url, options: [.requestModifier(parameter.modifier)])
+        dateLabel.text = data.createdAt.toISODate()?.toString()
         likeCountLabel.text = "좋아요 \(data.likes.count)"
-        commentCountLabel.text = "좋아요 \(data.comments.count)"
+        commentCountLabel.text = "댓글 \(data.comments.count)"
     }
 }

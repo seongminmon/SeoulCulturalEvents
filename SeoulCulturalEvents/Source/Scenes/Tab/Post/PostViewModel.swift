@@ -15,20 +15,26 @@ final class PostViewModel: ViewModelType {
     
     struct Input {
         let viewDidLoad: Observable<Void>
+        let cellTap: ControlEvent<PostModel>
     }
     
     struct Output {
         let postList: BehaviorSubject<[PostModel]>
+        let cellTap: ControlEvent<PostModel>
     }
     
     func transform(input: Input) -> Output {
         
         let postList = BehaviorSubject<[PostModel]>(value: [])
         
+        // 포스트 조회 통신
         input.viewDidLoad
             .flatMap { _ in
                 let query = PostFetchQuery(next: nil, productID: ProductID.post)
-                return LSLPAPIManager.shared.callRequestWithRetry(api: .fetchPost(query: query), model: PostModelList.self)
+                return LSLPAPIManager.shared.callRequestWithRetry(
+                    api: .fetchPost(query: query),
+                    model: PostModelList.self
+                )
             }
             .subscribe(with: self) { owner, result in
                 switch result {
@@ -45,7 +51,8 @@ final class PostViewModel: ViewModelType {
             .disposed(by: disposeBag)
         
         return Output(
-            postList: postList
+            postList: postList,
+            cellTap: input.cellTap
         )
     }
 }

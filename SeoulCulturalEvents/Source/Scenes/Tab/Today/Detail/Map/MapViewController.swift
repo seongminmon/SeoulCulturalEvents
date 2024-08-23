@@ -18,8 +18,11 @@ final class MapViewController: BaseViewController {
         let annotation = MKPointAnnotation()
         annotation.coordinate = coordinate
         $0.addAnnotation(annotation)
-        
-        let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
+        let region = MKCoordinateRegion(
+            center: coordinate,
+            latitudinalMeters: 1000,
+            longitudinalMeters: 1000
+        )
         $0.setRegion(region, animated: true)
     }
     

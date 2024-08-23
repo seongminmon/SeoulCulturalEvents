@@ -276,24 +276,13 @@
 			path = Map;
 			sourceTree = "<group>";
 		};
-		24AB4BCB2C7753D10030558A /* CulturalEvent */ = {
-			isa = PBXGroup;
-			children = (
-				24B3C0E12C7327280008B597 /* CulturalEventViewController.swift */,
-				24B3C0E32C7327460008B597 /* CulturalEventViewModel.swift */,
-				245D386A2C7621E3006E282D /* Map */,
-				24B3C0EF2C744E070008B597 /* Reservation */,
-			);
-			path = CulturalEvent;
-			sourceTree = "<group>";
-		};
-		24AB4BCC2C7753DB0030558A /* Post */ = {
+		24AB4BCC2C7753DB0030558A /* Detail */ = {
 			isa = PBXGroup;
 			children = (
 				24AB4BCD2C7753F50030558A /* DetailPostViewController.swift */,
 				24AB4BCF2C77540C0030558A /* DetailPostViewModel.swift */,
 			);
-			path = Post;
+			path = Detail;
 			sourceTree = "<group>";
 		};
 		24B2B6462C6C96FE00190BFC /* Scenes */ = {
@@ -302,7 +291,6 @@
 				245D38692C761361006E282D /* Cell */,
 				24B2B65B2C6CCA3D00190BFC /* Sign */,
 				24B2B6532C6CAA5E00190BFC /* Tab */,
-				24B3C0E02C7327070008B597 /* Detail */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -349,6 +337,7 @@
 			children = (
 				240E0A952C6C7E8B003A212B /* TodayViewController.swift */,
 				24B3C0D62C7224520008B597 /* TodayViewModel.swift */,
+				24B3C0E02C7327070008B597 /* Detail */,
 			);
 			path = Today;
 			sourceTree = "<group>";
@@ -368,6 +357,7 @@
 			children = (
 				24B2B6422C6C956700190BFC /* PostViewController.swift */,
 				24AB4BC72C7738690030558A /* PostViewModel.swift */,
+				24AB4BCC2C7753DB0030558A /* Detail */,
 			);
 			path = Post;
 			sourceTree = "<group>";
@@ -554,8 +544,10 @@
 		24B3C0E02C7327070008B597 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
-				24AB4BCB2C7753D10030558A /* CulturalEvent */,
-				24AB4BCC2C7753DB0030558A /* Post */,
+				24B3C0E12C7327280008B597 /* CulturalEventViewController.swift */,
+				24B3C0E32C7327460008B597 /* CulturalEventViewModel.swift */,
+				245D386A2C7621E3006E282D /* Map */,
+				24B3C0EF2C744E070008B597 /* Reservation */,
 			);
 			path = Detail;
 			sourceTree = "<group>";

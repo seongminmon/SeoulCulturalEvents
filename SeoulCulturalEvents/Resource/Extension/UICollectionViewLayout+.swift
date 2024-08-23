@@ -62,19 +62,17 @@ extension UICollectionViewLayout {
     static func postLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
         
-        let sectionSpacing: CGFloat = 10
-        let cellSpacing: CGFloat = 10
+        let spacing: CGFloat = 10
         let cellCount: CGFloat = 1
         
         // 셀 사이즈
-        let totalWidth = UIScreen.main.bounds.width - 2 * sectionSpacing - (cellCount-1) * cellSpacing
+        let totalWidth = UIScreen.main.bounds.width - 2 * spacing - (cellCount-1) * spacing
         let width = totalWidth / cellCount
-        let height: CGFloat = 80
+        let height: CGFloat = 100
         layout.itemSize = CGSize(width: width, height: height)
         layout.scrollDirection = .vertical
-        layout.minimumInteritemSpacing = cellSpacing
-        layout.minimumLineSpacing = cellSpacing
-        layout.sectionInset = UIEdgeInsets(top: sectionSpacing, left: sectionSpacing, bottom: sectionSpacing, right: sectionSpacing)
+        layout.minimumInteritemSpacing = spacing
+        layout.minimumLineSpacing = spacing
         
         return layout
     }

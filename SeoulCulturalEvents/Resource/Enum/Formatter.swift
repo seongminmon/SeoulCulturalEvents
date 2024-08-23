@@ -15,6 +15,6 @@ enum Formatter {
     }
     
     static let isoDateFormatter = ISO8601DateFormatter().then {
-        $0.timeZone = TimeZone(secondsFromGMT: 0)
+        $0.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
     }
 }
