@@ -36,6 +36,7 @@
 		24AB4BD92C78732F0030558A /* WriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AB4BD82C78732F0030558A /* WriteViewController.swift */; };
 		24AB4BDB2C7873480030558A /* WriteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AB4BDA2C7873480030558A /* WriteViewModel.swift */; };
 		24AB4BE32C78B50B0030558A /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 24AB4BE22C78B50B0030558A /* IQKeyboardManagerSwift */; };
+		24AB4BE72C78C4610030558A /* Typealias.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AB4BE62C78C4610030558A /* Typealias.swift */; };
 		24B2B63F2C6C948100190BFC /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B63E2C6C948100190BFC /* TabBarController.swift */; };
 		24B2B6412C6C951C00190BFC /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B6402C6C951C00190BFC /* SearchViewController.swift */; };
 		24B2B6432C6C956700190BFC /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B6422C6C956700190BFC /* PostViewController.swift */; };
@@ -133,6 +134,7 @@
 		24AB4BD52C7854750030558A /* LikeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeModel.swift; sourceTree = "<group>"; };
 		24AB4BD82C78732F0030558A /* WriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteViewController.swift; sourceTree = "<group>"; };
 		24AB4BDA2C7873480030558A /* WriteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteViewModel.swift; sourceTree = "<group>"; };
+		24AB4BE62C78C4610030558A /* Typealias.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typealias.swift; sourceTree = "<group>"; };
 		24B2B63E2C6C948100190BFC /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		24B2B6402C6C951C00190BFC /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		24B2B6422C6C956700190BFC /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
@@ -328,14 +330,15 @@
 			isa = PBXGroup;
 			children = (
 				240E0AA72C6C7F83003A212B /* APIInfo.swift */,
-				24B2B67B2C6CD17600190BFC /* Design */,
-				24B2B6812C6CD2B800190BFC /* Enum */,
-				24B2B6802C6CD2B000190BFC /* Protocol */,
-				24B2B6542C6CB04500190BFC /* Extension */,
 				240E0A912C6C7E8B003A212B /* AppDelegate.swift */,
 				240E0A932C6C7E8B003A212B /* SceneDelegate.swift */,
 				240E0A9A2C6C7E8C003A212B /* Assets.xcassets */,
 				240E0A9C2C6C7E8C003A212B /* LaunchScreen.storyboard */,
+				24AB4BE62C78C4610030558A /* Typealias.swift */,
+				24B2B67B2C6CD17600190BFC /* Design */,
+				24B2B6812C6CD2B800190BFC /* Enum */,
+				24B2B6802C6CD2B000190BFC /* Protocol */,
+				24B2B6542C6CB04500190BFC /* Extension */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -728,6 +731,7 @@
 				24B2B63F2C6C948100190BFC /* TabBarController.swift in Sources */,
 				24B2B6C32C6F0F9F00190BFC /* ReuseIdentifierProtocol.swift in Sources */,
 				24B2B6782C6CCFDF00190BFC /* SignInViewModel.swift in Sources */,
+				24AB4BE72C78C4610030558A /* Typealias.swift in Sources */,
 				24B2B6452C6C957300190BFC /* ProfileViewController.swift in Sources */,
 				24B2B67A2C6CD01E00190BFC /* ViewModelType.swift in Sources */,
 				24B2B6AF2C6E130600190BFC /* SignUpQuery.swift in Sources */,

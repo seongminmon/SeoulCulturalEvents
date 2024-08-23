@@ -8,8 +8,6 @@
 import Foundation
 import RxSwift
 import RxCocoa
-// TODO: - VM에서 RxDataSources 없애보기
-import RxDataSources
 
 final class SearchViewModel: ViewModelType {
     
@@ -22,21 +20,20 @@ final class SearchViewModel: ViewModelType {
     }
     
     struct Output {
-        let categoryList: Observable<[Section]>
+        let categoryList: BehaviorSubject<[SearchSection]>
         let cultureParameter: Observable<CultureParameter>
     }
     
-    typealias Section = AnimatableSectionModel<String, String>
-    
-    private let sections: [Section] = [
-//        Section(model: "최근 검색어", items: ["test1", "test2", "test3", "test4", "test5"]),
-        Section(model: "카테고리", items: CodeName.allCases.map { $0.rawValue} )
+    private let sections: [SearchSection] = [
+//        SearchSection(model: "최근 검색어", items: ["test1", "test2", "test3", "test4", "test5"]),
+        SearchSection(model: "카테고리", items: CodeName.allCases.map { $0.rawValue} )
     ]
     
     private let disposeBag = DisposeBag()
     
     func transform(input: Input) -> Output {
         
+        let categoryList = BehaviorSubject(value: sections)
         let searchButtonTap = PublishSubject<CultureParameter>()
         let categorySelected = PublishSubject<CultureParameter>()
         
@@ -57,7 +54,7 @@ final class SearchViewModel: ViewModelType {
             .disposed(by: disposeBag)
         
         return Output(
-            categoryList: Observable.just(sections),
+            categoryList: categoryList,
             cultureParameter: Observable.merge(categorySelected, searchButtonTap)
         )
     }

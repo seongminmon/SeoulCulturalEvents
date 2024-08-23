@@ -10,23 +10,23 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
-struct SettingSection {
-    var header: String
-    var items: [Item]
-}
+//struct SettingSection {
+//    var header: String
+//    var items: [Item]
+//}
 // TODO: - AnimatableSectionModel로 바꿔보기
-extension SettingSection: AnimatableSectionModelType {
-    typealias Item = String
-    
-    init(original: SettingSection, items: [String]) {
-        self = original
-        self.items = items
-    }
-    
-    var identity: String {
-        return header
-    }
-}
+//extension SettingSection: AnimatableSectionModelType {
+//    typealias Item = String
+//    
+//    init(original: SettingSection, items: [String]) {
+//        self = original
+//        self.items = items
+//    }
+//    
+//    var identity: String {
+//        return header
+//    }
+//}
 
 final class ProfileViewModel: ViewModelType {
     
@@ -38,7 +38,10 @@ final class ProfileViewModel: ViewModelType {
         case delete = "탈퇴하기"
     }
     
-    let sectionData = [SettingSection(header: "보관함", items: SettingCellData.allCases.map { $0.rawValue })]
+    let sections: [SettingSection] = [
+        SettingSection(model: "보관함", items: SettingCellData.allCases.map { $0.rawValue } )
+    ]
+    
     private let disposeBag = DisposeBag()
     
     struct Input {
@@ -52,7 +55,7 @@ final class ProfileViewModel: ViewModelType {
     }
     
     struct Output {
-        let list: BehaviorSubject<[SettingSection]>
+        let settinglist: BehaviorSubject<[SettingSection]>
         let editButtonTap: ControlEvent<Void>
         let profile: PublishSubject<ProfileModel>
         let withdrawTap: PublishSubject<Void>
@@ -61,7 +64,7 @@ final class ProfileViewModel: ViewModelType {
     
     func transform(input: Input) -> Output {
         
-        let list = BehaviorSubject(value: sectionData)
+        let settinglist = BehaviorSubject(value: sections)
         let profile = PublishSubject<ProfileModel>()
         let withdrawTap = PublishSubject<Void>()
         let withdrawActionSuccess = PublishSubject<Void>()
@@ -117,7 +120,7 @@ final class ProfileViewModel: ViewModelType {
             .disposed(by: disposeBag)
         
         return Output(
-            list: list,
+            settinglist: settinglist,
             editButtonTap: input.editButtonTap,
             profile: profile,
             withdrawTap: withdrawTap,

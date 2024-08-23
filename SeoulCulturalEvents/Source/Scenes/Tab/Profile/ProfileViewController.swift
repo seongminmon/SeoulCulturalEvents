@@ -69,14 +69,17 @@ final class ProfileViewController: BaseViewController {
         let output = viewModel.transform(input: input)
         
         let dataSource = RxTableViewSectionedAnimatedDataSource<SettingSection> { dataSource, tableView, indexPath, item in
-            let cell = tableView.dequeueReusableCell(withIdentifier: ProfileTableViewCell.identifier, for: indexPath) as! ProfileTableViewCell
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileTableViewCell.identifier, for: indexPath) as? ProfileTableViewCell else {
+                return UITableViewCell()
+            }
             cell.configureCell(title: item)
             return cell
         } titleForHeaderInSection: { [weak self] dataSource, row in
-            return self?.viewModel.sectionData[row].header
+            guard let header = self?.viewModel.sections[row].model else { return ""}
+            return header
         }
         
-        output.list
+        output.settinglist
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         

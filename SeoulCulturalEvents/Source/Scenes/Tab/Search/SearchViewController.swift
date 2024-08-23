@@ -44,7 +44,7 @@ final class SearchViewController: BaseViewController {
         )
         let output = viewModel.transform(input: input)
         
-        let dataSource = RxCollectionViewSectionedAnimatedDataSource<AnimatableSectionModel<String, String>> { dataSource, collectionView, indexPath, item in
+        let dataSource = RxCollectionViewSectionedAnimatedDataSource<SearchSection> { dataSource, collectionView, indexPath, item in
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: CategoryCollectionViewCell.identifier,
                 for: indexPath

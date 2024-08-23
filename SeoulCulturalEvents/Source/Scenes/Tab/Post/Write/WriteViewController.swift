@@ -14,6 +14,8 @@ import Then
 
 final class WriteViewController: BaseViewController {
     
+    // TODO: - contents입력시 키보드 아래로 들어가는 문제
+    
     private let completeButton = UIBarButtonItem(title: "완료")
     private let scrollView = UIScrollView()
     private let contentView = UIView()
@@ -45,8 +47,6 @@ final class WriteViewController: BaseViewController {
         output.completeButtonEnabled
             .bind(to: completeButton.rx.isEnabled)
             .disposed(by: disposeBag)
-        
-        // TODO: - contents입력시 키보드 위로 스크롤 올려주기
         
     }
     
