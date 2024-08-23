@@ -13,12 +13,11 @@ import Then
 
 final class PostViewController: BaseViewController {
     
-    // MARK: - viewDidLoad에서 통신하는 대신 당겨서 새로고침으로 리로드하기
-    // 항상 최신 데이터를 보장하는 것은 아님
-    // ex) 디테일화면에서 댓글이나 좋아요를 하더라도 새로고침전엔 반영 X
+    // MARK: - viewWillAppear에서 통신하는 대신 당겨서 새로고침으로 리로드
+    // >> 항상 최신 데이터를 보장하는 것은 아님
+    // ex) 디테일화면에서 댓글이나 좋아요를 하더라도 새로고침 전엔 반영 X
     
     // TODO: - 페이지네이션
-    // TODO: - 글쓰기 버튼 만들기
     
     private let refreshControl = UIRefreshControl()
     private lazy var collectionView = UICollectionView(

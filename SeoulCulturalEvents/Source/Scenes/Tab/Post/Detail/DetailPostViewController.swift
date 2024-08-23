@@ -14,7 +14,6 @@ import Then
 final class DetailPostViewController: BaseViewController {
     
     // TODO: - 댓글 화면 만들기 + 댓글화면으로 이동
-    // TODO: - 이미지 컬렉션뷰 페이징 넘버 표시 ex) 1/5
     
     private let likeButton = UIBarButtonItem().then {
         $0.image = .emptyHeart
@@ -28,11 +27,7 @@ final class DetailPostViewController: BaseViewController {
         $0.font = .bold20
         $0.numberOfLines = 0
     }
-    private let contentsLabel = UILabel().then {
-        $0.font = .regular15
-        $0.numberOfLines = 0
-    }
-    private let collectionView = UICollectionView(
+    private lazy var collectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: .imageLayout()
     ).then {
@@ -40,8 +35,14 @@ final class DetailPostViewController: BaseViewController {
             ImageCollectionViewCell.self,
             forCellWithReuseIdentifier: ImageCollectionViewCell.identifier
         )
+        // MARK: - 이미지 긴 경우 세로스크롤이 되어서 막아둠
         $0.isScrollEnabled = false
     }
+    private let contentsLabel = UILabel().then {
+        $0.font = .regular15
+        $0.numberOfLines = 0
+    }
+//    private let commentButton = UIButton()
     
     init(viewModel: DetailPostViewModel) {
         self.viewModel = viewModel
@@ -59,12 +60,15 @@ final class DetailPostViewController: BaseViewController {
     }
     
     override func bind() {
-        
         let input = DetailPostViewModel.Input(
             viewDidLoad: Observable.just(()),
             likeButtonTap: likeButton.rx.tap
         )
         let output = viewModel.transform(input: input)
+        
+        output.navigationTitle
+            .bind(to: navigationItem.rx.title)
+            .disposed(by: disposeBag)
         
         output.post
             .bind(with: self) { owner, data in
@@ -95,8 +99,8 @@ final class DetailPostViewController: BaseViewController {
         [
             userInfoView,
             titleLabel,
-            contentsLabel,
-            collectionView
+            collectionView,
+            contentsLabel
         ].forEach { contentView.addSubview($0) }
         scrollView.addSubview(contentView)
         view.addSubview(scrollView)
@@ -116,14 +120,14 @@ final class DetailPostViewController: BaseViewController {
             make.top.equalTo(userInfoView.snp.bottom).offset(16)
             make.horizontalEdges.equalToSuperview().inset(8)
         }
-        contentsLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(8)
-            make.horizontalEdges.equalToSuperview().inset(8)
-        }
         collectionView.snp.makeConstraints { make in
-            make.top.equalTo(contentsLabel.snp.bottom).offset(8)
+            make.top.equalTo(titleLabel.snp.bottom).offset(16)
             make.horizontalEdges.equalToSuperview()
-            make.height.equalTo(collectionView.snp.width)
+            make.height.equalTo(collectionView.snp.width).multipliedBy(0.8)
+        }
+        contentsLabel.snp.makeConstraints { make in
+            make.top.equalTo(collectionView.snp.bottom).offset(16)
+            make.horizontalEdges.equalToSuperview().inset(8)
             make.bottom.equalToSuperview().inset(16)
         }
     }

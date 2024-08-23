@@ -24,16 +24,18 @@ final class DetailPostViewModel: ViewModelType {
     }
     
     struct Output {
+        let navigationTitle: PublishSubject<String?>
         let post: PublishSubject<PostModel>
         let imageList: PublishSubject<[String]>
-        let isLike: BehaviorSubject<Bool>
+        let isLike: PublishSubject<Bool>
     }
     
     func transform(input: Input) -> Output {
 
+        let navigationTitle = PublishSubject<String?>()
         let post = PublishSubject<PostModel>()
         let imageList = PublishSubject<[String]>()
-        let isLike = BehaviorSubject<Bool>(value: false)
+        let isLike = PublishSubject<Bool>()
         
         // MARK: - 후기 화면 데이터가 최신 상태가 아닐 수 있으므로 새롭게 통신
         // 특정 포스트 조회 통신
@@ -50,6 +52,7 @@ final class DetailPostViewModel: ViewModelType {
                 case .success(let data):
                     print("특정 포스트 조회 통신 성공")
                     post.onNext(data)
+                    navigationTitle.onNext(data.title)
                     imageList.onNext(data.files)
                     isLike.onNext(data.likes.contains(UserDefaultsManager.shared.userID))
                     
@@ -79,9 +82,10 @@ final class DetailPostViewModel: ViewModelType {
             .disposed(by: disposeBag)
         
         return Output(
-        post: post,
-        imageList: imageList,
-        isLike: isLike
+            navigationTitle: navigationTitle,
+            post: post,
+            imageList: imageList,
+            isLike: isLike
         )
     }
 }

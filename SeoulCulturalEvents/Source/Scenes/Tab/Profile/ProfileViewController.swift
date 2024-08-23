@@ -58,7 +58,7 @@ final class ProfileViewController: BaseViewController {
         let newProfile = PublishSubject<ProfileModel>()
         
         let input = ProfileViewModel.Input(
-            viewDidLoad: Observable.just(()),
+            viewWillAppear: rx.viewWillAppear,
             editButtonTap: editButton.rx.tap,
             followerButtonTap: followerButton.rx.tap,
             followingButtonTap: followingButton.rx.tap,

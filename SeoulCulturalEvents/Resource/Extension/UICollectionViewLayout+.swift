@@ -47,13 +47,14 @@ extension UICollectionViewLayout {
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
         let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1),
-            heightDimension: .fractionalWidth(1)
+            widthDimension: .fractionalWidth(0.8),
+            heightDimension: .fractionalWidth(0.8)
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
 
         let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .groupPaging
+        section.orthogonalScrollingBehavior = .groupPagingCentered
+        section.interGroupSpacing = 10
         
         let layout = UICollectionViewCompositionalLayout(section: section)
         return layout

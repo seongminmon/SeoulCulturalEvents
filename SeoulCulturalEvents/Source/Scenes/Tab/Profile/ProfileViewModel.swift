@@ -42,7 +42,7 @@ final class ProfileViewModel: ViewModelType {
     private let disposeBag = DisposeBag()
     
     struct Input {
-        let viewDidLoad: Observable<Void>
+        let viewWillAppear: ControlEvent<Bool>
         let editButtonTap: ControlEvent<Void>
         let followerButtonTap: ControlEvent<Void>
         let followingButtonTap: ControlEvent<Void>
@@ -67,7 +67,7 @@ final class ProfileViewModel: ViewModelType {
         let withdrawActionSuccess = PublishSubject<Void>()
         
         // 내 프로필 조회 통신하기
-        input.viewDidLoad
+        input.viewWillAppear
             .flatMap { _ in
                 LSLPAPIManager.shared.callRequestWithRetry(api: .fetchProfile, model: ProfileModel.self)
             }
