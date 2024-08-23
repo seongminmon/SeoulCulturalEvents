@@ -40,23 +40,22 @@ extension UICollectionViewLayout {
     }
     
     static func imageLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewFlowLayout()
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .fractionalWidth(1)
+        )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .fractionalWidth(1)
+        )
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .groupPaging
         
-        let sectionSpacing: CGFloat = 10
-        let cellSpacing: CGFloat = 10
-        let cellCount: CGFloat = 1
-        let rate: CGFloat = 1
-        
-        // 셀 사이즈
-        let totalWidth = UIScreen.main.bounds.width - 2 * sectionSpacing - (cellCount-1) * cellSpacing
-        let width = totalWidth / cellCount
-        let height = width * rate
-        layout.itemSize = CGSize(width: width, height: height)
-        layout.scrollDirection = .vertical
-        layout.minimumInteritemSpacing = cellSpacing
-        layout.minimumLineSpacing = cellSpacing
-        layout.sectionInset = UIEdgeInsets(top: sectionSpacing, left: sectionSpacing, bottom: sectionSpacing, right: sectionSpacing)
-        
+        let layout = UICollectionViewCompositionalLayout(section: section)
         return layout
     }
     
