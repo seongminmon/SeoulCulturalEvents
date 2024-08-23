@@ -13,8 +13,8 @@ import Then
 
 final class PostViewController: BaseViewController {
     
-    // MARK: - viewWillAppear에서 통신하는 대신 당겨서 새로고침으로 리로드
-    // >> 항상 최신 데이터를 보장하는 것은 아님
+    // MARK: - viewWillAppear 대신 당겨서 새로고침으로 리로드하도록 구현
+    // >>> 항상 최신 데이터를 보장하는 것은 아님
     // ex) 디테일화면에서 댓글이나 좋아요를 하더라도 새로고침 전엔 반영 X
     
     // TODO: - 페이지네이션
@@ -91,7 +91,7 @@ final class PostViewController: BaseViewController {
     }
     
     override func setNavigationBar() {
-        navigationItem.title = "후기"
+        navigationItem.title = "후기 둘러보기"
     }
     
     override func setLayout() {

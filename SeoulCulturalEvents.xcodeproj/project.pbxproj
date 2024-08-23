@@ -35,6 +35,7 @@
 		24AB4BD62C7854750030558A /* LikeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AB4BD52C7854750030558A /* LikeModel.swift */; };
 		24AB4BD92C78732F0030558A /* WriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AB4BD82C78732F0030558A /* WriteViewController.swift */; };
 		24AB4BDB2C7873480030558A /* WriteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AB4BDA2C7873480030558A /* WriteViewModel.swift */; };
+		24AB4BE32C78B50B0030558A /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 24AB4BE22C78B50B0030558A /* IQKeyboardManagerSwift */; };
 		24B2B63F2C6C948100190BFC /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B63E2C6C948100190BFC /* TabBarController.swift */; };
 		24B2B6412C6C951C00190BFC /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B6402C6C951C00190BFC /* SearchViewController.swift */; };
 		24B2B6432C6C956700190BFC /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B6422C6C956700190BFC /* PostViewController.swift */; };
@@ -197,6 +198,7 @@
 				24B2B66D2C6CCAD700190BFC /* RxSwift in Frameworks */,
 				24B2B66B2C6CCAD700190BFC /* RxCocoa in Frameworks */,
 				24B2B6842C6CD50F00190BFC /* Toast in Frameworks */,
+				24AB4BE32C78B50B0030558A /* IQKeyboardManagerSwift in Frameworks */,
 				24B2B6CA2C6F138700190BFC /* RxDataSources in Frameworks */,
 				24B2B6992C6CE0CD00190BFC /* ReactiveMoya in Frameworks */,
 				24B2B6C82C6F138700190BFC /* Differentiator in Frameworks */,
@@ -372,8 +374,8 @@
 			children = (
 				24B2B6422C6C956700190BFC /* PostViewController.swift */,
 				24AB4BC72C7738690030558A /* PostViewModel.swift */,
-				24AB4BCC2C7753DB0030558A /* Detail */,
 				24AB4BD72C7873240030558A /* Write */,
+				24AB4BCC2C7753DB0030558A /* Detail */,
 			);
 			path = Post;
 			sourceTree = "<group>";
@@ -606,6 +608,7 @@
 				24B2B69A2C6CE0CD00190BFC /* RxMoya */,
 				24B2B6C72C6F138700190BFC /* Differentiator */,
 				24B2B6C92C6F138700190BFC /* RxDataSources */,
+				24AB4BE22C78B50B0030558A /* IQKeyboardManagerSwift */,
 			);
 			productName = SeoulCulturalEvents;
 			productReference = 240E0A8E2C6C7E8B003A212B /* SeoulCulturalEvents.app */;
@@ -643,6 +646,7 @@
 				24B2B6822C6CD50F00190BFC /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 				24B2B6952C6CE0CD00190BFC /* XCRemoteSwiftPackageReference "Moya" */,
 				24B2B6C62C6F138700190BFC /* XCRemoteSwiftPackageReference "RxDataSources" */,
+				24AB4BE12C78B50B0030558A /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 			);
 			productRefGroup = 240E0A8F2C6C7E8B003A212B /* Products */;
 			projectDirPath = "";
@@ -975,6 +979,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		24AB4BE12C78B50B0030558A /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.1.1;
+			};
+		};
 		24B2B6602C6CCAA900190BFC /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher";
@@ -1034,6 +1046,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		24AB4BE22C78B50B0030558A /* IQKeyboardManagerSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 24AB4BE12C78B50B0030558A /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
+			productName = IQKeyboardManagerSwift;
+		};
 		24B2B6612C6CCAA900190BFC /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 24B2B6602C6CCAA900190BFC /* XCRemoteSwiftPackageReference "Kingfisher" */;

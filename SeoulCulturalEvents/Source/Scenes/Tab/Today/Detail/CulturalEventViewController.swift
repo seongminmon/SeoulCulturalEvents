@@ -18,9 +18,7 @@ final class CulturalEventViewController: BaseViewController {
         $0.image = .emptyHeart
         $0.tintColor = .systemRed
     }
-    private let scrollView = UIScrollView().then {
-        $0.showsHorizontalScrollIndicator = false
-    }
+    private let scrollView = UIScrollView()
     private let contentView = UIView()
     private let posterImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
@@ -153,7 +151,8 @@ final class CulturalEventViewController: BaseViewController {
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
         contentView.snp.makeConstraints { make in
-            make.width.verticalEdges.equalToSuperview()
+            make.edges.equalToSuperview()
+            make.width.equalToSuperview()
         }
         posterImageView.snp.makeConstraints { make in
             make.top.horizontalEdges.equalToSuperview()

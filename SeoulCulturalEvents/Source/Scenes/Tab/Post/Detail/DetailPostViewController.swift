@@ -109,7 +109,8 @@ final class DetailPostViewController: BaseViewController {
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
         contentView.snp.makeConstraints { make in
-            make.width.verticalEdges.equalToSuperview()
+            make.edges.equalToSuperview()
+            make.width.equalToSuperview()
         }
         userInfoView.snp.makeConstraints { make in
             make.top.equalToSuperview()
