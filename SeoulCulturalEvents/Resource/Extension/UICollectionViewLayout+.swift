@@ -66,7 +66,6 @@ extension UICollectionViewLayout {
         let spacing: CGFloat = 10
         let cellCount: CGFloat = 1
         
-        // 셀 사이즈
         let totalWidth = UIScreen.main.bounds.width - 2 * spacing - (cellCount-1) * spacing
         let width = totalWidth / cellCount
         let height: CGFloat = 100
@@ -74,6 +73,20 @@ extension UICollectionViewLayout {
         layout.scrollDirection = .vertical
         layout.minimumInteritemSpacing = spacing
         layout.minimumLineSpacing = spacing
+        
+        return layout
+    }
+    
+    static func uploadImageLayout() -> UICollectionViewLayout {
+        let layout = UICollectionViewFlowLayout()
+        
+        let spacing: CGFloat = 10
+        let width: CGFloat = 60
+        let height: CGFloat = 60
+        layout.itemSize = CGSize(width: width, height: height)
+        layout.scrollDirection = .horizontal
+        layout.minimumInteritemSpacing = spacing
+//        layout.minimumLineSpacing = spacing
         
         return layout
     }

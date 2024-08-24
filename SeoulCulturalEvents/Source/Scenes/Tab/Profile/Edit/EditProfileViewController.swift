@@ -145,7 +145,7 @@ extension EditProfileViewController: PHPickerViewControllerDelegate {
             if let image = object as? UIImage {
                 DispatchQueue.main.async {
                     self?.profileImageView.image = image
-                    self?.profileImageData.onNext(image.pngData())
+                    self?.profileImageData.onNext(image.jpegData(compressionQuality: 0.5))
                 }
             }
         }

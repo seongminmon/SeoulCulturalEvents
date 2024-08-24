@@ -71,6 +71,7 @@ final class SignUpViewModel: ViewModelType {
                                 
                             case .failure(let error):
                                 print("로그인 실패")
+                                print(error)
                                 signUpFailure.onNext("로그인 실패")
                             }
                         }
@@ -78,6 +79,7 @@ final class SignUpViewModel: ViewModelType {
                     
                 case .failure(let error):
                     print("회원 가입 실패")
+                    print(error)
                     signUpFailure.onNext("회원 가입 실패")
                 }
             }

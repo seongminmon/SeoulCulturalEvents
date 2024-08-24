@@ -82,6 +82,12 @@ final class PostViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
+        output.postList
+            .bind(with: self) { owner, _ in
+                owner.refreshControl.endRefreshing()
+            }
+            .disposed(by: disposeBag)
+        
         writeButton.rx.tap
             .bind(with: self) { owner, _ in
                 let vc = WriteViewController()

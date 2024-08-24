@@ -7,6 +7,8 @@
 
 import Foundation
 
+// TODO: - property wrapper
+
 final class UserDefaultsManager {
     static let shared = UserDefaultsManager()
     private init() {}

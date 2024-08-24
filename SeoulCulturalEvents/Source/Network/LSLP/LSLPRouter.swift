@@ -20,7 +20,7 @@ enum LSLPRouter {
     // MARK: - 포스트
     case fetchPostList(query: PostFetchQuery)
     case fetchPost(postID: String)
-    case postImageFiles(files: [Data?])
+    case postImageFiles(files: [Data])
     case createPost(query: PostQuery)
     case deletePost(postID: String)
     case postLike(postID: String, query: LikeModel)
@@ -122,8 +122,12 @@ extension LSLPRouter: TargetType {
             
             // 프로필 이미지 추가
             if let profileData = query.profile {
-                let uniqueFileName = UUID().uuidString + ".png"
-                let profileFormData = MultipartFormData(provider: .data(profileData), name: "profile", fileName: uniqueFileName, mimeType: "image/png")
+                let profileFormData = MultipartFormData(
+                    provider: .data(profileData),
+                    name: "profile",
+                    fileName: "profile.jpg",
+                    mimeType: "image/jpeg"
+                )
                 multipartData.append(profileFormData)
             }
             
@@ -139,17 +143,15 @@ extension LSLPRouter: TargetType {
         case .fetchPost:
             return .requestPlain
         case .postImageFiles(let files):
-            var multipartData = [MultipartFormData]()
-            // 포스트 이미지 추가
-            for file in files {
-                if let data = file {
-                    let uniqueFileName = UUID().uuidString + ".png"
-                    let postFormData = MultipartFormData(provider: .data(data), name: "files", fileName: uniqueFileName, mimeType: "image/png")
-                    multipartData.append(postFormData)
-                }
+            let multipartFormData: [MultipartFormData] = files.enumerated().map { index, data in
+                MultipartFormData(
+                    provider: .data(data),
+                    name: "files",
+                    fileName: "files\(index).jpg",
+                    mimeType: "image/jpeg"
+                )
             }
-            return .uploadCompositeMultipart(multipartData, urlParameters: [:])
-            
+            return .uploadMultipart(multipartFormData)
         case .createPost(let query):
             return .requestJSONEncodable(query)
         case .deletePost:

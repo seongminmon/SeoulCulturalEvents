@@ -8,25 +8,6 @@
 import Foundation
 import RxSwift
 import RxCocoa
-import RxDataSources
-
-//struct SettingSection {
-//    var header: String
-//    var items: [Item]
-//}
-// TODO: - AnimatableSectionModel로 바꿔보기
-//extension SettingSection: AnimatableSectionModelType {
-//    typealias Item = String
-//    
-//    init(original: SettingSection, items: [String]) {
-//        self = original
-//        self.items = items
-//    }
-//    
-//    var identity: String {
-//        return header
-//    }
-//}
 
 final class ProfileViewModel: ViewModelType {
     
