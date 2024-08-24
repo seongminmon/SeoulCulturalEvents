@@ -56,8 +56,7 @@ final class WriteViewController: BaseViewController {
         $0.isScrollEnabled = false
     }
     
-    private let addImage = PublishSubject<Data?>()
-    private let removeAllImage = PublishSubject<Void>()
+    private let imageList = BehaviorSubject<[Data?]>(value: [])
     private let viewModel = WriteViewModel()
     
     override func viewDidLoad() {
@@ -70,8 +69,7 @@ final class WriteViewController: BaseViewController {
             addImageButtonTap: addImageButton.rx.tap,
             titleText: titleTextField.rx.text.orEmpty,
             contentsText: contentsTextView.rx.text.orEmpty,
-            addImage: addImage,
-            removeAllImage: removeAllImage
+            imageList: imageList
         )
         let output = viewModel.transform(input: input)
         
@@ -172,16 +170,27 @@ final class WriteViewController: BaseViewController {
 extension WriteViewController: PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         picker.dismiss(animated: true)
-        removeAllImage.onNext(())
+        showLoadingToast()
         
-        // TODO: - dispatchGroup
+        let dispatchGroup = DispatchGroup()
+        var tempList = [Data?]()
         
         for result in results {
             guard result.itemProvider.canLoadObject(ofClass: UIImage.self) else { continue }
-            result.itemProvider.loadObject(ofClass: UIImage.self) { [weak self] object, error in
+            dispatchGroup.enter()
+            result.itemProvider.loadObject(ofClass: UIImage.self) { object, error in
                 if let image = object as? UIImage {
-                    self?.addImage.onNext(image.jpegData(compressionQuality: 0.5))
+                    let data = image.jpegData(compressionQuality: 0.5)
+                    tempList.append(data)
                 }
+                dispatchGroup.leave()
+            }
+        }
+        
+        dispatchGroup.notify(queue: .main) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                self.imageList.onNext(tempList)
+                self.hideLoadingToast()
             }
         }
     }
