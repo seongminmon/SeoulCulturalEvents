@@ -21,6 +21,5 @@ extension UIImage {
     static let arrow = UIImage(systemName: "arrow.down.backward.and.arrow.up.forward")
     static let pencil = UIImage(systemName: "pencil")!
     static let camera = UIImage(systemName: "camera.fill")!
-//    static let star = UIImage(systemName: "star.fill")!
-//    static let circle = UIImage(systemName: "circle.fill")!
+    static let paperplane = UIImage(systemName: "paperplane")!
 }

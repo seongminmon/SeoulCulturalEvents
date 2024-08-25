@@ -11,16 +11,15 @@ import RxCocoa
 
 final class ProfileViewModel: ViewModelType {
     
-    private enum SettingCellData: String, CaseIterable {
+    private enum Storage: String, CaseIterable {
         case likeCulturalEvent = "관심 행사"
         case likePost = "관심 후기"
-        case myPost = "내가 쓴 후기"
-//        case alarm = "내가 쓴 코멘트"
+        case myPost = "내 후기"
 //        case delete = "탈퇴하기"
     }
     
     let sections: [SettingSection] = [
-        SettingSection(model: "보관함", items: SettingCellData.allCases.map { $0.rawValue } )
+        SettingSection(model: "보관함", items: Storage.allCases.map { $0.rawValue } )
     ]
     
     private let disposeBag = DisposeBag()
@@ -30,7 +29,7 @@ final class ProfileViewModel: ViewModelType {
         let editButtonTap: ControlEvent<Void>
         let followerButtonTap: ControlEvent<Void>
         let followingButtonTap: ControlEvent<Void>
-        let cellTap: ControlEvent<IndexPath>
+        let cellTap: ControlEvent<String>
         let withdrawAction: PublishSubject<Void>
         let newProfile: PublishSubject<ProfileModel>
     }
@@ -59,6 +58,7 @@ final class ProfileViewModel: ViewModelType {
                 switch result {
                 case .success(let data):
                     print("프로필 조회 성공")
+                    dump(data)
                     profile.onNext(data)
                 case .failure(let error):
                     print("프로필 조회 실패")
@@ -68,12 +68,15 @@ final class ProfileViewModel: ViewModelType {
             .disposed(by: disposeBag)
         
         input.cellTap
-            .subscribe(with: self) { owner, indexPath in
-                switch indexPath.row {
-                case 4:
-                    withdrawTap.onNext(())
-                default:
-                    break
+            .subscribe(with: self) { owner, rawValue in
+                guard let storage = Storage(rawValue: rawValue) else { return }
+                switch storage {
+                case .likeCulturalEvent:
+                    print("관심 행사 탭")
+                case .likePost:
+                    print("관심 후기 탭")
+                case .myPost:
+                    print("내 후기 탭")
                 }
             }
             .disposed(by: disposeBag)

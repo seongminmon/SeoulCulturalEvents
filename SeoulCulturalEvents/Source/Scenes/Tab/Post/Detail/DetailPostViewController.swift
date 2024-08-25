@@ -42,7 +42,10 @@ final class DetailPostViewController: BaseViewController {
         $0.font = .regular15
         $0.numberOfLines = 0
     }
-//    private let commentButton = UIButton()
+    private let commentButton = UIButton().then {
+        $0.setTitle("댓글", for: .normal)
+        $0.setTitleColor(.gray, for: .normal)
+    }
     
     init(viewModel: DetailPostViewModel) {
         self.viewModel = viewModel
@@ -62,7 +65,8 @@ final class DetailPostViewController: BaseViewController {
     override func bind() {
         let input = DetailPostViewModel.Input(
             viewDidLoad: Observable.just(()),
-            likeButtonTap: likeButton.rx.tap
+            likeButtonTap: likeButton.rx.tap,
+            commentButtonTap: commentButton.rx.tap
         )
         let output = viewModel.transform(input: input)
         
@@ -89,6 +93,15 @@ final class DetailPostViewController: BaseViewController {
             .map { $0 ? UIImage.fillHeart : UIImage.emptyHeart }
             .bind(to: likeButton.rx.image)
             .disposed(by: disposeBag)
+        
+        output.commentButtonTap
+            .bind(with: self) { owner, value in
+                let vm = CommentViewModel(commentList: value)
+                let vc = CommentViewController(viewModel: vm)
+                let nav = UINavigationController(rootViewController: vc)
+                owner.present(nav, animated: true)
+            }
+            .disposed(by: disposeBag)
     }
     
     override func setNavigationBar() {
@@ -100,7 +113,8 @@ final class DetailPostViewController: BaseViewController {
             userInfoView,
             titleLabel,
             collectionView,
-            contentsLabel
+            contentsLabel,
+            commentButton
         ].forEach { contentView.addSubview($0) }
         scrollView.addSubview(contentView)
         view.addSubview(scrollView)
@@ -128,6 +142,10 @@ final class DetailPostViewController: BaseViewController {
         }
         contentsLabel.snp.makeConstraints { make in
             make.top.equalTo(collectionView.snp.bottom).offset(16)
+            make.horizontalEdges.equalToSuperview().inset(8)
+        }
+        commentButton.snp.makeConstraints { make in
+            make.top.equalTo(contentsLabel.snp.bottom).offset(8)
             make.horizontalEdges.equalToSuperview().inset(8)
             make.bottom.equalToSuperview().inset(16)
         }

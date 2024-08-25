@@ -44,7 +44,7 @@ final class ProfileViewController: BaseViewController {
             editButtonTap: profileView.editButton.rx.tap,
             followerButtonTap: profileView.followerButton.rx.tap,
             followingButtonTap: profileView.followingButton.rx.tap,
-            cellTap: tableView.rx.itemSelected,
+            cellTap: tableView.rx.modelSelected(String.self),
             withdrawAction: withdrawAction,
             newProfile: newProfile
         )
@@ -85,7 +85,10 @@ final class ProfileViewController: BaseViewController {
         
         output.withdrawTap
             .bind(with: self) { owner, _ in
-                owner.showWithdrawAlert(title: "탈퇴하기", message: "정말 탈퇴하시겠습니까?", actionTitle: "탈퇴하기") { _ in
+                owner.showWithdrawAlert(
+                    title: "탈퇴하기",
+                    message: "모든 정보가 사라집니다. 정말 탈퇴하시겠습니까?",
+                    actionTitle: "탈퇴하기") { _ in
                     withdrawAction.onNext(())
                 }
             }
