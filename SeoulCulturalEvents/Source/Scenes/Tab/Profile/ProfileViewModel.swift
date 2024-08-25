@@ -13,10 +13,10 @@ final class ProfileViewModel: ViewModelType {
     
     private enum SettingCellData: String, CaseIterable {
         case likeCulturalEvent = "관심 행사"
-        case likePost = "관심 포스트"
-        case myPost = "내가 쓴 포스트"
-        case alarm = "내가 쓴 코멘트"
-        case delete = "탈퇴하기"
+        case likePost = "관심 후기"
+        case myPost = "내가 쓴 후기"
+//        case alarm = "내가 쓴 코멘트"
+//        case delete = "탈퇴하기"
     }
     
     let sections: [SettingSection] = [
@@ -78,20 +78,21 @@ final class ProfileViewModel: ViewModelType {
             }
             .disposed(by: disposeBag)
         
-        input.withdrawAction
-            .flatMap { LSLPAPIManager.shared.callRequestWithRetry(api: .withdraw, model: SignUpModel.self) }
-            .subscribe(with: self) { owner, result in
-                switch result {
-                case .success(let data):
-                    print("탈퇴 성공")
-                    withdrawActionSuccess.onNext(())
-                    
-                case .failure(let error):
-                    print("탈퇴 실패")
-                    print(error.localizedDescription)
-                }
-            }
-            .disposed(by: disposeBag)
+        // MARK: - 탈퇴 기능 막아두기
+//        input.withdrawAction
+//            .flatMap { LSLPAPIManager.shared.callRequestWithRetry(api: .withdraw, model: SignUpModel.self) }
+//            .subscribe(with: self) { owner, result in
+//                switch result {
+//                case .success(let data):
+//                    print("탈퇴 성공")
+//                    withdrawActionSuccess.onNext(())
+//                    
+//                case .failure(let error):
+//                    print("탈퇴 실패")
+//                    print(error.localizedDescription)
+//                }
+//            }
+//            .disposed(by: disposeBag)
         
         // 프로필 수정 화면에서 받아온 데이터 넘겨주기
         input.newProfile

@@ -15,25 +15,7 @@ import Then
 
 final class ProfileViewController: BaseViewController {
     
-    private let profileContainerView = UIView()
-    private let profileImageView = ProfileImageView()
-    private let nicknameLabel = UILabel().then {
-        $0.font = .bold16
-    }
-    private let followerButton = UIButton().then {
-        $0.titleLabel?.textAlignment = .left
-        $0.titleLabel?.font = .bold16
-        $0.setTitleColor(.black, for: .normal)
-    }
-    private let followingButton = UIButton().then {
-        $0.titleLabel?.font = .bold16
-        $0.titleLabel?.textAlignment = .left
-        $0.setTitleColor(.black, for: .normal)
-    }
-    private let editButton = UIButton().then {
-        $0.setImage(.chevron, for: .normal)
-        $0.tintColor = .black
-    }
+    private let profileView = ProfileView()
     private let separator = UIView().then {
         $0.backgroundColor = .systemGray3
     }
@@ -59,10 +41,10 @@ final class ProfileViewController: BaseViewController {
         
         let input = ProfileViewModel.Input(
             viewWillAppear: rx.viewWillAppear,
-            editButtonTap: editButton.rx.tap,
-            followerButtonTap: followerButton.rx.tap,
-            followingButtonTap: followingButton.rx.tap,
-            cellTap: tableView.rx.itemSelected, 
+            editButtonTap: profileView.editButton.rx.tap,
+            followerButtonTap: profileView.followerButton.rx.tap,
+            followingButtonTap: profileView.followingButton.rx.tap,
+            cellTap: tableView.rx.itemSelected,
             withdrawAction: withdrawAction,
             newProfile: newProfile
         )
@@ -75,7 +57,7 @@ final class ProfileViewController: BaseViewController {
             cell.configureCell(title: item)
             return cell
         } titleForHeaderInSection: { [weak self] dataSource, row in
-            guard let header = self?.viewModel.sections[row].model else { return ""}
+            let header = self?.viewModel.sections[row].model ?? ""
             return header
         }
         
@@ -85,15 +67,7 @@ final class ProfileViewController: BaseViewController {
         
         output.profile
             .bind(with: self) { owner, profile in
-                let parameter = (profile.profileImage ?? "").getKFParameter()
-                owner.profileImageView.kf.setImage(
-                    with: parameter.url,
-                    placeholder: UIImage.person,
-                    options: [.requestModifier(parameter.modifier)]
-                )
-                owner.nicknameLabel.text = profile.nick
-                owner.followerButton.setTitle("팔로워 \(profile.followers.count)", for: .normal)
-                owner.followingButton.setTitle("팔로잉 \(profile.following.count)", for: .normal)
+                owner.profileView.configureView(profile)
             }
             .disposed(by: disposeBag)
         
@@ -129,52 +103,17 @@ final class ProfileViewController: BaseViewController {
     }
 
     override func setLayout() {
-        [profileImageView, nicknameLabel, followerButton, followingButton, editButton].forEach {
-            profileContainerView.addSubview($0)
-        }
-        
-        [profileContainerView, tableView, separator].forEach {
+        [profileView, tableView, separator].forEach {
             view.addSubview($0)
         }
         
-        profileContainerView.snp.makeConstraints { make in
+        profileView.snp.makeConstraints { make in
             make.top.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(150)
         }
         
-        profileImageView.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.leading.equalToSuperview().inset(16)
-            make.size.equalTo(100)
-        }
-        
-        nicknameLabel.snp.makeConstraints { make in
-            make.top.equalTo(profileImageView).inset(16)
-            make.leading.equalTo(profileImageView.snp.trailing).offset(16)
-            make.trailing.equalTo(editButton.snp.leading)
-            make.height.equalTo(30)
-        }
-        
-        followerButton.snp.makeConstraints { make in
-            make.bottom.equalTo(profileImageView).inset(16)
-            make.leading.equalTo(nicknameLabel)
-            make.height.equalTo(30)
-        }
-        
-        followingButton.snp.makeConstraints { make in
-            make.bottom.equalTo(profileImageView).inset(16)
-            make.leading.equalTo(followerButton.snp.trailing).offset(8)
-            make.height.equalTo(30)
-        }
-        
-        editButton.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.trailing.equalToSuperview().inset(16)
-            make.size.equalTo(40)
-        }
-        
         separator.snp.makeConstraints { make in
-            make.top.equalTo(profileContainerView.snp.bottom)
+            make.top.equalTo(profileView.snp.bottom)
             make.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(0.3)
         }

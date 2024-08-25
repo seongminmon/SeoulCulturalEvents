@@ -23,6 +23,7 @@
 		245D38642C75E079006E282D /* SearchResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245D38632C75E079006E282D /* SearchResultViewModel.swift */; };
 		245D38672C7601EF006E282D /* CultureParameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245D38662C7601EF006E282D /* CultureParameter.swift */; };
 		245D386C2C76223C006E282D /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245D386B2C76223C006E282D /* MapViewController.swift */; };
+		247A60092C79D01500906909 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247A60082C79D01500906909 /* ProfileView.swift */; };
 		24AB4BC22C7724C70030558A /* UserInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AB4BC12C7724C70030558A /* UserInfoView.swift */; };
 		24AB4BC42C7724FA0030558A /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AB4BC32C7724FA0030558A /* BaseView.swift */; };
 		24AB4BC62C7734890030558A /* PostImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AB4BC52C7734890030558A /* PostImageModel.swift */; };
@@ -122,6 +123,7 @@
 		245D38632C75E079006E282D /* SearchResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewModel.swift; sourceTree = "<group>"; };
 		245D38662C7601EF006E282D /* CultureParameter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CultureParameter.swift; sourceTree = "<group>"; };
 		245D386B2C76223C006E282D /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		247A60082C79D01500906909 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		24AB4BC12C7724C70030558A /* UserInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoView.swift; sourceTree = "<group>"; };
 		24AB4BC32C7724FA0030558A /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		24AB4BC52C7734890030558A /* PostImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostImageModel.swift; sourceTree = "<group>"; };
@@ -432,6 +434,7 @@
 				24B2B6742C6CCF0A00190BFC /* PointButton.swift */,
 				24B2B6BA2C6EFB4500190BFC /* ProfileImageView.swift */,
 				24AB4BC12C7724C70030558A /* UserInfoView.swift */,
+				247A60082C79D01500906909 /* ProfileView.swift */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -750,6 +753,7 @@
 				24B2B6B32C6EEB9200190BFC /* RefreshModel.swift in Sources */,
 				24B2B6C52C6F107000190BFC /* BaseTableViewCell.swift in Sources */,
 				24B2B6BB2C6EFB4500190BFC /* ProfileImageView.swift in Sources */,
+				247A60092C79D01500906909 /* ProfileView.swift in Sources */,
 				24B2B6B92C6EF6B700190BFC /* ProfileViewModel.swift in Sources */,
 				24B2B6A22C6CEA5C00190BFC /* UserDefaultsManager.swift in Sources */,
 				24B2B6A52C6CEB9F00190BFC /* LSLPHeader.swift in Sources */,
