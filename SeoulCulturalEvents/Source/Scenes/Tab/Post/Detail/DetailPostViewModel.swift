@@ -54,7 +54,7 @@ final class DetailPostViewModel: ViewModelType {
                     post.onNext(data)
                     navigationTitle.onNext(data.title)
                     imageList.onNext(data.files)
-                    isLike.onNext(data.likes.contains(UserDefaultsManager.shared.userID))
+                    isLike.onNext(data.likes.contains(UserDefaultsManager.userID))
                     
                 case .failure(let error):
                     print("특정 포스트 조회 통신 성공")

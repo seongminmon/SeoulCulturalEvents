@@ -7,11 +7,11 @@
 
 import Foundation
 
-enum LSLPHeader: String {
-    case sesacKey = "SesacKey"
-    case contentType = "Content-Type"
-    case json = "application/json"
-    case multipart = "multipart/form-data"
-    case authorization = "Authorization"
-    case refresh = "Refresh"
+enum LSLPHeader {
+    static let sesacKey = "SesacKey"
+    static let contentType = "Content-Type"
+    static let json = "application/json"
+    static let multipart = "multipart/form-data"
+    static let authorization = "Authorization"
+    static let refresh = "Refresh"
 }

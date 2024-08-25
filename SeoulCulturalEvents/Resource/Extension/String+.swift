@@ -23,8 +23,8 @@ extension String {
         let url = URL(string: APIURL.lslpURL + "v1/" + self)
         let modifier = AnyModifier { request in
             var requestBody = request
-            requestBody.setValue(APIKey.lslpKey, forHTTPHeaderField: LSLPHeader.sesacKey.rawValue)
-            requestBody.setValue(UserDefaultsManager.shared.accessToken, forHTTPHeaderField: LSLPHeader.authorization.rawValue)
+            requestBody.setValue(APIKey.lslpKey, forHTTPHeaderField: LSLPHeader.sesacKey)
+            requestBody.setValue(UserDefaultsManager.accessToken, forHTTPHeaderField: LSLPHeader.authorization)
             return requestBody
         }
         return KFParameter(url: url, modifier: modifier)

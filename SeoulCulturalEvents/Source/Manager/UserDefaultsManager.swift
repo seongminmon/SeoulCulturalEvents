@@ -7,11 +7,22 @@
 
 import Foundation
 
-// TODO: - property wrapper
+@propertyWrapper
+struct UserDefault<T> {
+    let key: String
+    let defaultValue: T
+    
+    var wrappedValue: T {
+        get {
+            UserDefaults.standard.object(forKey: key) as? T ?? defaultValue
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: key)
+        }
+    }
+}
 
-final class UserDefaultsManager {
-    static let shared = UserDefaultsManager()
-    private init() {}
+enum UserDefaultsManager {
     
     private enum Key: String {
         case access
@@ -19,34 +30,28 @@ final class UserDefaultsManager {
         case userID
     }
     
-    var accessToken: String {
-        get { UserDefaults.standard.string(forKey: Key.access.rawValue) ?? "" }
-        set { UserDefaults.standard.set(newValue, forKey: Key.access.rawValue) }
+    @UserDefault(key: Key.access.rawValue, defaultValue: "")
+    static var accessToken
+    
+    @UserDefault(key: Key.refresh.rawValue, defaultValue: "")
+    static var refreshToken
+    
+    @UserDefault(key: Key.userID.rawValue, defaultValue: "")
+    static var userID
+    
+    static func refresh(_ access: String) {
+        UserDefaultsManager.accessToken = access
     }
     
-    var refreshToken: String {
-        get { UserDefaults.standard.string(forKey: Key.refresh.rawValue) ?? "" }
-        set { UserDefaults.standard.set(newValue, forKey: Key.refresh.rawValue) }
+    static func signIn(_ access: String, _ refresh: String, _ id: String) {
+        UserDefaultsManager.accessToken = access
+        UserDefaultsManager.refreshToken = refresh
+        UserDefaultsManager.userID = id
     }
     
-    var userID: String {
-        get { UserDefaults.standard.string(forKey: Key.userID.rawValue) ?? "" }
-        set { UserDefaults.standard.set(newValue, forKey: Key.userID.rawValue) }
-    }
-    
-    func refresh(_ access: String) {
-        accessToken = access
-    }
-    
-    func signIn(_ access: String, _ refresh: String, _ id: String) {
-        accessToken = access
-        refreshToken = refresh
-        userID = id
-    }
-    
-    func removeAll() {
-        accessToken = ""
-        refreshToken = ""
-        userID = ""
+    static func removeAll() {
+        UserDefaultsManager.accessToken = ""
+        UserDefaultsManager.refreshToken = ""
+        UserDefaultsManager.userID = ""
     }
 }

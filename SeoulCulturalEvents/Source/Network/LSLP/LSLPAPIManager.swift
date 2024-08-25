@@ -98,7 +98,7 @@ final class LSLPAPIManager {
                 do {
                     print("엑세스 토큰 갱신 성공")
                     let data = try response.map(RefreshModel.self)
-                    UserDefaultsManager.shared.refresh(data.accessToken)
+                    UserDefaultsManager.refresh(data.accessToken)
                     handler(.success(data))
                 } catch {
                     print("엑세스 토큰 갱신 디코딩 실패")
@@ -107,7 +107,7 @@ final class LSLPAPIManager {
                 
             case .failure(_):
                 print("엑세스 토큰 갱신 실패")
-                UserDefaultsManager.shared.removeAll()
+                UserDefaultsManager.removeAll()
                 handler(.failure(.refreshToken))
             }
         }
@@ -128,7 +128,7 @@ final class AuthInterceptor: RequestInterceptor {
         
         print("Adapt - 헤더 세팅")
         var urlRequest = urlRequest
-        urlRequest.setValue(UserDefaultsManager.shared.accessToken, forHTTPHeaderField: LSLPHeader.authorization.rawValue)
+        urlRequest.setValue(UserDefaultsManager.accessToken, forHTTPHeaderField: LSLPHeader.authorization)
         completion(.success(urlRequest))
     }
     

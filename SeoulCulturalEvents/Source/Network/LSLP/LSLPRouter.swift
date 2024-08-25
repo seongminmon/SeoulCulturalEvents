@@ -8,6 +8,48 @@
 import Foundation
 import Moya
 
+/*
+ ✅: 구현 완료 ⭐️: 구현 필요 ❌: 사용 X
+ 
+ - 회원인증
+    [✅] 회원가입
+    [❌] 이메일 중복 확인
+    [✅] 로그인
+    [✅] 엑세스 토큰 갱신
+    [✅] 탈퇴
+ 
+ - 포스트
+    [✅] 포스트 이미지 업로드
+    [✅] 포스트 작성
+    [✅] 포스트 조회
+    [✅] 특정 포스트 조회
+    [⭐️] 포스트 수정
+    [✅] 포스트 삭제
+    [⭐️] 유저별 작성한 포스트 조회
+ 
+    [❌] 해시태그 검색
+ 
+ - 댓글
+    [⭐️] 댓글 작성
+    [⭐️] 댓글 수정
+    [⭐️] 댓글 삭제
+ 
+ - 좋아요
+    [✅] 포스트 좋아요/좋아요 취소
+    [⭐️] 좋아요한 포스트 조회
+ 
+ - 팔로우
+    [⭐️] 팔로우
+    [⭐️] 팔로우 취소
+ 
+ - 프로필
+    [✅] 내 프로필 조회
+    [✅] 내 프로필 수정
+    [⭐️] 다른유저 프로필 조회
+    [⭐️] 유저검색
+ 
+ */
+
 enum LSLPRouter {
     // MARK: - 유저
     case signIn(query: SignInQuery)
@@ -165,75 +207,75 @@ extension LSLPRouter: TargetType {
         switch self {
         case .signIn:
             return [
-                LSLPHeader.sesacKey.rawValue: APIKey.lslpKey,
-                LSLPHeader.contentType.rawValue: LSLPHeader.json.rawValue
+                LSLPHeader.sesacKey: APIKey.lslpKey,
+                LSLPHeader.contentType: LSLPHeader.json
             ]
         case .signUp:
             return [
-                LSLPHeader.sesacKey.rawValue: APIKey.lslpKey,
-                LSLPHeader.contentType.rawValue: LSLPHeader.json.rawValue
+                LSLPHeader.sesacKey: APIKey.lslpKey,
+                LSLPHeader.contentType: LSLPHeader.json
             ]
         case .refresh:
             return [
-                LSLPHeader.sesacKey.rawValue: APIKey.lslpKey,
-                LSLPHeader.contentType.rawValue: LSLPHeader.json.rawValue,
-                LSLPHeader.authorization.rawValue: UserDefaultsManager.shared.accessToken,
-                LSLPHeader.refresh.rawValue: UserDefaultsManager.shared.refreshToken
+                LSLPHeader.sesacKey: APIKey.lslpKey,
+                LSLPHeader.contentType: LSLPHeader.json,
+                LSLPHeader.authorization: UserDefaultsManager.accessToken,
+                LSLPHeader.refresh: UserDefaultsManager.refreshToken
             ]
         case .withdraw:
             return [
-                LSLPHeader.sesacKey.rawValue: APIKey.lslpKey,
-                LSLPHeader.contentType.rawValue: LSLPHeader.json.rawValue,
-                LSLPHeader.authorization.rawValue: UserDefaultsManager.shared.accessToken
+                LSLPHeader.sesacKey: APIKey.lslpKey,
+                LSLPHeader.contentType: LSLPHeader.json,
+                LSLPHeader.authorization: UserDefaultsManager.accessToken
             ]
         case .fetchProfile:
             return [
-                LSLPHeader.sesacKey.rawValue: APIKey.lslpKey,
-                LSLPHeader.contentType.rawValue: LSLPHeader.json.rawValue,
-                LSLPHeader.authorization.rawValue: UserDefaultsManager.shared.accessToken
+                LSLPHeader.sesacKey: APIKey.lslpKey,
+                LSLPHeader.contentType: LSLPHeader.json,
+                LSLPHeader.authorization: UserDefaultsManager.accessToken
             ]
         case .editProfile:
             return [
-                LSLPHeader.sesacKey.rawValue: APIKey.lslpKey,
-                LSLPHeader.contentType.rawValue: LSLPHeader.multipart.rawValue,
-                LSLPHeader.authorization.rawValue: UserDefaultsManager.shared.accessToken
+                LSLPHeader.sesacKey: APIKey.lslpKey,
+                LSLPHeader.contentType: LSLPHeader.multipart,
+                LSLPHeader.authorization: UserDefaultsManager.accessToken
             ]
             
         case .fetchPostList:
             return [
-                LSLPHeader.sesacKey.rawValue: APIKey.lslpKey,
-                LSLPHeader.contentType.rawValue: LSLPHeader.json.rawValue,
-                LSLPHeader.authorization.rawValue: UserDefaultsManager.shared.accessToken
+                LSLPHeader.sesacKey: APIKey.lslpKey,
+                LSLPHeader.contentType: LSLPHeader.json,
+                LSLPHeader.authorization: UserDefaultsManager.accessToken
             ]
         case .fetchPost:
             return [
-                LSLPHeader.sesacKey.rawValue: APIKey.lslpKey,
-                LSLPHeader.contentType.rawValue: LSLPHeader.json.rawValue,
-                LSLPHeader.authorization.rawValue: UserDefaultsManager.shared.accessToken
+                LSLPHeader.sesacKey: APIKey.lslpKey,
+                LSLPHeader.contentType: LSLPHeader.json,
+                LSLPHeader.authorization: UserDefaultsManager.accessToken
             ]
         case .postImageFiles:
             return [
-                LSLPHeader.sesacKey.rawValue: APIKey.lslpKey,
-                LSLPHeader.contentType.rawValue: LSLPHeader.multipart.rawValue,
-                LSLPHeader.authorization.rawValue: UserDefaultsManager.shared.accessToken
+                LSLPHeader.sesacKey: APIKey.lslpKey,
+                LSLPHeader.contentType: LSLPHeader.multipart,
+                LSLPHeader.authorization: UserDefaultsManager.accessToken
             ]
         case .createPost:
             return [
-                LSLPHeader.sesacKey.rawValue: APIKey.lslpKey,
-                LSLPHeader.contentType.rawValue: LSLPHeader.json.rawValue,
-                LSLPHeader.authorization.rawValue: UserDefaultsManager.shared.accessToken
+                LSLPHeader.sesacKey: APIKey.lslpKey,
+                LSLPHeader.contentType: LSLPHeader.json,
+                LSLPHeader.authorization: UserDefaultsManager.accessToken
             ]
         case .deletePost:
             return [
-                LSLPHeader.sesacKey.rawValue: APIKey.lslpKey,
-                LSLPHeader.contentType.rawValue: LSLPHeader.json.rawValue,
-                LSLPHeader.authorization.rawValue: UserDefaultsManager.shared.accessToken
+                LSLPHeader.sesacKey: APIKey.lslpKey,
+                LSLPHeader.contentType: LSLPHeader.json,
+                LSLPHeader.authorization: UserDefaultsManager.accessToken
             ]
         case .postLike:
             return [
-                LSLPHeader.sesacKey.rawValue: APIKey.lslpKey,
-                LSLPHeader.contentType.rawValue: LSLPHeader.json.rawValue,
-                LSLPHeader.authorization.rawValue: UserDefaultsManager.shared.accessToken
+                LSLPHeader.sesacKey: APIKey.lslpKey,
+                LSLPHeader.contentType: LSLPHeader.json,
+                LSLPHeader.authorization: UserDefaultsManager.accessToken
             ]
         }
     }

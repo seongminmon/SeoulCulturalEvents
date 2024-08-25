@@ -65,7 +65,7 @@ final class SignUpViewModel: ViewModelType {
                             case .success(let data):
                                 print("로그인 성공")
                                 // 토큰 저장
-                                UserDefaultsManager.shared.signIn(data.access, data.refresh, data.id)
+                                UserDefaultsManager.signIn(data.access, data.refresh, data.id)
                                 // 로그인까지 성공하면 성공
                                 signUpSuccess.onNext(())
                                 
