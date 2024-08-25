@@ -64,4 +64,20 @@ extension BaseViewController {
         alert.addAction(cancel)
         present(alert, animated: true)
     }
+    
+    func showFilterActionSheet(
+        totalHandler: @escaping (UIAlertAction) -> Void,
+        nowHandler: @escaping (UIAlertAction) -> Void
+    ) {
+        let alert = UIAlertController(
+            title: nil,
+            message: nil,
+            preferredStyle: .actionSheet
+        )
+        let total = UIAlertAction(title: "모든 행사 보기", style: .default, handler: totalHandler)
+        let now = UIAlertAction(title: "진행 중인 행사만 보기", style: .default, handler: nowHandler)
+        alert.addAction(total)
+        alert.addAction(now)
+        present(alert, animated: true)
+    }
 }

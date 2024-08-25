@@ -22,7 +22,7 @@ final class TabBarController: UITabBarController {
         search.tabBarItem = UITabBarItem(title: "검색", image: .search, tag: 1)
         
         let post = UINavigationController(rootViewController: PostViewController())
-        post.tabBarItem = UITabBarItem(title: "후기", image: .post, tag: 2)
+        post.tabBarItem = UITabBarItem(title: "후기", image: .list, tag: 2)
         
         let profile = UINavigationController(rootViewController: ProfileViewController())
         profile.tabBarItem = UITabBarItem(title: "설정", image: .profile, tag: 3)

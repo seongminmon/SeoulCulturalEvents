@@ -11,13 +11,22 @@ import RxCocoa
 import SnapKit
 import Then
 
+enum FilterOption {
+    case total
+    case now
+}
+
 final class SearchResultViewController: BaseViewController {
-    
+        
+    private let filterButton = UIBarButtonItem().then {
+        $0.image = .list
+    }
     private let tableView = UITableView().then {
         $0.register(CulturalEventTableViewCell.self, forCellReuseIdentifier: CulturalEventTableViewCell.identifier)
         $0.separatorStyle = .none
     }
     
+    private let filterAction = PublishSubject<FilterOption>()
     private let viewModel: SearchResultViewModel
     
     init(viewModel: SearchResultViewModel) {
@@ -36,7 +45,9 @@ final class SearchResultViewController: BaseViewController {
     override func bind() {
         let input = SearchResultViewModel.Input(
             viewDidLoad: Observable.just(()),
-            cellTap: tableView.rx.itemSelected
+            cellTap: tableView.rx.itemSelected,
+            filterButtonTap: filterButton.rx.tap,
+            filterAction: filterAction
         )
         let output = viewModel.transform(input: input)
         
@@ -66,10 +77,20 @@ final class SearchResultViewController: BaseViewController {
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
+        
+        filterButton.rx.tap
+            .bind(with: self) { owner, _ in
+                owner.showFilterActionSheet { _ in
+                    owner.filterAction.onNext(.total)
+                } nowHandler: { _ in
+                    owner.filterAction.onNext(.now)
+                }
+            }
+            .disposed(by: disposeBag)
     }
     
     override func setNavigationBar() {
-        
+        navigationItem.rightBarButtonItem = filterButton
     }
     
     override func setLayout() {
