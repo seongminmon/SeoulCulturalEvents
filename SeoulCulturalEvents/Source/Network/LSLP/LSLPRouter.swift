@@ -65,6 +65,8 @@ enum LSLPRouter {
     case createPost(query: PostQuery)
     case deletePost(postID: String)
     case postLike(postID: String, query: LikeModel)
+    
+    case createComment(postID: String, query: CommentQuery)
 }
 
 extension LSLPRouter: TargetType {
@@ -99,6 +101,8 @@ extension LSLPRouter: TargetType {
             return "posts/\(id)"
         case .postLike(let id, _):
             return "posts/\(id)/like"
+        case .createComment(let id, _):
+            return "posts/\(id)/comments"
         }
     }
     
@@ -128,6 +132,8 @@ extension LSLPRouter: TargetType {
         case .deletePost:
             return .delete
         case .postLike:
+            return .post
+        case .createComment:
             return .post
         }
     }
@@ -198,6 +204,8 @@ extension LSLPRouter: TargetType {
         case .deletePost:
             return .requestPlain
         case .postLike(_, let query):
+            return .requestJSONEncodable(query)
+        case .createComment(_, let query):
             return .requestJSONEncodable(query)
         }
     }
@@ -271,6 +279,12 @@ extension LSLPRouter: TargetType {
                 LSLPHeader.authorization: UserDefaultsManager.accessToken
             ]
         case .postLike:
+            return [
+                LSLPHeader.sesacKey: APIKey.lslpKey,
+                LSLPHeader.contentType: LSLPHeader.json,
+                LSLPHeader.authorization: UserDefaultsManager.accessToken
+            ]
+        case .createComment:
             return [
                 LSLPHeader.sesacKey: APIKey.lslpKey,
                 LSLPHeader.contentType: LSLPHeader.json,

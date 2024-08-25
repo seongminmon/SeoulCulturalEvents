@@ -96,7 +96,7 @@ final class DetailPostViewController: BaseViewController {
         
         output.commentButtonTap
             .bind(with: self) { owner, value in
-                let vm = CommentViewModel(commentList: value)
+                let vm = CommentViewModel(postID: value.0, commentList: value.1)
                 let vc = CommentViewController(viewModel: vm)
                 let nav = UINavigationController(rootViewController: vc)
                 owner.present(nav, animated: true)

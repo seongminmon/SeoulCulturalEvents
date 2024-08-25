@@ -14,6 +14,7 @@ final class CommentTableViewCell: BaseTableViewCell {
     private let userInfoView = UserInfoView()
     private let commentLabel = UILabel().then {
         $0.font = .regular14
+        $0.numberOfLines = 0
     }
     
     override func setLayout() {

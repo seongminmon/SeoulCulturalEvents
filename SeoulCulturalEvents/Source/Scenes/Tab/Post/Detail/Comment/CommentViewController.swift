@@ -44,7 +44,10 @@ final class CommentViewController: BaseViewController {
     }
     
     override func bind() {
-        let input = CommentViewModel.Input()
+        let input = CommentViewModel.Input(
+            comment: textField.rx.text.orEmpty,
+            confirmButtonTap: confirmButton.rx.tap
+        )
         let output = viewModel.transform(input: input)
         
         output.commentList
@@ -55,11 +58,11 @@ final class CommentViewController: BaseViewController {
                 cell.configureCell(element)
             }
             .disposed(by: disposeBag)
+        
     }
     
     override func setNavigationBar() {
         navigationItem.title = "댓글"
-        confirmButton.backgroundColor = .systemBrown
     }
     
     override func setLayout() {
