@@ -22,4 +22,5 @@ extension UIImage {
     static let pencil = UIImage(systemName: "pencil")!
     static let camera = UIImage(systemName: "camera.fill")!
     static let paperplane = UIImage(systemName: "paperplane")!
+    static let xmark = UIImage(systemName: "xmark")!
 }

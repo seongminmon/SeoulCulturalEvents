@@ -61,7 +61,6 @@ final class SearchResultViewModel: ViewModelType {
                 switch result {
                 case .success(let data):
                     print("문화행사 검색 성공")
-                    print(data.culturalEventInfo.totalCount)
                     owner.cultureResponse = data
                     guard let list = owner.cultureResponse?.culturalEventInfo.list else { return }
                     cultureList.onNext(list)
@@ -84,7 +83,6 @@ final class SearchResultViewModel: ViewModelType {
         // 페이지 네이션
         input.prefetchRows
             .compactMap { indexPaths -> Void? in
-                print(indexPaths)
                 guard let cultureResponse = self.cultureResponse,
                       self.cultureParameter.startIndex + 20 <= cultureResponse.culturalEventInfo.totalCount else { return nil }
                 
@@ -98,7 +96,6 @@ final class SearchResultViewModel: ViewModelType {
             .flatMap { _ in
                 self.cultureParameter.startIndex += 20
                 self.cultureParameter.endIndex += 20
-                print(self.cultureParameter)
                 return CultureAPIManager.shared.callRequest(self.cultureParameter)
             }
             .subscribe(with: self) { owner, result in

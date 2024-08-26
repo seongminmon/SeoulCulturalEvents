@@ -1,5 +1,5 @@
 //
-//  CategoryCollectionHeaderView.swift
+//  SearchCollectionHeaderView.swift
 //  SeoulCulturalEvents
 //
 //  Created by 김성민 on 8/21/24.
@@ -9,9 +9,9 @@ import UIKit
 import SnapKit
 import Then
 
-final class CategoryCollectionHeaderView: UICollectionReusableView {
+final class SearchCollectionHeaderView: UICollectionReusableView {
     
-    static let identifier = String(describing: CategoryCollectionHeaderView.self)
+    static let identifier = String(describing: SearchCollectionHeaderView.self)
     
     private let titleLabel = UILabel().then {
         $0.font = .bold20

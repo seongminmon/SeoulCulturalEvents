@@ -17,16 +17,21 @@ final class SearchViewController: BaseViewController {
     private let searchBar = UISearchBar().then {
         $0.placeholder = "문화 행사명을 검색해보세요"
     }
-    private let categoryCollectionView = UICollectionView(frame: .zero, collectionViewLayout: .categoryLayout()).then {
+    private let searchCollectionView = UICollectionView(frame: .zero, collectionViewLayout: .searchLayout()).then {
+        $0.register(
+            SearchCollectionViewCell.self,
+            forCellWithReuseIdentifier: SearchCollectionViewCell.identifier
+        )
         $0.register(
             CategoryCollectionViewCell.self,
             forCellWithReuseIdentifier: CategoryCollectionViewCell.identifier
         )
         $0.register(
-            CategoryCollectionHeaderView.self,
+            SearchCollectionHeaderView.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: CategoryCollectionHeaderView.identifier
+            withReuseIdentifier: SearchCollectionHeaderView.identifier
         )
+        $0.keyboardDismissMode = .onDrag
         $0.showsHorizontalScrollIndicator = false
     }
     
@@ -37,28 +42,59 @@ final class SearchViewController: BaseViewController {
     }
     
     override func bind() {
+        
+        let deleteTerms = PublishSubject<IndexPath>()
+        
         let input = SearchViewModel.Input(
             searchText: searchBar.rx.text.orEmpty,
             searchButtonTap: searchBar.rx.searchButtonClicked,
-            categoryCellTap: categoryCollectionView.rx.itemSelected
+            cellTap: searchCollectionView.rx.itemSelected,
+            deleteTerms: deleteTerms
         )
         let output = viewModel.transform(input: input)
         
         let dataSource = RxCollectionViewSectionedAnimatedDataSource<SearchSection> { dataSource, collectionView, indexPath, item in
-            guard let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: CategoryCollectionViewCell.identifier,
-                for: indexPath
-            ) as? CategoryCollectionViewCell else {
-                return UICollectionViewCell()
+            switch indexPath.section {
+            case 0:
+                // 최근 검색어 섹션
+                guard let cell = collectionView.dequeueReusableCell(
+                    withReuseIdentifier: SearchCollectionViewCell.identifier,
+                    for: indexPath
+                ) as? SearchCollectionViewCell else {
+                    return UICollectionViewCell()
+                }
+                cell.configureCell(item)
+                cell.deleteButton.rx.tap
+                    .bind(with: self) { owner, _ in
+                        // MARK: - indexPath로 가져오면 인덱스가 밀리게 됨 >> cell의 indexPath 가져오기
+                        if let indexPath = collectionView.indexPath(for: cell) {
+                            deleteTerms.onNext(indexPath)
+                        }
+                    }
+                    .disposed(by: cell.disposeBag)
+                return cell
+                
+            case 1:
+                // 카테고리 섹션
+                guard let cell = collectionView.dequeueReusableCell(
+                    withReuseIdentifier: CategoryCollectionViewCell.identifier,
+                    for: indexPath
+                ) as? CategoryCollectionViewCell else {
+                    return UICollectionViewCell()
+                }
+                cell.configureCell(item)
+                return cell
+                
+            default: break
             }
-            cell.configureCell(item)
-            return cell
+            return UICollectionViewCell()
+            
         } configureSupplementaryView: { dataSource, collectionView, kind, indexPath in
             guard let header = collectionView.dequeueReusableSupplementaryView(
                 ofKind: kind,
-                withReuseIdentifier: CategoryCollectionHeaderView.identifier,
+                withReuseIdentifier: SearchCollectionHeaderView.identifier,
                 for: indexPath
-            ) as? CategoryCollectionHeaderView else {
+            ) as? SearchCollectionHeaderView else {
                 return UICollectionReusableView()
             }
             let section = dataSource.sectionModels[indexPath.section]
@@ -66,8 +102,8 @@ final class SearchViewController: BaseViewController {
             return header
         }
         
-        output.categoryList
-            .bind(to: categoryCollectionView.rx.items(dataSource: dataSource))
+        output.sections
+            .bind(to: searchCollectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
         output.cultureParameter
@@ -86,7 +122,7 @@ final class SearchViewController: BaseViewController {
     override func setLayout() {
         [
             searchBar,
-            categoryCollectionView
+            searchCollectionView
         ].forEach {
             view.addSubview($0)
         }
@@ -96,7 +132,7 @@ final class SearchViewController: BaseViewController {
             make.height.equalTo(44)
         }
         
-        categoryCollectionView.snp.makeConstraints { make in
+        searchCollectionView.snp.makeConstraints { make in
             make.top.equalTo(searchBar.snp.bottom)
             make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(16)
             make.bottom.equalTo(view.safeAreaLayoutGuide)

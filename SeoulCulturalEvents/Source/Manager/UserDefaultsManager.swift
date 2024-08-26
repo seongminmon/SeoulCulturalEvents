@@ -28,6 +28,7 @@ enum UserDefaultsManager {
         case access
         case refresh
         case userID
+        case recentSearchTerms
     }
     
     @UserDefault(key: Key.access.rawValue, defaultValue: "")
@@ -38,6 +39,9 @@ enum UserDefaultsManager {
     
     @UserDefault(key: Key.userID.rawValue, defaultValue: "")
     static var userID
+    
+    @UserDefault<[String]>(key: Key.recentSearchTerms.rawValue, defaultValue: [])
+    static var recentSearchTerms
     
     static func refresh(_ access: String) {
         UserDefaultsManager.accessToken = access

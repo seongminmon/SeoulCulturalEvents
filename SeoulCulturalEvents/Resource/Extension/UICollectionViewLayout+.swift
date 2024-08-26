@@ -9,25 +9,25 @@ import UIKit
 
 extension UICollectionViewLayout {
     
-    static func categoryLayout() -> UICollectionViewLayout {
+    static func searchLayout() -> UICollectionViewLayout {
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .estimated(80),
-            heightDimension: .estimated(44)
+            heightDimension: .estimated(30)
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
-            heightDimension: .absolute(44)
+            heightDimension: .absolute(30)
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         group.interItemSpacing = .fixed(10)
 
         let section = NSCollectionLayoutSection(group: group)
         section.interGroupSpacing = 10
-        section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 0, trailing: 10)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
         
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(44))
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(30))
         let headerSupplementary = NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: headerSize,
             elementKind: UICollectionView.elementKindSectionHeader,
@@ -86,7 +86,6 @@ extension UICollectionViewLayout {
         layout.itemSize = CGSize(width: width, height: height)
         layout.scrollDirection = .horizontal
         layout.minimumInteritemSpacing = spacing
-//        layout.minimumLineSpacing = spacing
         
         return layout
     }
@@ -100,7 +99,7 @@ extension UICollectionViewLayout {
 //        return layout
 //    }
     
-//    static func categoryLayout() -> UICollectionViewLayout {
+//    static func searchLayout() -> UICollectionViewLayout {
 //        let itemSize = NSCollectionLayoutSize(
 //            widthDimension: .fractionalWidth(1),
 //            heightDimension: .fractionalHeight(1)
