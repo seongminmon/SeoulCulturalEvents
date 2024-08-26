@@ -7,7 +7,7 @@
 
 import Foundation
 
-// 포스트 조회
+// 포스트 조회 / 유저별 포스트 조회
 struct PostModelList: Decodable {
     var data: [PostModel]
 }

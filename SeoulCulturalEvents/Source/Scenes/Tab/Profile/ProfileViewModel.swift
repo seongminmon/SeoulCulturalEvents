@@ -9,17 +9,16 @@ import Foundation
 import RxSwift
 import RxCocoa
 
+enum UserStorage: String, CaseIterable {
+    case likeCulturalEvent = "관심 행사"
+    case likePost = "관심 후기"
+    case myPost = "내 후기"
+}
+
 final class ProfileViewModel: ViewModelType {
     
-    private enum Storage: String, CaseIterable {
-        case likeCulturalEvent = "관심 행사"
-        case likePost = "관심 후기"
-        case myPost = "내 후기"
-//        case delete = "탈퇴하기"
-    }
-    
     let sections: [SettingSection] = [
-        SettingSection(model: "보관함", items: Storage.allCases.map { $0.rawValue } )
+        SettingSection(model: "보관함", items: UserStorage.allCases.map { $0.rawValue } )
     ]
     
     private let disposeBag = DisposeBag()
@@ -29,7 +28,7 @@ final class ProfileViewModel: ViewModelType {
         let editButtonTap: ControlEvent<Void>
         let followerButtonTap: ControlEvent<Void>
         let followingButtonTap: ControlEvent<Void>
-        let cellTap: ControlEvent<String>
+        let cellTap: ControlEvent<IndexPath>
         let withdrawAction: PublishSubject<Void>
         let newProfile: PublishSubject<ProfileModel>
     }
@@ -38,6 +37,7 @@ final class ProfileViewModel: ViewModelType {
         let settinglist: BehaviorSubject<[SettingSection]>
         let editButtonTap: ControlEvent<Void>
         let profile: PublishSubject<ProfileModel>
+        let cellTap: PublishSubject<(IndexPath, String)>
         let withdrawTap: PublishSubject<Void>
         let withdrawActionSuccess: PublishSubject<Void>
     }
@@ -46,6 +46,7 @@ final class ProfileViewModel: ViewModelType {
         
         let settinglist = BehaviorSubject(value: sections)
         let profile = PublishSubject<ProfileModel>()
+        let cellTap = PublishSubject<(IndexPath, String)>()
         let withdrawTap = PublishSubject<Void>()
         let withdrawActionSuccess = PublishSubject<Void>()
         
@@ -68,16 +69,9 @@ final class ProfileViewModel: ViewModelType {
             .disposed(by: disposeBag)
         
         input.cellTap
-            .subscribe(with: self) { owner, rawValue in
-                guard let storage = Storage(rawValue: rawValue) else { return }
-                switch storage {
-                case .likeCulturalEvent:
-                    print("관심 행사 탭")
-                case .likePost:
-                    print("관심 후기 탭")
-                case .myPost:
-                    print("내 후기 탭")
-                }
+            .withLatestFrom(profile) { ($0, $1) }
+            .subscribe(with: self) { owner, value in
+                cellTap.onNext((value.0, value.1.id))
             }
             .disposed(by: disposeBag)
         
@@ -108,6 +102,7 @@ final class ProfileViewModel: ViewModelType {
             settinglist: settinglist,
             editButtonTap: input.editButtonTap,
             profile: profile,
+            cellTap: cellTap,
             withdrawTap: withdrawTap,
             withdrawActionSuccess: withdrawActionSuccess
         )

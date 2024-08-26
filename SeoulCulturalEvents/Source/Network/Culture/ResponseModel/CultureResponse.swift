@@ -41,23 +41,6 @@ struct CulturalEvent: Decodable {
     
     let link: String
     
-    var startDateString: String {
-        return startDate.split(separator: " ").map { String($0) }.first ?? ""
-    }
-    
-    var endDateString: String {
-        return endDate.split(separator: " ").map { String($0) }.first ?? ""
-    }
-    
-    // MARK: - 통신에서 위경도 값 반대로 오는 문제 처리
-    var lat: Double {
-        return Double(longitude) ?? 37.5665
-    }
-    
-    var lon: Double {
-        return Double(latitude) ?? 126.9780
-    }
-    
     enum CodingKeys: String, CodingKey {
         case mainImage = "MAIN_IMG"
         case title = "TITLE"
@@ -73,6 +56,23 @@ struct CulturalEvent: Decodable {
         case isFree = "IS_FREE"
         case useTarget = "USE_TRGT"
         case link = "ORG_LINK"
+    }
+    
+    var startDateString: String {
+        return startDate.split(separator: " ").map { String($0) }.first ?? ""
+    }
+    
+    var endDateString: String {
+        return endDate.split(separator: " ").map { String($0) }.first ?? ""
+    }
+    
+    // MARK: - 통신에서 위경도 값 반대로 오는 문제 처리
+    var lat: Double {
+        return Double(longitude) ?? 37.5665
+    }
+    
+    var lon: Double {
+        return Double(latitude) ?? 126.9780
     }
 }
 

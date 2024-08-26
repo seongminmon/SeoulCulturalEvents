@@ -44,7 +44,7 @@ final class ProfileViewController: BaseViewController {
             editButtonTap: profileView.editButton.rx.tap,
             followerButtonTap: profileView.followerButton.rx.tap,
             followingButtonTap: profileView.followingButton.rx.tap,
-            cellTap: tableView.rx.modelSelected(String.self),
+            cellTap: tableView.rx.itemSelected,
             withdrawAction: withdrawAction,
             newProfile: newProfile
         )
@@ -83,22 +83,39 @@ final class ProfileViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
-        output.withdrawTap
-            .bind(with: self) { owner, _ in
-                owner.showWithdrawAlert(
-                    title: "탈퇴하기",
-                    message: "모든 정보가 사라집니다. 정말 탈퇴하시겠습니까?",
-                    actionTitle: "탈퇴하기") { _ in
-                    withdrawAction.onNext(())
+        output.cellTap
+            .bind(with: self) { owner, value in
+                let userStorage = UserStorage.allCases[value.0.row]
+                switch userStorage {
+                case .likeCulturalEvent:
+                    print("관심 행사 탭")
+                    let vm = LikeEventViewModel(userID: value.1)
+                    let vc = LikeEventViewController(viewModel: vm)
+                    owner.navigationController?.pushViewController(vc, animated: true)
+                case .likePost:
+                    print("관심 후기 탭")
+                case .myPost:
+                    print("내 후기 탭")
                 }
             }
             .disposed(by: disposeBag)
         
-        output.withdrawActionSuccess
-            .bind(with: self) { owner, _ in
-                SceneDelegate.changeWindow(SignInViewController())
-            }
-            .disposed(by: disposeBag)
+//        output.withdrawTap
+//            .bind(with: self) { owner, _ in
+//                owner.showWithdrawAlert(
+//                    title: "탈퇴하기",
+//                    message: "모든 정보가 사라집니다. 정말 탈퇴하시겠습니까?",
+//                    actionTitle: "탈퇴하기") { _ in
+//                    withdrawAction.onNext(())
+//                }
+//            }
+//            .disposed(by: disposeBag)
+//        
+//        output.withdrawActionSuccess
+//            .bind(with: self) { owner, _ in
+//                SceneDelegate.changeWindow(SignInViewController())
+//            }
+//            .disposed(by: disposeBag)
     }
     
     override func setNavigationBar() {
