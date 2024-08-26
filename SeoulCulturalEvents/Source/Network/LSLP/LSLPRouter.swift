@@ -50,6 +50,7 @@ import Moya
  */
 
 enum LSLPRouter {
+    
     // MARK: - 유저
     case signIn(query: SignInQuery)
     case signUp(query: SignUpQuery)
@@ -60,12 +61,14 @@ enum LSLPRouter {
     
     // MARK: - 포스트
     case fetchPostList(query: PostFetchQuery)
-    case fetchUserPostList(userID: String)
+    case fetchUserPostList(userID: String, query: PostFetchQuery)
+    case fetchLikePostList(query: PostFetchQuery)
     case fetchPost(postID: String)
     case postImageFiles(files: [Data])
     case createPost(query: PostQuery)
     case deletePost(postID: String)
     case postLike(postID: String, query: LikeModel)
+    
     
     case createComment(postID: String, query: CommentQuery)
 }
@@ -92,8 +95,10 @@ extension LSLPRouter: TargetType {
             
         case .fetchPostList:
             return "posts"
-        case .fetchUserPostList(let id):
+        case .fetchUserPostList(let id, _):
             return "posts/users/\(id)"
+        case .fetchLikePostList:
+            return "posts/likes/me"
         case .fetchPost(let id):
             return "posts/\(id)"
         case .postImageFiles:
@@ -128,6 +133,8 @@ extension LSLPRouter: TargetType {
         case .fetchPostList:
             return .get
         case .fetchUserPostList:
+            return .get
+        case .fetchLikePostList:
             return .get
         case .fetchPost:
             return .get
@@ -193,8 +200,19 @@ extension LSLPRouter: TargetType {
                 "product_id": query.productID ?? ""
             ]
             return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
-        case .fetchUserPostList:
-            return .requestPlain
+        case .fetchLikePostList(let query):
+            let parameters: [String : Any] = [
+                "next": query.next ?? "",
+                "limit": query.limit
+            ]
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
+        case .fetchUserPostList(_, let query):
+            let parameters: [String : Any] = [
+                "next": query.next ?? "",
+                "limit": query.limit,
+                "product_id": query.productID ?? ""
+            ]
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
         case .fetchPost:
             return .requestPlain
         case .postImageFiles(let files):
@@ -263,6 +281,12 @@ extension LSLPRouter: TargetType {
                 LSLPHeader.authorization: UserDefaultsManager.accessToken
             ]
         case .fetchUserPostList:
+            return [
+                LSLPHeader.sesacKey: APIKey.lslpKey,
+                LSLPHeader.contentType: LSLPHeader.json,
+                LSLPHeader.authorization: UserDefaultsManager.accessToken
+            ]
+        case .fetchLikePostList:
             return [
                 LSLPHeader.sesacKey: APIKey.lslpKey,
                 LSLPHeader.contentType: LSLPHeader.json,

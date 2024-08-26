@@ -94,8 +94,14 @@ final class ProfileViewController: BaseViewController {
                     owner.navigationController?.pushViewController(vc, animated: true)
                 case .likePost:
                     print("관심 후기 탭")
+                    let vm = LikePostViewModel(userID: value.1)
+                    let vc = LikePostViewController(viewModel: vm)
+                    owner.navigationController?.pushViewController(vc, animated: true)
                 case .myPost:
                     print("내 후기 탭")
+                    let vm = UserPostViewModel(userID: value.1)
+                    let vc = UserPostViewController(viewModel: vm)
+                    owner.navigationController?.pushViewController(vc, animated: true)
                 }
             }
             .disposed(by: disposeBag)

@@ -40,7 +40,7 @@ final class PostViewModel: ViewModelType {
                     remainTime.onNext(())
                     return Single.just(.failure(LSLPError.unknown))
                 }
-                let query = PostFetchQuery(next: nil, productID: ProductID.post)
+                let query = PostFetchQuery(productID: ProductID.post)
                 return LSLPAPIManager.shared.callRequestWithRetry(
                     api: .fetchPostList(query: query),
                     model: PostModelList.self

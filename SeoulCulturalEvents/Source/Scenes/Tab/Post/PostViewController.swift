@@ -67,6 +67,12 @@ final class PostViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
+        output.postList
+            .bind(with: self) { owner, _ in
+                owner.refreshControl.endRefreshing()
+            }
+            .disposed(by: disposeBag)
+        
         output.cellTap
             .bind(with: self) { owner, value in
                 let vm = DetailPostViewModel(postID: value.postID)
@@ -78,12 +84,6 @@ final class PostViewController: BaseViewController {
         output.remainTime
             .bind(with: self) { owner, value in
                 owner.view.makeToast("잠시 후 시도해주세요!", duration: 1, position: .center)
-                owner.refreshControl.endRefreshing()
-            }
-            .disposed(by: disposeBag)
-        
-        output.postList
-            .bind(with: self) { owner, _ in
                 owner.refreshControl.endRefreshing()
             }
             .disposed(by: disposeBag)

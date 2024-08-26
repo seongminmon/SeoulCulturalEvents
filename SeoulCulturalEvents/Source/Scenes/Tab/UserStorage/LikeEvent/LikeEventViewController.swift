@@ -33,7 +33,9 @@ final class LikeEventViewController: BaseViewController {
     }
     
     override func bind() {
-        let input = LikeEventViewModel.Input()
+        let input = LikeEventViewModel.Input(
+            cellTap: tableView.rx.itemSelected
+        )
         let output = viewModel.transform(input: input)
         
         output.eventList
@@ -42,6 +44,20 @@ final class LikeEventViewController: BaseViewController {
                     cellType: CulturalEventTableViewCell.self
             )) { row, element, cell in
                 cell.configureCell(data: element)
+            }
+            .disposed(by: disposeBag)
+        
+        output.networkFailure
+            .bind(with: self) { owner, value in
+                owner.makeNetworkFailureToast(value)
+            }
+            .disposed(by: disposeBag)
+        
+        output.cellTap
+            .bind(with: self) { owner, value in
+                let vm = CulturalEventViewModel(culturalEvent: value)
+                let vc = CulturalEventViewController(viewModel: vm)
+                owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
     }

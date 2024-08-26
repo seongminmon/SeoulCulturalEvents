@@ -15,7 +15,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         
-        // MARK: - 첫 화면 분기처리
         LSLPAPIManager.shared.refresh { [weak self] result in
             guard let self else { return }
             switch result {
@@ -34,7 +33,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             }
         }
     }
-    
+}
+
+extension SceneDelegate {
     static func changeWindow(_ vc: UIViewController) {
         guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
               let sceneDelegate = windowScene.delegate as? SceneDelegate,
@@ -42,7 +43,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window.rootViewController = vc
         window.makeKeyAndVisible()
-        
         UIView.transition(
             with: window,
             duration: 0.2,
