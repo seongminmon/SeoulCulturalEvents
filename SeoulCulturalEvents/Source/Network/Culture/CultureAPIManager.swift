@@ -16,7 +16,19 @@ final class CultureAPIManager {
     
     func callRequest(_ parameter: CultureParameter) -> Single<Result<CultureResponse, MoyaError>> {
         return Single<Result<CultureResponse, MoyaError>>.create { observer in
-            let provider = MoyaProvider<CultureRouter>()
+            
+            // 5초 타임아웃
+            let requestClosure = { (endpoint: Endpoint, done: MoyaProvider.RequestResultClosure) in
+                do {
+                    var request = try endpoint.urlRequest()
+                    request.timeoutInterval = 5
+                    done(.success(request))
+                } catch {
+                    done(.failure(MoyaError.underlying(error, nil)))
+                }
+            }
+            
+            let provider = MoyaProvider<CultureRouter>(requestClosure: requestClosure)
             provider.request(.fetchCulturalEvents(parameter)) { result in
                 switch result {
                 case .success(let response):

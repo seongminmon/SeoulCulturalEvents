@@ -65,6 +65,12 @@ final class SearchResultViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
+        output.scrollToTop
+            .bind(with: self) { owner, _ in
+                owner.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+            }
+            .disposed(by: disposeBag)
+        
         output.networkFailure
             .bind(with: self) { owner, value in
                 owner.makeNetworkFailureToast(value)
