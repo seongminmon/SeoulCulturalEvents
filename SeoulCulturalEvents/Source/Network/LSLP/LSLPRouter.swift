@@ -31,8 +31,8 @@ import Moya
  
  - 댓글
     [✅] 댓글 작성
-    [⭐️] 댓글 수정
-    [⭐️] 댓글 삭제
+    [✅] 댓글 수정
+    [✅] 댓글 삭제
  
  - 좋아요
     [✅] 포스트 좋아요/좋아요 취소
@@ -72,6 +72,8 @@ enum LSLPRouter {
     case postLike(postID: String, query: LikeModel)
     
     case createComment(postID: String, query: CommentQuery)
+    case editComment(postID: String, commentID: String, query: CommentQuery)
+    case deleteComment(postID: String, commentID: String)
 }
 
 extension LSLPRouter: TargetType {
@@ -117,6 +119,10 @@ extension LSLPRouter: TargetType {
             
         case .createComment(let id, _):
             return "posts/\(id)/comments"
+        case .editComment(let postID, let commentID, _):
+            return "posts/\(postID)/comments/\(commentID)"
+        case .deleteComment(let postID, let commentID):
+            return "posts/\(postID)/comments/\(commentID)"
         }
     }
     
@@ -157,6 +163,10 @@ extension LSLPRouter: TargetType {
             return .post
         case .createComment:
             return .post
+        case .editComment:
+            return .put
+        case .deleteComment:
+            return .delete
         }
     }
     
@@ -246,6 +256,10 @@ extension LSLPRouter: TargetType {
             return .requestJSONEncodable(query)
         case .createComment(_, let query):
             return .requestJSONEncodable(query)
+        case .editComment(_, _, let query):
+            return .requestJSONEncodable(query)
+        case .deleteComment:
+            return .requestPlain
         }
     }
     
@@ -349,6 +363,18 @@ extension LSLPRouter: TargetType {
                 LSLPHeader.authorization: UserDefaultsManager.accessToken
             ]
         case .createComment:
+            return [
+                LSLPHeader.sesacKey: APIKey.lslpKey,
+                LSLPHeader.contentType: LSLPHeader.json,
+                LSLPHeader.authorization: UserDefaultsManager.accessToken
+            ]
+        case .editComment:
+            return [
+                LSLPHeader.sesacKey: APIKey.lslpKey,
+                LSLPHeader.contentType: LSLPHeader.json,
+                LSLPHeader.authorization: UserDefaultsManager.accessToken
+            ]
+        case .deleteComment:
             return [
                 LSLPHeader.sesacKey: APIKey.lslpKey,
                 LSLPHeader.contentType: LSLPHeader.json,
