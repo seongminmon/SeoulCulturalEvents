@@ -36,11 +36,11 @@ import Moya
  
  - 좋아요
     [✅] 포스트 좋아요/좋아요 취소
-    [⭐️] 좋아요한 포스트 조회
+    [✅] 좋아요한 포스트 조회
  
  - 팔로우
-    [⭐️] 팔로우
-    [⭐️] 팔로우 취소
+    [✅] 팔로우
+    [✅] 팔로우 취소
  
  - 프로필
     [✅] 내 프로필 조회
@@ -58,6 +58,8 @@ enum LSLPRouter {
     case withdraw
     case fetchProfile
     case editProfile(query: EditProfileQuery)
+    case follow(userID: String)
+    case cancelFollow(userID: String)
     
     // MARK: - 포스트
     case fetchPostList(query: PostFetchQuery)
@@ -68,7 +70,6 @@ enum LSLPRouter {
     case createPost(query: PostQuery)
     case deletePost(postID: String)
     case postLike(postID: String, query: LikeModel)
-    
     
     case createComment(postID: String, query: CommentQuery)
 }
@@ -92,6 +93,10 @@ extension LSLPRouter: TargetType {
             return "users/me/profile"
         case .editProfile:
             return "users/me/profile"
+        case .follow(let id):
+            return "follow/\(id)"
+        case .cancelFollow(let id):
+            return "follow/\(id)"
             
         case .fetchPostList:
             return "posts"
@@ -129,6 +134,10 @@ extension LSLPRouter: TargetType {
             return .get
         case .editProfile:
             return .put
+        case .follow:
+            return .post
+        case .cancelFollow:
+            return .delete
             
         case .fetchPostList:
             return .get
@@ -192,6 +201,10 @@ extension LSLPRouter: TargetType {
             }
             
             return .uploadCompositeMultipart(multipartData, urlParameters: [:])
+        case .follow:
+            return .requestPlain
+        case .cancelFollow:
+            return .requestPlain
             
         case .fetchPostList(let query):
             let parameters: [String : Any] = [
@@ -271,6 +284,18 @@ extension LSLPRouter: TargetType {
             return [
                 LSLPHeader.sesacKey: APIKey.lslpKey,
                 LSLPHeader.contentType: LSLPHeader.multipart,
+                LSLPHeader.authorization: UserDefaultsManager.accessToken
+            ]
+        case .follow:
+            return [
+                LSLPHeader.sesacKey: APIKey.lslpKey,
+                LSLPHeader.contentType: LSLPHeader.json,
+                LSLPHeader.authorization: UserDefaultsManager.accessToken
+            ]
+        case .cancelFollow:
+            return [
+                LSLPHeader.sesacKey: APIKey.lslpKey,
+                LSLPHeader.contentType: LSLPHeader.json,
                 LSLPHeader.authorization: UserDefaultsManager.accessToken
             ]
             
