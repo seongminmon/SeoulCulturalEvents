@@ -13,8 +13,6 @@ import Then
 
 final class DetailPostViewController: BaseViewController {
     
-    // TODO: - 댓글 화면 만들기 + 댓글화면으로 이동
-    
     private let likeButton = UIBarButtonItem().then {
         $0.image = .emptyHeart
         $0.tintColor = .systemRed
@@ -78,6 +76,11 @@ final class DetailPostViewController: BaseViewController {
             .bind(with: self) { owner, data in
                 owner.configureView(data)
             }
+            .disposed(by: disposeBag)
+        
+        output.post
+            .map { "댓글 \($0.comments.count)" }
+            .bind(to: commentButton.rx.title())
             .disposed(by: disposeBag)
         
         output.imageList

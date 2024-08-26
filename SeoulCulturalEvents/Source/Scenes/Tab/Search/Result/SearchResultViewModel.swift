@@ -25,6 +25,7 @@ final class SearchResultViewModel: ViewModelType {
         let cellTap: ControlEvent<IndexPath>
         let filterButtonTap: ControlEvent<Void>
         let filterAction: PublishSubject<FilterOption>
+        let prefetchRows: ControlEvent<[IndexPath]>
     }
     
     struct Output {
@@ -61,6 +62,7 @@ final class SearchResultViewModel: ViewModelType {
                 switch result {
                 case .success(let data):
                     print("문화행사 검색 성공")
+                    print(data.culturalEventInfo.totalCount)
                     owner.cultureResponse = data
                     guard let list = owner.cultureResponse?.culturalEventInfo.list else { return }
                     cultureList.onNext(list)
@@ -79,6 +81,46 @@ final class SearchResultViewModel: ViewModelType {
                 cellTap.onNext(item)
             }
             .disposed(by: disposeBag)
+        
+        // 페이지 네이션
+//        input.prefetchRows
+//            .compactMap { indexPaths -> Void? in
+//                print(indexPaths)
+//                guard let cultureResponse = self.cultureResponse,
+//                        self.start + 20 <= cultureResponse.culturalEventInfo.totalCount else { return nil }
+//                
+//                for indexPath in indexPaths {
+//                    if indexPath.row == cultureResponse.culturalEventInfo.list.count - 1 {
+//                        self.start += 20
+//                        return nil
+//                    }
+//                }
+//                return ()
+//            }
+//            .flatMap { _ in
+//                let cultureParameter = CultureParameter(
+//                    startIndex: self.start,
+//                    endIndex: self.start + 19,
+//                    codeName: nil, title: nil,
+//                    date: Date()
+//                )
+//                print(cultureParameter)
+//                return CultureAPIManager.shared.callRequest(cultureParameter)
+//            }
+//            .subscribe(with: self) { owner, result in
+//                switch result {
+//                case .success(let data):
+//                    print("문화 행사 통신 페이지네이션 성공")
+//                    owner.cultureResponse?.culturalEventInfo.list.append(contentsOf: data.culturalEventInfo.list)
+//                    guard let list = owner.cultureResponse?.culturalEventInfo.list else { return }
+//                    cultureList.onNext(list)
+//                    
+//                case .failure(let error):
+//                    print("문화 행사 통신 페이지네이션 실패")
+//                    networkFailure.onNext(error.localizedDescription)
+//                }
+//            }
+//            .disposed(by: disposeBag)
         
         // 액션 시트에서 선택 시 전체 / 현재 진행 중 토글 기능
         input.filterAction

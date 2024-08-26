@@ -47,7 +47,8 @@ final class SearchResultViewController: BaseViewController {
             viewDidLoad: Observable.just(()),
             cellTap: tableView.rx.itemSelected,
             filterButtonTap: filterButton.rx.tap,
-            filterAction: filterAction
+            filterAction: filterAction,
+            prefetchRows: tableView.rx.prefetchRows
         )
         let output = viewModel.transform(input: input)
         

@@ -76,12 +76,11 @@ final class CommentViewController: BaseViewController {
         textField.snp.makeConstraints { make in
             make.leading.equalTo(view.safeAreaLayoutGuide).inset(8)
             make.trailing.equalTo(confirmButton.snp.leading).offset(-8)
-            make.bottom.equalTo(view.safeAreaLayoutGuide)
+            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(8)
             make.height.equalTo(40)
         }
         confirmButton.snp.makeConstraints { make in
-            make.trailing.equalTo(view.safeAreaLayoutGuide).inset(8)
-            make.bottom.equalTo(view.safeAreaLayoutGuide)
+            make.trailing.bottom.equalTo(view.safeAreaLayoutGuide).inset(8)
             make.size.equalTo(40)
         }
     }

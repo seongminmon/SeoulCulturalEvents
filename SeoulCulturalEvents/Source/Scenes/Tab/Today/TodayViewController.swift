@@ -27,7 +27,8 @@ final class TodayViewController: BaseViewController {
     override func bind() {
         let input = TodayViewModel.Input(
             viewDidLoad: Observable.just(()),
-            cellTap: tableView.rx.itemSelected
+            cellTap: tableView.rx.itemSelected,
+            prefetchRows: tableView.rx.prefetchRows
         )
         let output = viewModel.transform(input: input)
         
