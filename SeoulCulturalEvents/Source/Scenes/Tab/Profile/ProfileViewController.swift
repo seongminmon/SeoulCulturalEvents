@@ -135,7 +135,7 @@ final class ProfileViewController: BaseViewController {
         
         profileView.snp.makeConstraints { make in
             make.top.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(150)
+            make.height.equalTo(260)
         }
         
         separator.snp.makeConstraints { make in

@@ -464,6 +464,7 @@
 				24B2B6442C6C957300190BFC /* ProfileViewController.swift */,
 				24B2B6B82C6EF6B700190BFC /* ProfileViewModel.swift */,
 				24B2B6CF2C6F264700190BFC /* Edit */,
+				240784E82C7C72AB00E06A5E /* UserStorage */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -476,7 +477,6 @@
 				24B2B6502C6CAA4200190BFC /* Search */,
 				24B2B6512C6CAA4D00190BFC /* Post */,
 				24B2B6522C6CAA5700190BFC /* Profile */,
-				240784E82C7C72AB00E06A5E /* UserStorage */,
 			);
 			path = Tab;
 			sourceTree = "<group>";

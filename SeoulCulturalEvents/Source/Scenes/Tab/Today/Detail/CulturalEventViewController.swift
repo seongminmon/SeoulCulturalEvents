@@ -14,6 +14,8 @@ import Then
 
 final class CulturalEventViewController: BaseViewController {
     
+    // TODO: - 탭바 없애기
+    
     private let likeButton = UIBarButtonItem().then {
         $0.image = .emptyHeart
         $0.tintColor = .systemRed

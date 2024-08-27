@@ -14,7 +14,7 @@ final class ProfileView: BaseView {
     
     private let profileImageView = ProfileImageView()
     private let nicknameLabel = UILabel().then {
-        $0.font = .bold16
+        $0.font = .bold20
     }
     let followerButton = UIButton().then {
         $0.titleLabel?.font = .regular14
@@ -25,8 +25,11 @@ final class ProfileView: BaseView {
         $0.setTitleColor(.black, for: .normal)
     }
     let editButton = UIButton().then {
-        $0.setImage(.chevron, for: .normal)
-        $0.tintColor = .black
+        $0.setTitle("프로필 수정", for: .normal)
+        $0.setTitleColor(.black, for: .normal)
+        $0.layer.cornerRadius = 10
+        $0.layer.borderColor = UIColor.gray.cgColor
+        $0.layer.borderWidth = 1
     }
     
     override func setLayout() {
@@ -41,31 +44,29 @@ final class ProfileView: BaseView {
         }
         
         profileImageView.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.leading.equalToSuperview().inset(16)
+            make.top.leading.equalToSuperview().inset(16)
             make.size.equalTo(100)
         }
         
         nicknameLabel.snp.makeConstraints { make in
-            make.centerY.equalTo(profileImageView).offset(-16)
-            make.leading.equalTo(profileImageView.snp.trailing).offset(16)
-            make.trailing.equalTo(editButton.snp.leading)
+            make.top.equalTo(profileImageView.snp.bottom).offset(16)
+            make.leading.equalTo(profileImageView)
         }
         
         followerButton.snp.makeConstraints { make in
-            make.top.equalTo(nicknameLabel.snp.bottom).offset(4)
-            make.leading.equalTo(nicknameLabel)
+            make.top.equalTo(nicknameLabel.snp.bottom).offset(8)
+            make.leading.equalTo(profileImageView)
         }
         
         followingButton.snp.makeConstraints { make in
             make.top.equalTo(followerButton)
-            make.leading.equalTo(followerButton.snp.trailing).offset(4)
+            make.leading.equalTo(followerButton.snp.trailing).offset(8)
         }
         
         editButton.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.trailing.equalToSuperview().inset(16)
-            make.size.equalTo(40)
+            make.top.equalTo(followerButton.snp.bottom).offset(8)
+            make.horizontalEdges.equalToSuperview().inset(16)
+            make.height.equalTo(40)
         }
     }
     
