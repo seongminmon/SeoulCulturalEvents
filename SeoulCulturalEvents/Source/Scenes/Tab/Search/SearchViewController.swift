@@ -17,7 +17,10 @@ final class SearchViewController: BaseViewController {
     private let searchBar = UISearchBar().then {
         $0.placeholder = "문화 행사명을 검색해보세요"
     }
-    private let searchCollectionView = UICollectionView(frame: .zero, collectionViewLayout: .searchLayout()).then {
+    private let searchCollectionView = UICollectionView(
+        frame: .zero,
+        collectionViewLayout: .searchLayout()
+    ).then {
         $0.register(
             SearchCollectionViewCell.self,
             forCellWithReuseIdentifier: SearchCollectionViewCell.identifier

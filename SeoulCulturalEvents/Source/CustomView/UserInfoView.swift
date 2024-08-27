@@ -12,7 +12,7 @@ import Then
 
 final class UserInfoView: BaseView {
     
-    private let profileImageView = ProfileImageView()
+    private let profileImageView = CircleImageView()
     private let nicknameLabel = UILabel().then {
         $0.font = .bold15
     }

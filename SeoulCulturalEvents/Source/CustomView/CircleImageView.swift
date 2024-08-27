@@ -1,5 +1,5 @@
 //
-//  ProfileImageView.swift
+//  CircleImageView.swift
 //  SeoulCulturalEvents
 //
 //  Created by 김성민 on 8/16/24.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ProfileImageView: UIImageView {
+final class CircleImageView: UIImageView {
     
     init() {
         super.init(frame: .zero)

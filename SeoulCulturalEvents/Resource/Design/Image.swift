@@ -23,4 +23,8 @@ extension UIImage {
     static let camera = UIImage(systemName: "camera.fill")!
     static let paperplane = UIImage(systemName: "paperplane")!
     static let xmark = UIImage(systemName: "xmark")!
+    
+    static let likeEvent = UIImage(systemName: "bag")!
+    static let likePost = UIImage(systemName: "bookmark")!
+    static let myPost = UIImage(systemName: "pencil")!
 }

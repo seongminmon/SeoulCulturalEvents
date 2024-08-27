@@ -17,19 +17,26 @@ final class ProfileViewController: BaseViewController {
     
     private let profileView = ProfileView()
     private let separator = UIView().then {
-        $0.backgroundColor = .systemGray3
+        $0.backgroundColor = .systemGray6
     }
-    private let tableView = UITableView().then {
-        $0.register(ProfileTableViewCell.self, forCellReuseIdentifier: ProfileTableViewCell.identifier)
-        $0.rowHeight = 44
-        $0.separatorStyle = .singleLine
-        $0.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        $0.separatorInsetReference = .fromCellEdges
-        $0.separatorColor = .systemGray3
+    private let collectionView = UICollectionView(
+        frame: .zero,
+        collectionViewLayout: .settingLayout()
+    ).then {
+        $0.register(
+            ProfileCollectionViewCell.self,
+            forCellWithReuseIdentifier: ProfileCollectionViewCell.identifier
+        )
+        $0.register(
+            SearchCollectionHeaderView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: SearchCollectionHeaderView.identifier
+        )
+        $0.isScrollEnabled = false
     }
     
     private let viewModel = ProfileViewModel()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -44,25 +51,37 @@ final class ProfileViewController: BaseViewController {
             editButtonTap: profileView.editButton.rx.tap,
             followerButtonTap: profileView.followerButton.rx.tap,
             followingButtonTap: profileView.followingButton.rx.tap,
-            cellTap: tableView.rx.itemSelected,
+            cellTap: collectionView.rx.itemSelected,
             withdrawAction: withdrawAction,
             newProfile: newProfile
         )
         let output = viewModel.transform(input: input)
         
-        let dataSource = RxTableViewSectionedAnimatedDataSource<SettingSection> { dataSource, tableView, indexPath, item in
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileTableViewCell.identifier, for: indexPath) as? ProfileTableViewCell else {
-                return UITableViewCell()
+        let dataSource = RxCollectionViewSectionedAnimatedDataSource<SettingSection> { dataSource, collectionView, indexPath, item in
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: ProfileCollectionViewCell.identifier,
+                for: indexPath
+            ) as? ProfileCollectionViewCell else {
+                return UICollectionViewCell()
             }
-            cell.configureCell(title: item)
+            cell.configureCell(item)
             return cell
-        } titleForHeaderInSection: { [weak self] dataSource, row in
-            let header = self?.viewModel.sections[row].model ?? ""
+            
+        } configureSupplementaryView: { dataSource, collectionView, kind, indexPath in
+            guard let header = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: SearchCollectionHeaderView.identifier,
+                for: indexPath
+            ) as? SearchCollectionHeaderView else {
+                return UICollectionReusableView()
+            }
+            let section = dataSource.sectionModels[indexPath.section]
+            header.configureHeader(section.model)
             return header
         }
         
-        output.settinglist
-            .bind(to: tableView.rx.items(dataSource: dataSource))
+        output.sections
+            .bind(to: collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
         output.profile
@@ -85,23 +104,25 @@ final class ProfileViewController: BaseViewController {
         
         output.cellTap
             .bind(with: self) { owner, value in
-                let userStorage = UserStorage.allCases[value.0.row]
-                switch userStorage {
-                case .likeCulturalEvent:
-                    print("관심 행사 탭")
-                    let vm = LikeEventViewModel(userID: value.1)
+                let (indexPath, userID) = value
+                switch indexPath.item {
+                case 0:
+                    // 관심 행사
+                    let vm = LikeEventViewModel(userID: userID)
                     let vc = LikeEventViewController(viewModel: vm)
                     owner.navigationController?.pushViewController(vc, animated: true)
-                case .likePost:
-                    print("관심 후기 탭")
-                    let vm = LikePostViewModel(userID: value.1)
+                case 1:
+                    // 관심 후기
+                    let vm = LikePostViewModel(userID: userID)
                     let vc = LikePostViewController(viewModel: vm)
                     owner.navigationController?.pushViewController(vc, animated: true)
-                case .myPost:
-                    print("내 후기 탭")
-                    let vm = UserPostViewModel(userID: value.1)
+                case 2:
+                    // 내 후기
+                    let vm = UserPostViewModel(userID: userID)
                     let vc = UserPostViewController(viewModel: vm)
                     owner.navigationController?.pushViewController(vc, animated: true)
+                default:
+                    break
                 }
             }
             .disposed(by: disposeBag)
@@ -116,7 +137,7 @@ final class ProfileViewController: BaseViewController {
 //                }
 //            }
 //            .disposed(by: disposeBag)
-//        
+//
 //        output.withdrawActionSuccess
 //            .bind(with: self) { owner, _ in
 //                SceneDelegate.changeWindow(SignInViewController())
@@ -127,9 +148,9 @@ final class ProfileViewController: BaseViewController {
     override func setNavigationBar() {
         navigationItem.title = "프로필"
     }
-
+    
     override func setLayout() {
-        [profileView, tableView, separator].forEach {
+        [profileView, separator, collectionView].forEach {
             view.addSubview($0)
         }
         
@@ -141,13 +162,13 @@ final class ProfileViewController: BaseViewController {
         separator.snp.makeConstraints { make in
             make.top.equalTo(profileView.snp.bottom)
             make.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(0.3)
+            make.height.equalTo(20)
         }
         
-        tableView.snp.makeConstraints { make in
-            make.top.equalTo(separator)
+        collectionView.snp.makeConstraints { make in
+            make.top.equalTo(separator.snp.bottom).offset(16)
             make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(16)
-            make.bottom.equalTo(view.safeAreaLayoutGuide)
+            make.height.equalTo(200)
         }
     }
 }

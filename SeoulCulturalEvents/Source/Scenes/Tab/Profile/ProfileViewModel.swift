@@ -9,16 +9,15 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-enum UserStorage: String, CaseIterable {
-    case likeCulturalEvent = "관심 행사"
-    case likePost = "관심 후기"
-    case myPost = "내 후기"
-}
-
 final class ProfileViewModel: ViewModelType {
     
-    let sections: [SettingSection] = [
-        SettingSection(model: "보관함", items: UserStorage.allCases.map { $0.rawValue } )
+    private let settingItems: [SettingItem] = [
+        SettingItem(image: .likeEvent, text: "관심 행사"),
+        SettingItem(image: .likePost, text: "관심 후기"),
+        SettingItem(image: .myPost, text: "내 후기"),
+    ]
+    private lazy var sections: [SettingSection] = [
+        SettingSection(model: "보관함", items: settingItems)
     ]
     
     private let disposeBag = DisposeBag()
@@ -34,7 +33,7 @@ final class ProfileViewModel: ViewModelType {
     }
     
     struct Output {
-        let settinglist: BehaviorSubject<[SettingSection]>
+        let sections: BehaviorSubject<[SettingSection]>
         let editButtonTap: ControlEvent<Void>
         let profile: PublishSubject<ProfileModel>
         let cellTap: PublishSubject<(IndexPath, String)>
@@ -44,7 +43,7 @@ final class ProfileViewModel: ViewModelType {
     
     func transform(input: Input) -> Output {
         
-        let settinglist = BehaviorSubject(value: sections)
+        let sections = BehaviorSubject(value: sections)
         let profile = PublishSubject<ProfileModel>()
         let cellTap = PublishSubject<(IndexPath, String)>()
         let withdrawTap = PublishSubject<Void>()
@@ -99,7 +98,7 @@ final class ProfileViewModel: ViewModelType {
             .disposed(by: disposeBag)
         
         return Output(
-            settinglist: settinglist,
+            sections: sections,
             editButtonTap: input.editButtonTap,
             profile: profile,
             cellTap: cellTap,

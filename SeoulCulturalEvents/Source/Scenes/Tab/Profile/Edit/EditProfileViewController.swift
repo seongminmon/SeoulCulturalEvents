@@ -7,6 +7,7 @@
 
 import UIKit
 import PhotosUI
+import IQKeyboardManagerSwift
 import Kingfisher
 import RxSwift
 import RxCocoa
@@ -25,7 +26,9 @@ final class EditProfileViewController: BaseViewController {
         $0.setTitle("갤러리에서 선택", for: .normal)
         $0.setTitleColor(.systemBlue, for: .normal)
     }
-    private let nicknameTextField = SignTextField(placeholderText: "닉네임을 입력해주세요")
+    private let nicknameTextField = SignTextField(placeholderText: "닉네임을 입력해주세요").then {
+        $0.becomeFirstResponder()
+    }
     
     // MARK: - 선택 사항
 //    private let phoneNumberTextField = SignTextField(placeholderText: "전화번호를 입력해주세요")
@@ -48,6 +51,13 @@ final class EditProfileViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // 키보드 매니저 비활성화
+        IQKeyboardManager.shared.enable = false
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        IQKeyboardManager.shared.enable = true
     }
     
     override func bind() {
