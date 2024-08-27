@@ -98,7 +98,8 @@ final class CulturalEventViewModel: ViewModelType {
         
         // postID를 갖고 있으면 삭제하기
         input.likeButtonTap
-            .compactMap { self.postID }
+            .withUnretained(self)
+            .compactMap { _ in self.postID }
             .flatMap { value in
                 return LSLPAPIManager.shared.callRequestWithRetry(api: .deletePost(postID: value))
             }

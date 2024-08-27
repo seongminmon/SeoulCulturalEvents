@@ -14,8 +14,6 @@ import Then
 
 final class CulturalEventViewController: BaseViewController {
     
-    // TODO: - 탭바 없애기
-    
     private let likeButton = UIBarButtonItem().then {
         $0.image = .emptyHeart
         $0.tintColor = .systemRed
@@ -83,6 +81,16 @@ final class CulturalEventViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = true
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        tabBarController?.tabBar.isHidden = false
     }
     
     override func bind() {
