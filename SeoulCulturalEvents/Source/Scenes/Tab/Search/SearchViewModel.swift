@@ -11,6 +11,13 @@ import RxCocoa
 
 final class SearchViewModel: ViewModelType {
     
+    private var sections: [SearchSection] = [
+        SearchSection(model: "최근 검색어", items: UserDefaultsManager.recentSearchTerms),
+        SearchSection(model: "카테고리", items: CodeName.allCases.map { $0.rawValue} )
+    ]
+    
+    private let disposeBag = DisposeBag()
+    
     struct Input {
         let searchText: ControlProperty<String>
         let searchButtonTap: ControlEvent<Void>
@@ -22,13 +29,6 @@ final class SearchViewModel: ViewModelType {
         let sections: BehaviorSubject<[SearchSection]>
         let cultureParameter: Observable<CultureParameter>
     }
-    
-    private var sections: [SearchSection] = [
-        SearchSection(model: "최근 검색어", items: UserDefaultsManager.recentSearchTerms),
-        SearchSection(model: "카테고리", items: CodeName.allCases.map { $0.rawValue} )
-    ]
-    
-    private let disposeBag = DisposeBag()
     
     func transform(input: Input) -> Output {
         

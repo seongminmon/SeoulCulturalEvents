@@ -14,8 +14,6 @@ import Then
 
 final class WriteViewController: BaseViewController {
     
-    // TODO: - 선택한 사진 삭제 기능
-    
     private let completeButton = UIBarButtonItem(title: "완료")
     private let scrollView = UIScrollView()
     private let contentView = UIView()
@@ -51,8 +49,9 @@ final class WriteViewController: BaseViewController {
         $0.font = .bold20
     }
     private let contentsTextView = UITextView().then {
-        $0.font = .regular14
-        $0.backgroundColor = .lightGray
+        $0.font = .regular15
+        $0.textColor = .gray
+        $0.text = "후기를 작성해보세요."
         $0.isScrollEnabled = false
     }
     
@@ -64,12 +63,16 @@ final class WriteViewController: BaseViewController {
     }
     
     override func bind() {
+        
+        let deleteTerms = PublishSubject<IndexPath>()
+        
         let input = WriteViewModel.Input(
             completeButtonTap: completeButton.rx.tap,
             addImageButtonTap: addImageButton.rx.tap,
             titleText: titleTextField.rx.text.orEmpty,
             contentsText: contentsTextView.rx.text.orEmpty,
-            imageList: imageList
+            imageList: imageList,
+            deleteTerms: deleteTerms
         )
         let output = viewModel.transform(input: input)
         
@@ -93,7 +96,15 @@ final class WriteViewController: BaseViewController {
                 cellIdentifier: ImageCollectionViewCell.identifier,
                 cellType: ImageCollectionViewCell.self
             )) { row, element, cell in
-                cell.imageView.image = UIImage(data: element ?? Data())
+                cell.configureCell(element)
+                cell.deleteButton.isHidden = false
+                cell.deleteButton.rx.tap
+                    .bind(with: self) { owner, _ in
+                        if let indexPath = owner.collectionView.indexPath(for: cell) {
+                            deleteTerms.onNext(indexPath)
+                        }
+                    }
+                    .disposed(by: cell.disposeBag)
             }
             .disposed(by: disposeBag)
         
@@ -106,6 +117,24 @@ final class WriteViewController: BaseViewController {
         output.uploadFailure
             .bind(with: self) { owner, value in
                 owner.makeNetworkFailureToast(value)
+            }
+            .disposed(by: disposeBag)
+        
+        contentsTextView.rx.didBeginEditing
+            .bind(with: self) { owner, _ in
+                if owner.contentsTextView.textColor == .gray {
+                    owner.contentsTextView.textColor = .black
+                    owner.contentsTextView.text = nil
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        contentsTextView.rx.didEndEditing
+            .bind(with: self) { owner, _ in
+                if owner.contentsTextView.text == nil || owner.contentsTextView.text.isEmpty {
+                    owner.contentsTextView.textColor = .gray
+                    owner.contentsTextView.text = "후기를 작성해보세요."
+                }
             }
             .disposed(by: disposeBag)
     }
@@ -135,13 +164,14 @@ final class WriteViewController: BaseViewController {
             make.width.equalToSuperview()
         }
         addImageButton.snp.makeConstraints { make in
-            make.top.leading.equalToSuperview().inset(8)
-            make.size.equalTo(60)
+            make.top.equalTo(collectionView).inset(10)
+            make.leading.equalToSuperview().inset(8)
+            make.size.equalTo(80)
         }
         collectionView.snp.makeConstraints { make in
             make.top.trailing.equalToSuperview().inset(8)
             make.leading.equalTo(addImageButton.snp.trailing).offset(8)
-            make.height.equalTo(60)
+            make.height.equalTo(100)
         }
         titleTextField.snp.makeConstraints { make in
             make.top.equalTo(addImageButton.snp.bottom).offset(8)
@@ -188,7 +218,7 @@ extension WriteViewController: PHPickerViewControllerDelegate {
         }
         
         dispatchGroup.notify(queue: .main) {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            DispatchQueue.main.async {
                 self.imageList.onNext(tempList)
                 self.hideLoadingToast()
             }

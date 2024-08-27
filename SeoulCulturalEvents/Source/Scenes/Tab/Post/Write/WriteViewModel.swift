@@ -19,6 +19,7 @@ final class WriteViewModel: ViewModelType {
         let titleText: ControlProperty<String>
         let contentsText: ControlProperty<String>
         let imageList: BehaviorSubject<[Data?]>
+        let deleteTerms: PublishSubject<IndexPath>
     }
     
     struct Output {
@@ -37,7 +38,7 @@ final class WriteViewModel: ViewModelType {
         let uploadFailure = PublishSubject<String>()
         let imageUploadSuccess = PublishSubject<[String]>()
         
-        let allContents = Observable.combineLatest(input.imageList , input.titleText, input.contentsText)
+        let allContents = Observable.combineLatest(input.imageList, input.titleText, input.contentsText)
         
         // 이미지, 타이틀, 컨텐츠 모두 있을 때만 완료 버튼 활성화
         allContents
@@ -102,6 +103,15 @@ final class WriteViewModel: ViewModelType {
         input.imageList
             .subscribe(with: self) { owner, value in
                 imageList.onNext(value)
+            }
+            .disposed(by: disposeBag)
+        
+        input.deleteTerms
+            .withLatestFrom(imageList) { ($0, $1) }
+            .subscribe(with: self) { owner, value in
+                var list = value.1
+                list.remove(at: value.0.item)
+                imageList.onNext(list)
             }
             .disposed(by: disposeBag)
         
