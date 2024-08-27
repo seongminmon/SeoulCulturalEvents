@@ -45,7 +45,7 @@ import Moya
  - 프로필
     [✅] 내 프로필 조회
     [✅] 내 프로필 수정
-    [⭐️] 다른유저 프로필 조회
+    [✅] 다른유저 프로필 조회
     [❌] 유저검색
  */
 
@@ -56,7 +56,8 @@ enum LSLPRouter {
     case signUp(query: SignUpQuery)
     case refresh
     case withdraw
-    case fetchProfile
+    case fetchMyProfile
+    case fetchProfile(userID: String)
     case editProfile(query: EditProfileQuery)
     case follow(userID: String)
     case cancelFollow(userID: String)
@@ -91,8 +92,10 @@ extension LSLPRouter: TargetType {
             return "auth/refresh"
         case .withdraw:
             return "users/withdraw"
-        case .fetchProfile:
+        case .fetchMyProfile:
             return "users/me/profile"
+        case .fetchProfile(let id):
+            return "users/\(id)/profile"
         case .editProfile:
             return "users/me/profile"
         case .follow(let id):
@@ -135,6 +138,8 @@ extension LSLPRouter: TargetType {
         case .refresh:
             return .get
         case .withdraw:
+            return .get
+        case .fetchMyProfile:
             return .get
         case .fetchProfile:
             return .get
@@ -179,6 +184,8 @@ extension LSLPRouter: TargetType {
         case .refresh:
             return .requestPlain
         case .withdraw:
+            return .requestPlain
+        case .fetchMyProfile:
             return .requestPlain
         case .fetchProfile:
             return .requestPlain
@@ -283,6 +290,12 @@ extension LSLPRouter: TargetType {
                 LSLPHeader.refresh: UserDefaultsManager.refreshToken
             ]
         case .withdraw:
+            return [
+                LSLPHeader.sesacKey: APIKey.lslpKey,
+                LSLPHeader.contentType: LSLPHeader.json,
+                LSLPHeader.authorization: UserDefaultsManager.accessToken
+            ]
+        case .fetchMyProfile:
             return [
                 LSLPHeader.sesacKey: APIKey.lslpKey,
                 LSLPHeader.contentType: LSLPHeader.json,

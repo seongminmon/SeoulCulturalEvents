@@ -1,17 +1,18 @@
 //
-//  UserPostViewController.swift
+//  LikePostViewController.swift
 //  SeoulCulturalEvents
 //
 //  Created by 김성민 on 8/26/24.
 //
 
+import Foundation
 import UIKit
 import RxSwift
 import RxCocoa
 import SnapKit
 import Then
 
-final class UserPostViewController: BaseViewController {
+final class LikePostViewController: BaseViewController {
     
     private lazy var collectionView = UICollectionView(
         frame: .zero,
@@ -23,15 +24,11 @@ final class UserPostViewController: BaseViewController {
         )
     }
     
-    private let viewModel: UserPostViewModel
+    private let viewModel: LikePostViewModel
     
-    init(viewModel: UserPostViewModel) {
+    init(viewModel: LikePostViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
@@ -39,7 +36,7 @@ final class UserPostViewController: BaseViewController {
     }
     
     override func bind() {
-        let input = UserPostViewModel.Input(
+        let input = LikePostViewModel.Input(
             cellTap: collectionView.rx.modelSelected(PostModel.self)
         )
         let output = viewModel.transform(input: input)
@@ -63,7 +60,7 @@ final class UserPostViewController: BaseViewController {
     }
     
     override func setNavigationBar() {
-        navigationItem.title = "내 후기"
+        navigationItem.title = "관심 후기"
     }
     
     override func setLayout() {

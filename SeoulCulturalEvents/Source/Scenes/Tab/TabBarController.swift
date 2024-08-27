@@ -24,7 +24,7 @@ final class TabBarController: UITabBarController {
         let post = UINavigationController(rootViewController: PostViewController())
         post.tabBarItem = UITabBarItem(title: "후기", image: .list, tag: 2)
         
-        let profile = UINavigationController(rootViewController: ProfileViewController())
+        let profile = UINavigationController(rootViewController: MyProfileViewController())
         profile.tabBarItem = UITabBarItem(title: "설정", image: .profile, tag: 3)
  
         setViewControllers([today, search, post, profile], animated: true)

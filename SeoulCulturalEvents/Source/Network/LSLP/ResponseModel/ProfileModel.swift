@@ -7,10 +7,10 @@
 
 import Foundation
 
-// 내 프로필 조회 / 내 프로필 수정
+// 내 프로필 조회 / 내 프로필 수정/ 다른 유저 프로필 조회
 struct ProfileModel: Decodable {
     let id: String
-    let email: String
+    let email: String?
     let nick: String
     
     let phoneNum: String?

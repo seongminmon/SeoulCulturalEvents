@@ -21,7 +21,6 @@ final class SignTextField: UITextField {
         layer.borderColor = UIColor.black.cgColor
     }
     
-    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

@@ -1,5 +1,5 @@
 //
-//  ProfileViewController.swift
+//  MyProfileViewController.swift
 //  SeoulCulturalEvents
 //
 //  Created by 김성민 on 8/14/24.
@@ -13,7 +13,7 @@ import RxDataSources
 import SnapKit
 import Then
 
-final class ProfileViewController: BaseViewController {
+final class MyProfileViewController: BaseViewController {
     
     private let profileView = ProfileView()
     private let separator = UIView().then {
@@ -35,7 +35,7 @@ final class ProfileViewController: BaseViewController {
         $0.isScrollEnabled = false
     }
     
-    private let viewModel = ProfileViewModel()
+    private let viewModel = MyProfileViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,9 +46,9 @@ final class ProfileViewController: BaseViewController {
         let withdrawAction = PublishSubject<Void>()
         let newProfile = PublishSubject<ProfileModel>()
         
-        let input = ProfileViewModel.Input(
+        let input = MyProfileViewModel.Input(
             viewWillAppear: rx.viewWillAppear,
-            editButtonTap: profileView.editButton.rx.tap,
+            editButtonTap: profileView.additionalButton.rx.tap,
             followerButtonTap: profileView.followerButton.rx.tap,
             followingButtonTap: profileView.followingButton.rx.tap,
             cellTap: collectionView.rx.itemSelected,

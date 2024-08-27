@@ -1,5 +1,5 @@
 //
-//  ProfileViewModel.swift
+//  MyProfileViewModel.swift
 //  SeoulCulturalEvents
 //
 //  Created by 김성민 on 8/16/24.
@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-final class ProfileViewModel: ViewModelType {
+final class MyProfileViewModel: ViewModelType {
     
     private let settingItems: [SettingItem] = [
         SettingItem(image: .likeEvent, text: "관심 행사"),
@@ -52,7 +52,7 @@ final class ProfileViewModel: ViewModelType {
         // 내 프로필 조회 통신하기
         input.viewWillAppear
             .flatMap { _ in
-                LSLPAPIManager.shared.callRequestWithRetry(api: .fetchProfile, model: ProfileModel.self)
+                LSLPAPIManager.shared.callRequestWithRetry(api: .fetchMyProfile, model: ProfileModel.self)
             }
             .subscribe(with: self) { owner, result in
                 switch result {

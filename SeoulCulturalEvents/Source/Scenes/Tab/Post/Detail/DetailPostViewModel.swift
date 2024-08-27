@@ -22,6 +22,7 @@ final class DetailPostViewModel: ViewModelType {
         let viewDidLoad: Observable<Void>
         let likeButtonTap: ControlEvent<Void>
         let commentButtonTap: ControlEvent<Void>
+        let userInfoButtonTap: ControlEvent<Void>
     }
     
     struct Output {
@@ -30,6 +31,7 @@ final class DetailPostViewModel: ViewModelType {
         let imageList: PublishSubject<[String]>
         let isLike: PublishSubject<Bool>
         let commentButtonTap: PublishSubject<(String, [CommentModel])>
+        let userInfoButtonTap: PublishSubject<String>
     }
     
     func transform(input: Input) -> Output {
@@ -39,6 +41,7 @@ final class DetailPostViewModel: ViewModelType {
         let imageList = PublishSubject<[String]>()
         let isLike = PublishSubject<Bool>()
         let commentButtonTap = PublishSubject<(String, [CommentModel])>()
+        let userInfoButtonTap = PublishSubject<String>()
         
         // MARK: - 후기 화면 데이터가 최신 상태가 아닐 수 있으므로 새롭게 통신
         // 특정 포스트 조회 통신
@@ -91,12 +94,20 @@ final class DetailPostViewModel: ViewModelType {
             }
             .disposed(by: disposeBag)
         
+        input.userInfoButtonTap
+            .withLatestFrom(post)
+            .subscribe(with: self) { owner, value in
+                userInfoButtonTap.onNext(value.creator.id)
+            }
+            .disposed(by: disposeBag)
+        
         return Output(
             navigationTitle: navigationTitle,
             post: post,
             imageList: imageList,
             isLike: isLike,
-            commentButtonTap: commentButtonTap
+            commentButtonTap: commentButtonTap,
+            userInfoButtonTap: userInfoButtonTap
         )
     }
 }

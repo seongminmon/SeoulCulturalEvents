@@ -24,7 +24,7 @@ final class ProfileView: BaseView {
         $0.titleLabel?.font = .regular14
         $0.setTitleColor(.black, for: .normal)
     }
-    let editButton = UIButton().then {
+    let additionalButton = UIButton().then {
         $0.setTitle("프로필 수정", for: .normal)
         $0.setTitleColor(.black, for: .normal)
         $0.layer.cornerRadius = 10
@@ -38,7 +38,7 @@ final class ProfileView: BaseView {
             nicknameLabel,
             followerButton,
             followingButton,
-            editButton
+            additionalButton
         ].forEach {
             addSubview($0)
         }
@@ -63,7 +63,7 @@ final class ProfileView: BaseView {
             make.leading.equalTo(followerButton.snp.trailing).offset(8)
         }
         
-        editButton.snp.makeConstraints { make in
+        additionalButton.snp.makeConstraints { make in
             make.top.equalTo(followerButton.snp.bottom).offset(8)
             make.horizontalEdges.equalToSuperview().inset(16)
             make.height.equalTo(40)

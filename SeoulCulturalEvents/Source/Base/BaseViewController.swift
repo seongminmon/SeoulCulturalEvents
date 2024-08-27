@@ -28,8 +28,17 @@ class BaseViewController: UIViewController {
     func setLayout() {}
     func bind() {}
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        view.endEditing(true)
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+//    init(nibName: nil, bundle: nil) {
+//        super.init(nibName: nil, bundle: nil)
+//    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 

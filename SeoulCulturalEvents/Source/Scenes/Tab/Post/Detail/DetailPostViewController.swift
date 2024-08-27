@@ -21,6 +21,7 @@ final class DetailPostViewController: BaseViewController {
     private let contentView = UIView()
     
     private let userInfoView = UserInfoView()
+    private let userInfoButton = UIButton()
     private let titleLabel = UILabel().then {
         $0.font = .bold20
         $0.numberOfLines = 0
@@ -50,10 +51,6 @@ final class DetailPostViewController: BaseViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     private let viewModel: DetailPostViewModel
     
     override func viewDidLoad() {
@@ -64,7 +61,8 @@ final class DetailPostViewController: BaseViewController {
         let input = DetailPostViewModel.Input(
             viewDidLoad: Observable.just(()),
             likeButtonTap: likeButton.rx.tap,
-            commentButtonTap: commentButton.rx.tap
+            commentButtonTap: commentButton.rx.tap,
+            userInfoButtonTap: userInfoButton.rx.tap
         )
         let output = viewModel.transform(input: input)
         
@@ -105,6 +103,14 @@ final class DetailPostViewController: BaseViewController {
                 owner.present(nav, animated: true)
             }
             .disposed(by: disposeBag)
+        
+        output.userInfoButtonTap
+            .bind(with: self) { owner, userID in
+                let vm = OthersProfileViewModel(userID: userID)
+                let vc = OthersProfileViewController(viewModel: vm)
+                owner.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disposeBag)
     }
     
     override func setNavigationBar() {
@@ -114,6 +120,7 @@ final class DetailPostViewController: BaseViewController {
     override func setLayout() {
         [
             userInfoView,
+            userInfoButton,
             titleLabel,
             collectionView,
             contentsLabel,
@@ -130,6 +137,11 @@ final class DetailPostViewController: BaseViewController {
             make.width.equalToSuperview()
         }
         userInfoView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.horizontalEdges.equalToSuperview().inset(8)
+            make.height.equalTo(40)
+        }
+        userInfoButton.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.horizontalEdges.equalToSuperview().inset(8)
             make.height.equalTo(40)

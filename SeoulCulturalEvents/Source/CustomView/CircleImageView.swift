@@ -17,7 +17,6 @@ final class CircleImageView: UIImageView {
         layer.borderColor = UIColor.systemGray6.cgColor
     }
     
-    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
