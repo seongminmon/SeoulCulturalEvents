@@ -13,9 +13,7 @@ import Then
 
 final class OthersProfileViewController: BaseViewController {
     
-    private let profileView = ProfileView().then {
-        $0.additionalButton.setTitle("팔로잉", for: .normal)
-    }
+    private let profileView = ProfileView()
     
     private let viewModel: OthersProfileViewModel
     
@@ -29,7 +27,9 @@ final class OthersProfileViewController: BaseViewController {
     }
     
     override func bind() {
-        let input = OthersProfileViewModel.Input()
+        let input = OthersProfileViewModel.Input(
+            additionalButtonTap: profileView.additionalButton.rx.tap
+        )
         let output = viewModel.transform(input: input)
         
         output.profile
@@ -37,6 +37,12 @@ final class OthersProfileViewController: BaseViewController {
                 owner.navigationItem.title = profile.nick
                 owner.profileView.configureView(profile)
             }
+            .disposed(by: disposeBag)
+        
+        output.isFollow
+            .debug("팔로우 인지 아닌지???")
+            .map { $0 ? "팔로우 취소" : "팔로우" }
+            .bind(to: profileView.additionalButton.rx.title())
             .disposed(by: disposeBag)
     }
     

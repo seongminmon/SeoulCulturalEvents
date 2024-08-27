@@ -19,16 +19,18 @@ final class OthersProfileViewModel: ViewModelType {
     private let disposeBag = DisposeBag()
     
     struct Input {
-        
+        let additionalButtonTap: ControlEvent<Void>
     }
     
     struct Output {
         let profile: PublishSubject<ProfileModel>
+        let isFollow: PublishSubject<Bool>
     }
     
     func transform(input: Input) -> Output {
         
         let profile = PublishSubject<ProfileModel>()
+        let isFollow = PublishSubject<Bool>()
         
         // 다른 유저 프로필 조회 통신
         LSLPAPIManager.shared.callRequestWithRetry(
@@ -49,8 +51,66 @@ final class OthersProfileViewModel: ViewModelType {
         }
         .disposed(by: disposeBag)
         
+        // 팔로우 초기 상태
+        profile
+            .map { $0.followers.map { $0.id } }
+            .map { $0.contains(UserDefaultsManager.userID) }
+            .bind(to: isFollow)
+            .disposed(by: disposeBag)
+        
+        // 팔로우
+        input.additionalButtonTap
+            .withLatestFrom(isFollow)
+            .compactMap { value -> Void? in
+                return value ? nil : ()
+            }
+            .withLatestFrom(profile)
+            .map { $0.id }
+            .flatMap { userID in
+                LSLPAPIManager.shared.callRequestWithRetry(api: .follow(userID: userID), model: FollowModel.self)
+            }
+            .subscribe(with: self) { owner, result in
+                switch result {
+                case .success(let data):
+                    print("팔로우 성공")
+                    dump(data)
+                    isFollow.onNext(data.followingStatus)
+                    
+                case .failure(let error):
+                    print("팔로우 실패")
+                    print(error)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        // 팔로우 취소
+        input.additionalButtonTap
+            .withLatestFrom(isFollow)
+            .compactMap { value -> Void? in
+                return value ? () : nil
+            }
+            .withLatestFrom(profile)
+            .map { $0.id }
+            .flatMap { userID in
+                LSLPAPIManager.shared.callRequestWithRetry(api: .cancelFollow(userID: userID), model: FollowModel.self)
+            }
+            .subscribe(with: self) { owner, result in
+                switch result {
+                case .success(let data):
+                    print("팔로우 취소 성공")
+                    dump(data)
+                    isFollow.onNext(data.followingStatus)
+                    
+                case .failure(let error):
+                    print("팔로우 취소 실패")
+                    print(error)
+                }
+            }
+            .disposed(by: disposeBag)
+        
         return Output(
-            profile: profile
+            profile: profile,
+            isFollow: isFollow
         )
     }
 }
