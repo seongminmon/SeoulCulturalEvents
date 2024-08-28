@@ -38,6 +38,10 @@ import Moya
     [✅] 포스트 좋아요/좋아요 취소
     [✅] 좋아요한 포스트 조회
  
+ - 좋아요2
+    [❌] 포스트 좋아요2/좋아요2 취소
+    [❌] 좋아요2한 포스트 조회
+ 
  - 팔로우
     [✅] 팔로우
     [✅] 팔로우 취소
@@ -46,8 +50,9 @@ import Moya
     [✅] 내 프로필 조회
     [✅] 내 프로필 수정
     [✅] 다른유저 프로필 조회
-    [❌] 유저검색
+    [✅] 유저검색
  */
+
 
 enum LSLPRouter {
     
@@ -61,6 +66,7 @@ enum LSLPRouter {
     case editProfile(query: EditProfileQuery)
     case follow(userID: String)
     case cancelFollow(userID: String)
+    case searchUser(nick: String)
     
     // MARK: - 포스트
     case fetchPostList(query: PostFetchQuery)
@@ -102,6 +108,8 @@ extension LSLPRouter: TargetType {
             return "follow/\(id)"
         case .cancelFollow(let id):
             return "follow/\(id)"
+        case .searchUser:
+            return "users/search"
             
         case .fetchPostList:
             return "posts"
@@ -149,6 +157,8 @@ extension LSLPRouter: TargetType {
             return .post
         case .cancelFollow:
             return .delete
+        case .searchUser:
+            return .get
             
         case .fetchPostList:
             return .get
@@ -222,6 +232,11 @@ extension LSLPRouter: TargetType {
             return .requestPlain
         case .cancelFollow:
             return .requestPlain
+        case .searchUser(let id):
+            let parameters: [String : Any] = [
+                "nick": id
+            ]
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
             
         case .fetchPostList(let query):
             let parameters: [String : Any] = [
@@ -320,6 +335,12 @@ extension LSLPRouter: TargetType {
                 LSLPHeader.authorization: UserDefaultsManager.accessToken
             ]
         case .cancelFollow:
+            return [
+                LSLPHeader.sesacKey: APIKey.lslpKey,
+                LSLPHeader.contentType: LSLPHeader.json,
+                LSLPHeader.authorization: UserDefaultsManager.accessToken
+            ]
+        case .searchUser:
             return [
                 LSLPHeader.sesacKey: APIKey.lslpKey,
                 LSLPHeader.contentType: LSLPHeader.json,

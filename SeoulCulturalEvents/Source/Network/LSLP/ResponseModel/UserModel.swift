@@ -7,6 +7,11 @@
 
 import Foundation
 
+// 유저 검색
+struct SearchUserModel: Decodable {
+    let data: [UserModel]
+}
+
 struct UserModel: Decodable {
     let id: String
     let nick: String
