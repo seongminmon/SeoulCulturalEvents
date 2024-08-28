@@ -27,4 +27,5 @@ extension UIImage {
     static let likeEvent = UIImage(systemName: "bag")!
     static let likePost = UIImage(systemName: "bookmark")!
     static let myPost = UIImage(systemName: "pencil")!
+    static let searchUser = UIImage(systemName: "person.badge.plus")!
 }

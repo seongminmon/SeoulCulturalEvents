@@ -138,17 +138,17 @@ final class DetailPostViewController: BaseViewController {
         }
         userInfoView.snp.makeConstraints { make in
             make.top.equalToSuperview()
-            make.horizontalEdges.equalToSuperview().inset(8)
+            make.horizontalEdges.equalToSuperview().inset(16)
             make.height.equalTo(40)
         }
         userInfoButton.snp.makeConstraints { make in
             make.top.equalToSuperview()
-            make.horizontalEdges.equalToSuperview().inset(8)
+            make.horizontalEdges.equalToSuperview().inset(16)
             make.height.equalTo(40)
         }
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(userInfoView.snp.bottom).offset(16)
-            make.horizontalEdges.equalToSuperview().inset(8)
+            make.horizontalEdges.equalToSuperview().inset(16)
         }
         collectionView.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(16)
@@ -157,11 +157,11 @@ final class DetailPostViewController: BaseViewController {
         }
         contentsLabel.snp.makeConstraints { make in
             make.top.equalTo(collectionView.snp.bottom).offset(16)
-            make.horizontalEdges.equalToSuperview().inset(8)
+            make.horizontalEdges.equalToSuperview().inset(16)
         }
         commentButton.snp.makeConstraints { make in
             make.top.equalTo(contentsLabel.snp.bottom).offset(8)
-            make.horizontalEdges.equalToSuperview().inset(8)
+            make.horizontalEdges.equalToSuperview().inset(16)
             make.bottom.equalToSuperview().inset(16)
         }
     }

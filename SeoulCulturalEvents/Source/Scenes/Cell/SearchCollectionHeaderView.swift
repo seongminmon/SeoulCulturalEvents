@@ -11,8 +11,6 @@ import Then
 
 final class SearchCollectionHeaderView: UICollectionReusableView {
     
-    static let identifier = String(describing: SearchCollectionHeaderView.self)
-    
     private let titleLabel = UILabel().then {
         $0.font = .bold20
     }

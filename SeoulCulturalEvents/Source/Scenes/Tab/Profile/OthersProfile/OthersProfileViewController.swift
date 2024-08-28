@@ -13,6 +13,8 @@ import Then
 
 final class OthersProfileViewController: BaseViewController {
     
+    // TODO: - 유저가 쓴 글 보여주기
+    
     private let profileView = ProfileView()
     
     private let viewModel: OthersProfileViewModel
@@ -40,7 +42,6 @@ final class OthersProfileViewController: BaseViewController {
             .disposed(by: disposeBag)
         
         output.isFollow
-            .debug("팔로우 인지 아닌지???")
             .map { $0 ? "팔로우 취소" : "팔로우" }
             .bind(to: profileView.additionalButton.rx.title())
             .disposed(by: disposeBag)

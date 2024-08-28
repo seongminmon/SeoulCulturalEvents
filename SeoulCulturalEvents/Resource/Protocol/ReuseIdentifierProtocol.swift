@@ -11,7 +11,7 @@ protocol ReuseIdentifierProtocol: AnyObject {
     static var identifier: String { get }
 }
 
-extension UICollectionViewCell: ReuseIdentifierProtocol {
+extension UICollectionReusableView: ReuseIdentifierProtocol {
     static var identifier: String {
         return String(describing: self)
     }
@@ -22,3 +22,5 @@ extension UITableViewCell: ReuseIdentifierProtocol {
         return String(describing: self)
     }
 }
+
+

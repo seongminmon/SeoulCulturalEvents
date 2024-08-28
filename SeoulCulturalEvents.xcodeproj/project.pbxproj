@@ -116,6 +116,9 @@
 		24B3C0F32C74895C0008B597 /* ProductID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B3C0F22C74895C0008B597 /* ProductID.swift */; };
 		24B3C0F52C748A100008B597 /* LSLPError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B3C0F42C748A100008B597 /* LSLPError.swift */; };
 		24B3C0F72C74B5AB0008B597 /* PostFetchQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B3C0F62C74B5AB0008B597 /* PostFetchQuery.swift */; };
+		24CDA1862C7F23B1007D844E /* SearchUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CDA1852C7F23B1007D844E /* SearchUserViewController.swift */; };
+		24CDA1882C7F23CD007D844E /* SearchUserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CDA1872C7F23CD007D844E /* SearchUserViewModel.swift */; };
+		24CDA18A2C7F2698007D844E /* SearchUserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CDA1892C7F2698007D844E /* SearchUserTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -218,6 +221,9 @@
 		24B3C0F22C74895C0008B597 /* ProductID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductID.swift; sourceTree = "<group>"; };
 		24B3C0F42C748A100008B597 /* LSLPError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LSLPError.swift; sourceTree = "<group>"; };
 		24B3C0F62C74B5AB0008B597 /* PostFetchQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostFetchQuery.swift; sourceTree = "<group>"; };
+		24CDA1852C7F23B1007D844E /* SearchUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUserViewController.swift; sourceTree = "<group>"; };
+		24CDA1872C7F23CD007D844E /* SearchUserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUserViewModel.swift; sourceTree = "<group>"; };
+		24CDA1892C7F2698007D844E /* SearchUserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUserTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -305,6 +311,7 @@
 				24B2B6B82C6EF6B700190BFC /* MyProfileViewModel.swift */,
 				24B2B6CF2C6F264700190BFC /* Edit */,
 				240784E82C7C72AB00E06A5E /* UserStorage */,
+				24CDA1842C7F237B007D844E /* SearchUser */,
 			);
 			path = MyProfile;
 			sourceTree = "<group>";
@@ -356,6 +363,7 @@
 				24AB4BD32C7762DF0030558A /* PostCollectionViewCell.swift */,
 				24AB4BD12C775D460030558A /* ImageCollectionViewCell.swift */,
 				240784DC2C7AFE5300E06A5E /* CommentTableViewCell.swift */,
+				24CDA1892C7F2698007D844E /* SearchUserTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -668,6 +676,15 @@
 			path = Reservation;
 			sourceTree = "<group>";
 		};
+		24CDA1842C7F237B007D844E /* SearchUser */ = {
+			isa = PBXGroup;
+			children = (
+				24CDA1852C7F23B1007D844E /* SearchUserViewController.swift */,
+				24CDA1872C7F23CD007D844E /* SearchUserViewModel.swift */,
+			);
+			path = SearchUser;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -777,6 +794,7 @@
 				245D38642C75E079006E282D /* SearchResultViewModel.swift in Sources */,
 				24B2B65A2C6CC5C500190BFC /* Formatter.swift in Sources */,
 				24B2B69D2C6CE67F00190BFC /* CultureRouter.swift in Sources */,
+				24CDA18A2C7F2698007D844E /* SearchUserTableViewCell.swift in Sources */,
 				240784DF2C7B03B300E06A5E /* CommentQuery.swift in Sources */,
 				24B2B6412C6C951C00190BFC /* SearchViewController.swift in Sources */,
 				24B2B6752C6CCF0A00190BFC /* PointButton.swift in Sources */,
@@ -810,11 +828,13 @@
 				24AB4BD92C78732F0030558A /* WriteViewController.swift in Sources */,
 				24B3C0EE2C744E000008B597 /* ReservationViewController.swift in Sources */,
 				24B3C0E82C73649F0008B597 /* PostModel.swift in Sources */,
+				24CDA1862C7F23B1007D844E /* SearchUserViewController.swift in Sources */,
 				24B2B6CC2C6F25AC00190BFC /* EditProfileViewController.swift in Sources */,
 				240784F72C7CB64000E06A5E /* LikePostViewModel.swift in Sources */,
 				24B2B68E2C6CDD7100190BFC /* LSLPAPIManager.swift in Sources */,
 				245D38622C75E061006E282D /* SearchResultViewController.swift in Sources */,
 				24B3C0F72C74B5AB0008B597 /* PostFetchQuery.swift in Sources */,
+				24CDA1882C7F23CD007D844E /* SearchUserViewModel.swift in Sources */,
 				24B2B6432C6C956700190BFC /* PostViewController.swift in Sources */,
 				24B3C0EA2C7365920008B597 /* UserModel.swift in Sources */,
 				24B2B6B12C6E14B100190BFC /* SignUpModel.swift in Sources */,

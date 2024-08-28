@@ -11,10 +11,21 @@ import RxCocoa
 
 final class SearchViewModel: ViewModelType {
     
-    private var sections: [SearchSection] = [
-        SearchSection(model: "최근 검색어", items: UserDefaultsManager.recentSearchTerms),
-        SearchSection(model: "카테고리", items: CodeName.allCases.map { $0.rawValue} )
-    ]
+    enum Section: String, CaseIterable {
+        case recent = "최근 검색어"
+        case category = "카테고리"
+        
+        var items: [String] {
+            switch self {
+            case .recent:
+                return UserDefaultsManager.recentSearchTerms
+            case .category:
+                return CodeName.allCases.map { $0.rawValue}
+            }
+        }
+    }
+    
+    private var sections: [SearchSection] = Section.allCases.map { SearchSection(model: $0.rawValue, items: $0.items) }
     
     private let disposeBag = DisposeBag()
     

@@ -30,6 +30,7 @@ final class MyProfileViewModel: ViewModelType {
         let cellTap: ControlEvent<IndexPath>
         let withdrawAction: PublishSubject<Void>
         let newProfile: PublishSubject<ProfileModel>
+        let searchButtonTap: ControlEvent<Void>
     }
     
     struct Output {
@@ -39,6 +40,7 @@ final class MyProfileViewModel: ViewModelType {
         let cellTap: PublishSubject<(IndexPath, String)>
         let withdrawTap: PublishSubject<Void>
         let withdrawActionSuccess: PublishSubject<Void>
+        let searchButtonTap: PublishSubject<[UserModel]>
     }
     
     func transform(input: Input) -> Output {
@@ -48,6 +50,7 @@ final class MyProfileViewModel: ViewModelType {
         let cellTap = PublishSubject<(IndexPath, String)>()
         let withdrawTap = PublishSubject<Void>()
         let withdrawActionSuccess = PublishSubject<Void>()
+        let searchButtonTap = PublishSubject<[UserModel]>()
         
         // 내 프로필 조회 통신하기
         input.viewWillAppear
@@ -97,13 +100,20 @@ final class MyProfileViewModel: ViewModelType {
             }
             .disposed(by: disposeBag)
         
+        input.searchButtonTap
+            .withLatestFrom(profile)
+            .subscribe(with: self) { owner, value in
+                searchButtonTap.onNext(value.following)
+            }
+        
         return Output(
             sections: sections,
             editButtonTap: input.editButtonTap,
             profile: profile,
             cellTap: cellTap,
             withdrawTap: withdrawTap,
-            withdrawActionSuccess: withdrawActionSuccess
+            withdrawActionSuccess: withdrawActionSuccess,
+            searchButtonTap: searchButtonTap
         )
     }
 }

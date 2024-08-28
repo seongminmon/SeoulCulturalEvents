@@ -15,6 +15,9 @@ import Then
 
 final class MyProfileViewController: BaseViewController {
     
+    private let searchButton = UIBarButtonItem().then {
+        $0.image = .searchUser
+    }
     private let profileView = ProfileView()
     private let separator = UIView().then {
         $0.backgroundColor = .systemGray6
@@ -53,7 +56,8 @@ final class MyProfileViewController: BaseViewController {
             followingButtonTap: profileView.followingButton.rx.tap,
             cellTap: collectionView.rx.itemSelected,
             withdrawAction: withdrawAction,
-            newProfile: newProfile
+            newProfile: newProfile,
+            searchButtonTap: searchButton.rx.tap
         )
         let output = viewModel.transform(input: input)
         
@@ -127,6 +131,14 @@ final class MyProfileViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
+        output.searchButtonTap
+            .subscribe(with: self) { owner, following in
+                let vm = SearchUserViewModel(following: following)
+                let vc = SearchUserViewController(viewModel: vm)
+                owner.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disposeBag)
+        
 //        output.withdrawTap
 //            .bind(with: self) { owner, _ in
 //                owner.showWithdrawAlert(
@@ -147,6 +159,7 @@ final class MyProfileViewController: BaseViewController {
     
     override func setNavigationBar() {
         navigationItem.title = "프로필"
+        navigationItem.rightBarButtonItem = searchButton
     }
     
     override func setLayout() {
