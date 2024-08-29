@@ -27,6 +27,7 @@ final class ProfileView: BaseView {
     let additionalButton = UIButton().then {
         $0.setTitle("프로필 수정", for: .normal)
         $0.setTitleColor(.black, for: .normal)
+        $0.backgroundColor = .white
         $0.layer.cornerRadius = 10
         $0.layer.borderColor = UIColor.gray.cgColor
         $0.layer.borderWidth = 1
@@ -80,5 +81,19 @@ final class ProfileView: BaseView {
         nicknameLabel.text = profile.nick
         followerButton.setTitle("팔로워 \(profile.followers.count)", for: .normal)
         followingButton.setTitle("팔로잉 \(profile.following.count)", for: .normal)
+    }
+    
+    func configureAdditionalButton(_ isFollow: Bool) {
+        if isFollow {
+            additionalButton.setTitle("팔로우 취소", for: .normal)
+            additionalButton.setTitleColor(.black, for: .normal)
+            additionalButton.backgroundColor = .white
+            additionalButton.layer.borderColor = UIColor.gray.cgColor
+        } else {
+            additionalButton.setTitle("팔로우", for: .normal)
+            additionalButton.setTitleColor(.white, for: .normal)
+            additionalButton.backgroundColor = .systemPink
+            additionalButton.layer.borderColor = UIColor.white.cgColor
+        }
     }
 }

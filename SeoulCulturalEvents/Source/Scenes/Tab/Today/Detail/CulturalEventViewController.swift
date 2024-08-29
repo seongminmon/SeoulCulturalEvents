@@ -27,7 +27,7 @@ final class CulturalEventViewController: BaseViewController {
         $0.clipsToBounds = true
     }
     private let titleLabel = UILabel().then {
-        $0.font = .bold15
+        $0.font = .bold20
         $0.numberOfLines = 0
     }
     private let codeNameLabel = UILabel().then {
@@ -166,11 +166,11 @@ final class CulturalEventViewController: BaseViewController {
             make.top.horizontalEdges.equalToSuperview()
         }
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(posterImageView.snp.bottom).offset(8)
+            make.top.equalTo(posterImageView.snp.bottom).offset(16)
             make.horizontalEdges.equalToSuperview().inset(16)
         }
         codeNameLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(8)
+            make.top.equalTo(titleLabel.snp.bottom).offset(16)
             make.horizontalEdges.equalToSuperview().inset(16)
         }
         dateLabel.snp.makeConstraints { make in
@@ -206,6 +206,7 @@ final class CulturalEventViewController: BaseViewController {
     
     private func configureView(_ value: CulturalEvent) {
         navigationItem.title = value.title
+        
         let url = URL(string: value.mainImage)
         posterImageView.kf.setImage(with: url) { [weak self] result in
             guard let self else { return }
@@ -220,19 +221,18 @@ final class CulturalEventViewController: BaseViewController {
                 print("KF Error: \(error)")
             }
         }
+        
         titleLabel.text = value.title
-        codeNameLabel.text = value.codeName
-        dateLabel.text = "\(value.startDateString) ~ \(value.endDateString)"
-        placeLabel.text = "\(value.place) | \(value.guName)"
-        priceLabel.text = value.price.isEmpty ? value.isFree : value.price
-        useTargetLabel.text = value.useTarget
+        codeNameLabel.configureAttributedString(value.codeName, .hashtag)
+        dateLabel.configureAttributedString("\(value.startDateString) ~ \(value.endDateString)", .calendar)
+        placeLabel.configureAttributedString("\(value.place) | \(value.guName)", .map)
+        priceLabel.configureAttributedString(value.price.isEmpty ? value.isFree : value.price, .wonsign)
+        useTargetLabel.configureAttributedString(value.useTarget, .profile)
         
         let coordinate =  CLLocationCoordinate2D(latitude: value.lat, longitude: value.lon)
-        
         let annotation = MKPointAnnotation()
         annotation.coordinate = coordinate
         mapView.addAnnotation(annotation)
-        
         let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
         mapView.setRegion(region, animated: true)
     }
