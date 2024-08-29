@@ -10,6 +10,12 @@ import Foundation
 // 포스트 조회 / 유저별 포스트 조회
 struct PostModelList: Decodable {
     var data: [PostModel]
+    var nextCursor: String
+    
+    enum CodingKeys: String, CodingKey {
+        case data
+        case nextCursor = "next_cursor"
+    }
 }
 
 // 특정 포스트 조회 / 포스트 작성

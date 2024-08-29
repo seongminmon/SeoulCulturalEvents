@@ -79,9 +79,14 @@ final class SearchUserViewController: BaseViewController {
         
         tableView.rx.modelSelected(UserModel.self)
             .subscribe(with: self) { owner, user in
-                let vm = OthersProfileViewModel(userID: user.id)
-                let vc = OthersProfileViewController(viewModel: vm)
-                owner.navigationController?.pushViewController(vc, animated: true)
+                if user.id == UserDefaultsManager.userID {
+                    let vc = MyProfileViewController()
+                    owner.navigationController?.pushViewController(vc, animated: true)
+                } else {
+                    let vm = OthersProfileViewModel(userID: user.id)
+                    let vc = OthersProfileViewController(viewModel: vm)
+                    owner.navigationController?.pushViewController(vc, animated: true)
+                }
             }
             .disposed(by: disposeBag)
     }

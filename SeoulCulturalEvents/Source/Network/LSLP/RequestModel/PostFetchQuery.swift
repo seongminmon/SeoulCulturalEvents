@@ -9,7 +9,7 @@ import Foundation
 
 struct PostFetchQuery {
     var next: String?
-    let limit: String = "20"
+    let limit: String = "30"
     var productID: String?
     
     enum CodingKeys: String, CodingKey {

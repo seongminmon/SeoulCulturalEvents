@@ -108,9 +108,14 @@ final class DetailPostViewController: BaseViewController {
         
         output.userInfoButtonTap
             .bind(with: self) { owner, userID in
-                let vm = OthersProfileViewModel(userID: userID)
-                let vc = OthersProfileViewController(viewModel: vm)
-                owner.navigationController?.pushViewController(vc, animated: true)
+                if userID == UserDefaultsManager.userID {
+                    let vc = MyProfileViewController()
+                    owner.navigationController?.pushViewController(vc, animated: true)
+                } else {
+                    let vm = OthersProfileViewModel(userID: userID)
+                    let vc = OthersProfileViewController(viewModel: vm)
+                    owner.navigationController?.pushViewController(vc, animated: true)
+                }
             }
             .disposed(by: disposeBag)
     }

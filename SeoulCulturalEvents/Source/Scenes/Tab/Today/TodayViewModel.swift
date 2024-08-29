@@ -11,7 +11,7 @@ import RxCocoa
 
 final class TodayViewModel: ViewModelType {
     
-    private lazy var cultureParameter = CultureParameter(startIndex: 1, endIndex: 20, date: Date())
+    private var cultureParameter = CultureParameter(startIndex: 1, endIndex: 20, date: Date())
     private var cultureResponse: CultureResponse?
     private let disposeBag = DisposeBag()
     

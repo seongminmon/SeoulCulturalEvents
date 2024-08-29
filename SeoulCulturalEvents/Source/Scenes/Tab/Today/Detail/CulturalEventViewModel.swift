@@ -117,7 +117,6 @@ final class CulturalEventViewModel: ViewModelType {
             }
             .disposed(by: disposeBag)
         
-        
         input.showMapButtonTap
             .subscribe(with: self) { owner, _ in
                 showMapButtonTap.onNext((owner.culturalEvent.lat, owner.culturalEvent.lon))

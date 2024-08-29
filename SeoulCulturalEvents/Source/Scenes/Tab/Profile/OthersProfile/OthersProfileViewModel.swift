@@ -113,8 +113,7 @@ final class OthersProfileViewModel: ViewModelType {
             .disposed(by: disposeBag)
         
         // 유저별 작성한 포스트 조회 통신
-//        let query = PostFetchQuery(productID: ProductID.post)
-        let query = PostFetchQuery()
+        let query = PostFetchQuery(productID: ProductID.post)
         LSLPAPIManager.shared.callRequestWithRetry(
             api: .fetchUserPostList(userID: userID, query: query),
             model: PostModelList.self

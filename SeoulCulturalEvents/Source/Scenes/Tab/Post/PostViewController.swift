@@ -17,8 +17,6 @@ final class PostViewController: BaseViewController {
     // >>> 항상 최신 데이터를 보장하는 것은 아님
     // ex) 디테일화면에서 댓글이나 좋아요를 하더라도 새로고침 전엔 반영 X
     
-    // TODO: - 페이지네이션
-    
     private let refreshControl = UIRefreshControl()
     private lazy var collectionView = UICollectionView(
         frame: .zero,
@@ -54,7 +52,8 @@ final class PostViewController: BaseViewController {
         let input = PostViewModel.Input(
             viewDidLoad: Observable.just(()),
             cellTap: collectionView.rx.modelSelected(PostModel.self),
-            refreshEvent: refreshControl.rx.controlEvent(.valueChanged)
+            refreshEvent: refreshControl.rx.controlEvent(.valueChanged),
+            prefetchItems: collectionView.rx.prefetchItems
         )
         let output = viewModel.transform(input: input)
         
