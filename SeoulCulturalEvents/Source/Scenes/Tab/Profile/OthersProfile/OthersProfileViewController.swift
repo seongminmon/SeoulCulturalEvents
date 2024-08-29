@@ -13,8 +13,6 @@ import Then
 
 final class OthersProfileViewController: BaseViewController {
     
-    
-    
     private let profileView = ProfileView()
     private lazy var collectionView = UICollectionView(
         frame: .zero,
@@ -74,10 +72,6 @@ final class OthersProfileViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
     }
-    
-//    override func setNavigationBar() {
-//        
-//    }
     
     override func setLayout() {
         [profileView, collectionView].forEach {

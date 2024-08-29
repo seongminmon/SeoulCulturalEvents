@@ -25,7 +25,7 @@ final class SearchViewModel: ViewModelType {
         }
     }
     
-    private var sections: [SearchSection] = Section.allCases.map { SearchSection(model: $0.rawValue, items: $0.items) }
+    var sections: [SearchSection] = Section.allCases.map { SearchSection(model: $0.rawValue, items: $0.items) }
     
     private let disposeBag = DisposeBag()
     

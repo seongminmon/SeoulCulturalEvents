@@ -21,32 +21,23 @@ final class SearchViewController: BaseViewController {
         frame: .zero,
         collectionViewLayout: .searchLayout()
     ).then {
-        $0.register(
-            SearchCollectionViewCell.self,
-            forCellWithReuseIdentifier: SearchCollectionViewCell.identifier
-        )
-        $0.register(
-            CategoryCollectionViewCell.self,
-            forCellWithReuseIdentifier: CategoryCollectionViewCell.identifier
-        )
-        $0.register(
-            SearchCollectionHeaderView.self,
-            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: SearchCollectionHeaderView.identifier
-        )
         $0.keyboardDismissMode = .onDrag
         $0.showsHorizontalScrollIndicator = false
     }
     
+    private var searchCellRegistration: UICollectionView.CellRegistration<SearchCollectionViewCell, String>!
+    private var categoryCellRegistration: UICollectionView.CellRegistration<CategoryCollectionViewCell, String>!
+    private var headerRegistration: UICollectionView.SupplementaryRegistration<SearchCollectionHeaderView>!
+    
+    private let deleteTerms = PublishSubject<IndexPath>()
     private let viewModel = SearchViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureCollectionViewRegistration(viewModel.sections)
     }
     
     override func bind() {
-        
-        let deleteTerms = PublishSubject<IndexPath>()
         
         let input = SearchViewModel.Input(
             searchText: searchBar.rx.text.orEmpty,
@@ -56,53 +47,35 @@ final class SearchViewController: BaseViewController {
         )
         let output = viewModel.transform(input: input)
         
-        let dataSource = RxCollectionViewSectionedAnimatedDataSource<SearchSection> { dataSource, collectionView, indexPath, item in
+        let dataSource = RxCollectionViewSectionedAnimatedDataSource<SearchSection> { [weak self] dataSource, collectionView, indexPath, item in
+            guard let self else { return UICollectionViewCell() }
             switch indexPath.section {
             case 0:
                 // 최근 검색어 섹션
-                guard let cell = collectionView.dequeueReusableCell(
-                    withReuseIdentifier: SearchCollectionViewCell.identifier,
-                    for: indexPath
-                ) as? SearchCollectionViewCell else {
-                    return UICollectionViewCell()
-                }
-                cell.configureCell(item)
-                cell.deleteButton.rx.tap
-                    .bind(with: self) { owner, _ in
-                        // MARK: - indexPath로 가져오면 인덱스가 밀리게 됨 >> cell의 indexPath 가져오기
-                        if let indexPath = collectionView.indexPath(for: cell) {
-                            deleteTerms.onNext(indexPath)
-                        }
-                    }
-                    .disposed(by: cell.disposeBag)
-                return cell
+                return collectionView.dequeueConfiguredReusableCell(
+                    using: searchCellRegistration,
+                    for: indexPath,
+                    item: item
+                )
                 
             case 1:
                 // 카테고리 섹션
-                guard let cell = collectionView.dequeueReusableCell(
-                    withReuseIdentifier: CategoryCollectionViewCell.identifier,
-                    for: indexPath
-                ) as? CategoryCollectionViewCell else {
-                    return UICollectionViewCell()
-                }
-                cell.configureCell(item)
-                return cell
+                return collectionView.dequeueConfiguredReusableCell(
+                    using: categoryCellRegistration,
+                    for: indexPath,
+                    item: item
+                )
                 
-            default: break
+            default:
+                return UICollectionViewCell()
             }
-            return UICollectionViewCell()
             
-        } configureSupplementaryView: { dataSource, collectionView, kind, indexPath in
-            guard let header = collectionView.dequeueReusableSupplementaryView(
-                ofKind: kind,
-                withReuseIdentifier: SearchCollectionHeaderView.identifier,
+        } configureSupplementaryView: { [weak self] dataSource, collectionView, kind, indexPath in
+            guard let self else { return UICollectionReusableView() }
+            return collectionView.dequeueConfiguredReusableSupplementary(
+                using: self.headerRegistration,
                 for: indexPath
-            ) as? SearchCollectionHeaderView else {
-                return UICollectionReusableView()
-            }
-            let section = dataSource.sectionModels[indexPath.section]
-            header.configureHeader(section.model)
-            return header
+            )
         }
         
         output.sections
@@ -139,6 +112,31 @@ final class SearchViewController: BaseViewController {
             make.top.equalTo(searchBar.snp.bottom)
             make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(16)
             make.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+    }
+    
+    private func configureCollectionViewRegistration(_ models: [SearchSection]) {
+        searchCellRegistration = UICollectionView.CellRegistration<SearchCollectionViewCell, String> { cell, indexPath, item in
+            cell.configureCell(item)
+            cell.deleteButton.rx.tap
+                .bind(with: self) { owner, _ in
+                    // MARK: - indexPath로 가져오면 인덱스가 밀리게 됨 >> cell의 indexPath 가져오기
+                    if let indexPath = owner.searchCollectionView.indexPath(for: cell) {
+                        owner.deleteTerms.onNext(indexPath)
+                    }
+                }
+                .disposed(by: cell.disposeBag)
+        }
+        
+        categoryCellRegistration = UICollectionView.CellRegistration<CategoryCollectionViewCell, String> { cell, indexPath, item in
+            cell.configureCell(item)
+        }
+        
+        headerRegistration = UICollectionView.SupplementaryRegistration(
+            elementKind: UICollectionView.elementKindSectionHeader
+        ) { headeriew, kind, indexPath in
+            let header = models[indexPath.section].model
+            headeriew.configureHeader(header)
         }
     }
 }
