@@ -9,13 +9,15 @@ import Foundation
 
 // 유저 검색
 struct SearchUserModel: Decodable {
-    let data: [UserModel]
+    var data: [UserModel]
 }
 
 struct UserModel: Decodable {
     let id: String
     let nick: String
     let profileImage: String?
+    
+    var isFollow: Bool = false
     
     enum CodingKeys: String, CodingKey {
         case id = "user_id"

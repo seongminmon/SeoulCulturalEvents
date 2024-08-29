@@ -13,6 +13,8 @@ import Then
 
 final class DetailPostViewController: BaseViewController {
     
+    // TODO: - UI 개선
+    
     private let likeButton = UIBarButtonItem().then {
         $0.image = .emptyHeart
         $0.tintColor = .systemRed

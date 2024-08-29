@@ -22,13 +22,13 @@ final class SearchUserViewController: BaseViewController {
         $0.textAlignment = .center
     }
     private let tableView = UITableView().then {
-        $0.isHidden = true
-        $0.keyboardDismissMode = .onDrag
         $0.register(
             SearchUserTableViewCell.self,
             forCellReuseIdentifier: SearchUserTableViewCell.identifier
         )
         $0.rowHeight = 80
+        $0.keyboardDismissMode = .onDrag
+        $0.isHidden = true
     }
     
     private let viewModel: SearchUserViewModel
@@ -57,9 +57,10 @@ final class SearchUserViewController: BaseViewController {
             .bind(to: tableView.rx.items(
                 cellIdentifier: SearchUserTableViewCell.identifier,
                 cellType: SearchUserTableViewCell.self
-            )) { row, element, cell in
+            )) { [weak self] row, element, cell in
+                guard let self else { return }
                 cell.configureCell(element)
-//                cell.configureFollow(<#T##isFollow: Bool##Bool#>)
+                cell.configureFollow(element.isFollow)
                 cell.followButton.rx.tap
                     .bind(with: self) { owner, _ in
                         followButtonTap.onNext(element)
@@ -75,6 +76,7 @@ final class SearchUserViewController: BaseViewController {
                 owner.tableView.isHidden = isEmpty
             }
             .disposed(by: disposeBag)
+        
     }
     
     override func setNavigationBar() {

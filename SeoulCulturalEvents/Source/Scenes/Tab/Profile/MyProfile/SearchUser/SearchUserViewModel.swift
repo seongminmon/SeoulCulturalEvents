@@ -11,10 +11,10 @@ import RxCocoa
 
 final class SearchUserViewModel: ViewModelType {
     
-    private var following: [UserModel]
+    private var following: [String]
     private let disposeBag = DisposeBag()
     
-    init(following: [UserModel]) {
+    init(following: [String]) {
         self.following = following
     }
     
@@ -30,12 +30,9 @@ final class SearchUserViewModel: ViewModelType {
     
     func transform(input: Input) -> Output {
         
-        // TODO: - 팔로우 초기 상태 셀에 전달
-        // TODO: - 팔로우 / 취소 기능 구현
-        
         let userList = BehaviorSubject<[UserModel]>(value: [])
         
-        // 다른 유저 검색 통신
+        // 유저 검색 통신
         input.searchButtonTap
             .withLatestFrom(input.searchText)
             .flatMap { nick in
@@ -46,59 +43,67 @@ final class SearchUserViewModel: ViewModelType {
             }
             .subscribe(with: self) { owner, result in
                 switch result {
-                case .success(let data):
-                    print("유저 검색 통신 성공")
-                    userList.onNext(data.data)
+                case .success(var data):
+                    print("유저 검색 성공")
+                    let list = owner.configureIsFollow(data.data)
+                    userList.onNext(list)
                     
                 case .failure(let error):
-                    print("유저 검색 통신 실패")
+                    print("유저 검색 실패")
                     print(error)
                 }
             }
             .disposed(by: disposeBag)
-  
-        // 팔로우 통신
-//        input.followButtonTap
-//            .flatMap {
-//                LSLPAPIManager.shared.callRequestWithRetry(
-//                    api: .follow(userID: $0.id),
-//                    model: FollowModel.self
-//                )
-//            }
-//            .subscribe(with: self) { owner, result in
-//                switch result {
-//                case .success(let data):
-//                    print("팔로우 통신 성공")
-//                    print(data)
-//                case .failure(let error):
-//                    print("팔로우 통신 실패")
-//                    print(error)
-//                }
-//            }
-//            .disposed(by: disposeBag)
         
-        // 팔로우 취소 통신
-//        input.followButtonTap
-//            .flatMap {
-//                LSLPAPIManager.shared.callRequestWithRetry(
-//                    api: .cancelFollow(userID: $0.id),
-//                    model: FollowModel.self
-//                )
-//            }
-//            .subscribe(with: self) { owner, result in
-//                switch result {
-//                case .success(let data):
-//                    print("팔로우 통신 성공")
-//                    print(data)
-//                case .failure(let error):
-//                    print("팔로우 통신 실패")
-//                    print(error)
-//                }
-//            }
-//            .disposed(by: disposeBag)
+        // 팔로우 / 팔로우 취소 통신
+        input.followButtonTap
+            .flatMap {
+                if $0.isFollow {
+                    // 팔로우 취소
+                    return LSLPAPIManager.shared.callRequestWithRetry(
+                        api: .cancelFollow(userID: $0.id),
+                        model: FollowModel.self
+                    )
+                } else {
+                    // 팔로우
+                    return LSLPAPIManager.shared.callRequestWithRetry(
+                        api: .follow(userID: $0.id),
+                        model: FollowModel.self
+                    )
+                }
+            }
+            .subscribe(with: self) { owner, result in
+                switch result {
+                case .success(let data):
+                    if data.followingStatus {
+                        print("팔로우 성공")
+                        owner.following.append(data.opponentNick)
+                    } else {
+                        print("팔로우 취소 성공")
+                        if let index = owner.following.firstIndex(of: data.opponentNick) {
+                            owner.following.remove(at: index)
+                        }
+                    }
+                    let list = try? userList.value()
+                    userList.onNext(owner.configureIsFollow(list ?? []))
+                    
+                case .failure(let error):
+                    print("팔로우 통신 실패")
+                    print(error)
+                }
+            }
+            .disposed(by: disposeBag)
         
         return Output(
             userList: userList
         )
+    }
+    
+    private func configureIsFollow(_ array: [UserModel]) -> [UserModel] {
+        var array = array
+        for i in 0..<array.count {
+            array[i].isFollow = following.contains(array[i].nick)
+        }
+        return array
     }
 }

@@ -14,10 +14,7 @@ final class SearchUserTableViewCell: BaseTableViewCell {
     
     private let userInfoView = UserInfoView()
     let followButton = UIButton().then {
-        $0.setTitle("팔로우", for: .normal)
-        $0.setTitleColor(.white, for: .normal)
         $0.titleLabel?.font = .bold15
-        $0.backgroundColor = .systemPink
         $0.layer.cornerRadius = 10
     }
     
@@ -54,13 +51,13 @@ final class SearchUserTableViewCell: BaseTableViewCell {
     
     func configureFollow(_ isFollow: Bool) {
         if isFollow {
-            followButton.setTitle("팔로우", for: .normal)
-            followButton.setTitleColor(.white, for: .normal)
-            followButton.backgroundColor = .systemPink
-        } else {
             followButton.setTitle("팔로잉", for: .normal)
             followButton.setTitleColor(.systemGray6, for: .normal)
             followButton.backgroundColor = .systemGray4
+        } else {
+            followButton.setTitle("팔로우", for: .normal)
+            followButton.setTitleColor(.white, for: .normal)
+            followButton.backgroundColor = .systemPink
         }
     }
 }

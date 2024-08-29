@@ -133,7 +133,7 @@ final class MyProfileViewController: BaseViewController {
         
         output.searchButtonTap
             .subscribe(with: self) { owner, following in
-                let vm = SearchUserViewModel(following: following)
+                let vm = SearchUserViewModel(following: following.map { $0.nick } )
                 let vc = SearchUserViewController(viewModel: vm)
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
