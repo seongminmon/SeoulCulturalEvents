@@ -20,17 +20,21 @@ final class OthersProfileViewModel: ViewModelType {
     
     struct Input {
         let additionalButtonTap: ControlEvent<Void>
+        let cellTap: ControlEvent<PostModel>
     }
     
     struct Output {
         let profile: PublishSubject<ProfileModel>
         let isFollow: PublishSubject<Bool>
+        let postList: BehaviorSubject<[PostModel]>
+        let cellTap: ControlEvent<PostModel>
     }
     
     func transform(input: Input) -> Output {
         
         let profile = PublishSubject<ProfileModel>()
         let isFollow = PublishSubject<Bool>()
+        let postList = BehaviorSubject<[PostModel]>(value: [])
         
         // 다른 유저 프로필 조회 통신
         LSLPAPIManager.shared.callRequestWithRetry(
@@ -108,9 +112,31 @@ final class OthersProfileViewModel: ViewModelType {
             }
             .disposed(by: disposeBag)
         
+        // 유저별 작성한 포스트 조회 통신
+//        let query = PostFetchQuery(productID: ProductID.post)
+        let query = PostFetchQuery()
+        LSLPAPIManager.shared.callRequestWithRetry(
+            api: .fetchUserPostList(userID: userID, query: query),
+            model: PostModelList.self
+        )
+        .subscribe(with: self) { owner, result in
+            switch result {
+            case .success(let data):
+                print("유저별 포스트 조회 성공")
+                postList.onNext(data.data)
+                
+            case .failure(let error):
+                print("유저별 포스트 조회 실패")
+                print(error)
+            }
+        }
+        .disposed(by: disposeBag)
+        
         return Output(
             profile: profile,
-            isFollow: isFollow
+            isFollow: isFollow,
+            postList: postList, 
+            cellTap: input.cellTap
         )
     }
 }

@@ -77,6 +77,13 @@ final class SearchUserViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
+        tableView.rx.modelSelected(UserModel.self)
+            .subscribe(with: self) { owner, user in
+                let vm = OthersProfileViewModel(userID: user.id)
+                let vc = OthersProfileViewController(viewModel: vm)
+                owner.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disposeBag)
     }
     
     override func setNavigationBar() {

@@ -13,9 +13,18 @@ import Then
 
 final class OthersProfileViewController: BaseViewController {
     
-    // TODO: - 유저가 쓴 글 보여주기
+    
     
     private let profileView = ProfileView()
+    private lazy var collectionView = UICollectionView(
+        frame: .zero,
+        collectionViewLayout: .postLayout()
+    ).then {
+        $0.register(
+            PostCollectionViewCell.self,
+            forCellWithReuseIdentifier: PostCollectionViewCell.identifier
+        )
+    }
     
     private let viewModel: OthersProfileViewModel
     
@@ -30,7 +39,8 @@ final class OthersProfileViewController: BaseViewController {
     
     override func bind() {
         let input = OthersProfileViewModel.Input(
-            additionalButtonTap: profileView.additionalButton.rx.tap
+            additionalButtonTap: profileView.additionalButton.rx.tap,
+            cellTap: collectionView.rx.modelSelected(PostModel.self)
         )
         let output = viewModel.transform(input: input)
         
@@ -42,23 +52,46 @@ final class OthersProfileViewController: BaseViewController {
             .disposed(by: disposeBag)
         
         output.isFollow
-            .map { $0 ? "팔로우 취소" : "팔로우" }
-            .bind(to: profileView.additionalButton.rx.title())
+            .subscribe(with: self) { owner, value in
+                owner.profileView.configureAdditionalButton(value)
+            }
+            .disposed(by: disposeBag)
+        
+        output.postList
+            .bind(to: collectionView.rx.items(
+                cellIdentifier: PostCollectionViewCell.identifier,
+                cellType: PostCollectionViewCell.self
+            )) { row, element, cell in
+                cell.configureCell(element)
+            }
+            .disposed(by: disposeBag)
+        
+        output.cellTap
+            .bind(with: self) { owner, value in
+                let vm = DetailPostViewModel(postID: value.postID)
+                let vc = DetailPostViewController(viewModel: vm)
+                owner.navigationController?.pushViewController(vc, animated: true)
+            }
             .disposed(by: disposeBag)
     }
     
-    override func setNavigationBar() {
-        
-    }
+//    override func setNavigationBar() {
+//        
+//    }
     
     override func setLayout() {
-        [profileView].forEach {
+        [profileView, collectionView].forEach {
             view.addSubview($0)
         }
         
         profileView.snp.makeConstraints { make in
             make.top.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(260)
+        }
+        
+        collectionView.snp.makeConstraints { make in
+            make.top.equalTo(profileView.snp.bottom).offset(16)
+            make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
         }
     }
 }

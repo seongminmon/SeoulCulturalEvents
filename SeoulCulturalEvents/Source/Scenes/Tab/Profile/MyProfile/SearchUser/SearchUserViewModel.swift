@@ -100,10 +100,15 @@ final class SearchUserViewModel: ViewModelType {
     }
     
     private func configureIsFollow(_ array: [UserModel]) -> [UserModel] {
-        var array = array
-        for i in 0..<array.count {
-            array[i].isFollow = following.contains(array[i].nick)
-        }
         return array
+            .map { user in
+                var user = user
+                user.isFollow = following.contains(user.nick)
+                return user
+            }
+//        for i in 0..<array.count {
+//            array[i].isFollow = following.contains(array[i].nick)
+//        }
+//        return array
     }
 }
