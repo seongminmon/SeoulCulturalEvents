@@ -14,8 +14,12 @@ import Then
 final class TodayViewController: BaseViewController {
     
     private let tableView = UITableView().then {
-        $0.register(CulturalEventTableViewCell.self, forCellReuseIdentifier: CulturalEventTableViewCell.identifier)
+        $0.register(
+            CulturalEventTableViewCell.self,
+            forCellReuseIdentifier: CulturalEventTableViewCell.identifier
+        )
         $0.separatorStyle = .none
+        $0.rowHeight = 500
     }
     
     private let viewModel = TodayViewModel()
