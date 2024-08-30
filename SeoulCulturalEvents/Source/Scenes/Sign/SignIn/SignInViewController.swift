@@ -52,7 +52,7 @@ final class SignInViewController: BaseViewController {
         
         output.signInFailure
             .bind(with: self) { owner, value in
-                owner.makeNetworkFailureToast(value)
+                owner.showToast(value)
             }
             .disposed(by: disposeBag)
         

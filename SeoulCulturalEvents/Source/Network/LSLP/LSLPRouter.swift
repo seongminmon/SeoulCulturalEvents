@@ -23,7 +23,7 @@ import Moya
     [✅] 포스트 작성
     [✅] 포스트 조회
     [✅] 특정 포스트 조회
-    [⭐️] 포스트 수정
+    [✅] 포스트 수정
     [✅] 포스트 삭제
     [✅] 유저별 작성한 포스트 조회
  
@@ -53,7 +53,6 @@ import Moya
     [✅] 유저검색
  */
 
-
 enum LSLPRouter {
     
     // MARK: - 유저
@@ -75,9 +74,11 @@ enum LSLPRouter {
     case fetchPost(postID: String)
     case postImageFiles(files: [Data])
     case createPost(query: PostQuery)
+    case editPost(postID: String, query: PostQuery)
     case deletePost(postID: String)
     case postLike(postID: String, query: LikeModel)
     
+    // MARK: - 댓글
     case createComment(postID: String, query: CommentQuery)
     case editComment(postID: String, commentID: String, query: CommentQuery)
     case deleteComment(postID: String, commentID: String)
@@ -123,6 +124,8 @@ extension LSLPRouter: TargetType {
             return "posts/files"
         case .createPost:
             return "posts"
+        case .editPost(let id, _):
+            return "posts/\(id)"
         case .deletePost(let id):
             return "posts/\(id)"
         case .postLike(let id, _):
@@ -172,10 +175,13 @@ extension LSLPRouter: TargetType {
             return .post
         case .createPost:
             return .post
+        case .editPost:
+            return .put
         case .deletePost:
             return .delete
         case .postLike:
             return .post
+            
         case .createComment:
             return .post
         case .editComment:
@@ -272,10 +278,13 @@ extension LSLPRouter: TargetType {
             return .uploadMultipart(multipartFormData)
         case .createPost(let query):
             return .requestJSONEncodable(query)
+        case .editPost(_, let query):
+            return .requestJSONEncodable(query)
         case .deletePost:
             return .requestPlain
         case .postLike(_, let query):
             return .requestJSONEncodable(query)
+            
         case .createComment(_, let query):
             return .requestJSONEncodable(query)
         case .editComment(_, _, let query):
@@ -384,6 +393,12 @@ extension LSLPRouter: TargetType {
                 LSLPHeader.contentType: LSLPHeader.json,
                 LSLPHeader.authorization: UserDefaultsManager.accessToken
             ]
+        case .editPost:
+            return [
+                LSLPHeader.sesacKey: APIKey.lslpKey,
+                LSLPHeader.contentType: LSLPHeader.json,
+                LSLPHeader.authorization: UserDefaultsManager.accessToken
+            ]
         case .deletePost:
             return [
                 LSLPHeader.sesacKey: APIKey.lslpKey,
@@ -396,6 +411,7 @@ extension LSLPRouter: TargetType {
                 LSLPHeader.contentType: LSLPHeader.json,
                 LSLPHeader.authorization: UserDefaultsManager.accessToken
             ]
+            
         case .createComment:
             return [
                 LSLPHeader.sesacKey: APIKey.lslpKey,

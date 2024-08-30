@@ -14,7 +14,7 @@ import Then
 
 final class CulturalEventViewController: BaseViewController {
     
-    // TODO: - UI 개선
+    // TODO: - UI 개선하기
     
     private let likeButton = UIBarButtonItem().then {
         $0.image = .emptyHeart
@@ -113,7 +113,7 @@ final class CulturalEventViewController: BaseViewController {
         
         output.networkFailure
             .bind(with: self) { owner, value in
-                owner.makeNetworkFailureToast(value)
+                owner.showToast(value)
             }
             .disposed(by: disposeBag)
         

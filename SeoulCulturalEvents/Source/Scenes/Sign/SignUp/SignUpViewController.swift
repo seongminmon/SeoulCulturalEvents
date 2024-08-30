@@ -56,7 +56,7 @@ final class SignUpViewController: BaseViewController {
         
         output.signUpFailure
             .bind(with: self) { owner, value in
-                owner.makeNetworkFailureToast(value)
+                owner.showToast(value)
             }
             .disposed(by: disposeBag)
     }

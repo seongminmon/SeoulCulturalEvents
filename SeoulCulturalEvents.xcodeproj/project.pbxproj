@@ -38,6 +38,8 @@
 		245D38672C7601EF006E282D /* CultureParameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245D38662C7601EF006E282D /* CultureParameter.swift */; };
 		245D386C2C76223C006E282D /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245D386B2C76223C006E282D /* MapViewController.swift */; };
 		247A60092C79D01500906909 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247A60082C79D01500906909 /* ProfileView.swift */; };
+		248928FB2C816A5400911C89 /* EditPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248928FA2C816A5400911C89 /* EditPostViewController.swift */; };
+		248928FD2C816A6900911C89 /* EditPostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248928FC2C816A6900911C89 /* EditPostViewModel.swift */; };
 		249DB8C92C806E7B0076A163 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249DB8C82C806E7B0076A163 /* UILabel+.swift */; };
 		24AB4BC22C7724C70030558A /* UserInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AB4BC12C7724C70030558A /* UserInfoView.swift */; };
 		24AB4BC42C7724FA0030558A /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AB4BC32C7724FA0030558A /* BaseView.swift */; };
@@ -156,6 +158,8 @@
 		245D38662C7601EF006E282D /* CultureParameter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CultureParameter.swift; sourceTree = "<group>"; };
 		245D386B2C76223C006E282D /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		247A60082C79D01500906909 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		248928FA2C816A5400911C89 /* EditPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPostViewController.swift; sourceTree = "<group>"; };
+		248928FC2C816A6900911C89 /* EditPostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPostViewModel.swift; sourceTree = "<group>"; };
 		249DB8C82C806E7B0076A163 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
 		24AB4BC12C7724C70030558A /* UserInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoView.swift; sourceTree = "<group>"; };
 		24AB4BC32C7724FA0030558A /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
@@ -393,6 +397,8 @@
 			children = (
 				24AB4BD82C78732F0030558A /* WriteViewController.swift */,
 				24AB4BDA2C7873480030558A /* WriteViewModel.swift */,
+				248928FA2C816A5400911C89 /* EditPostViewController.swift */,
+				248928FC2C816A6900911C89 /* EditPostViewModel.swift */,
 			);
 			path = Write;
 			sourceTree = "<group>";
@@ -790,6 +796,7 @@
 				24AB4BC42C7724FA0030558A /* BaseView.swift in Sources */,
 				24B2B67F2C6CD21B00190BFC /* Color.swift in Sources */,
 				24B3C0D52C721E6E0008B597 /* CulturalEventTableViewCell.swift in Sources */,
+				248928FB2C816A5400911C89 /* EditPostViewController.swift in Sources */,
 				245D38592C75A7CA006E282D /* BaseCollectionViewCell.swift in Sources */,
 				240784D82C7AF14B00E06A5E /* CommentViewController.swift in Sources */,
 				24B3C0EC2C73659E0008B597 /* CommentModel.swift in Sources */,
@@ -852,6 +859,7 @@
 				24B2B6C32C6F0F9F00190BFC /* ReuseIdentifierProtocol.swift in Sources */,
 				24B2B6782C6CCFDF00190BFC /* SignInViewModel.swift in Sources */,
 				24AB4BE72C78C4610030558A /* Typealias.swift in Sources */,
+				248928FD2C816A6900911C89 /* EditPostViewModel.swift in Sources */,
 				24B2B6452C6C957300190BFC /* MyProfileViewController.swift in Sources */,
 				240784DB2C7AF16C00E06A5E /* CommentViewModel.swift in Sources */,
 				24B2B67A2C6CD01E00190BFC /* ViewModelType.swift in Sources */,

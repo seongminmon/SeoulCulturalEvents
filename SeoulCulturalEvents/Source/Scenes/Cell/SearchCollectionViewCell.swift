@@ -55,7 +55,7 @@ final class SearchCollectionViewCell: BaseCollectionViewCell {
         deleteButton.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.trailing.equalToSuperview().inset(12)
-            make.size.equalTo(10)
+            make.size.equalTo(15)
         }
     }
     

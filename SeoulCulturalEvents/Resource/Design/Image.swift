@@ -16,6 +16,9 @@ extension UIImage {
     static let person = UIImage(systemName: "person.fill")!
     static let chevron = UIImage(systemName: "chevron.right")!
     static let paperclip = UIImage(systemName: "paperclip")!
+    static let ellipsis = UIImage(systemName: "ellipsis")!
+    static let bubble = UIImage(systemName: "bubble.right")!
+    
     static let emptyHeart = UIImage(systemName: "heart")!
     static let fillHeart = UIImage(systemName: "heart.fill")!
     static let arrow = UIImage(systemName: "arrow.down.backward.and.arrow.up.forward")

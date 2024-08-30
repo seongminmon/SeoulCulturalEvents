@@ -1,8 +1,8 @@
 //
-//  WriteViewController.swift
+//  EditPostViewController.swift
 //  SeoulCulturalEvents
 //
-//  Created by 김성민 on 8/23/24.
+//  Created by 김성민 on 8/30/24.
 //
 
 import UIKit
@@ -12,8 +12,9 @@ import RxCocoa
 import SnapKit
 import Then
 
-final class WriteViewController: BaseViewController {
+final class EditPostViewController: BaseViewController {
     
+    private let cancelButton = UIBarButtonItem(image: .xmark)
     private let completeButton = UIBarButtonItem(title: "완료")
     private let scrollView = UIScrollView()
     private let contentView = UIView()
@@ -56,7 +57,12 @@ final class WriteViewController: BaseViewController {
     }
     
     private let imageList = BehaviorSubject<[Data?]>(value: [])
-    private let viewModel = WriteViewModel()
+    private let viewModel: EditPostViewModel
+    
+    init(viewModel: EditPostViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,20 +70,35 @@ final class WriteViewController: BaseViewController {
     
     override func bind() {
         
-        let deleteTerms = PublishSubject<IndexPath>()
+        let deleteImage = PublishSubject<IndexPath>()
         
-        let input = WriteViewModel.Input(
+        let input = EditPostViewModel.Input(
             completeButtonTap: completeButton.rx.tap,
             addImageButtonTap: addImageButton.rx.tap,
             titleText: titleTextField.rx.text.orEmpty,
             contentsText: contentsTextView.rx.text.orEmpty,
             imageList: imageList,
-            deleteTerms: deleteTerms
+            deleteImage: deleteImage
         )
         let output = viewModel.transform(input: input)
         
+        cancelButton.rx.tap
+            .bind(with: self) { owner, _ in
+                owner.dismiss(animated: true)
+            }
+            .disposed(by: disposeBag)
+        
         output.completeButtonEnabled
             .bind(to: completeButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+        
+        output.savedPost
+            .subscribe(with: self) { owner, post in
+                // TODO: - 기존 이미지뷰 뿌리기
+                owner.titleTextField.text = post.title
+                owner.contentsTextView.text = post.content
+                owner.contentsTextView.textColor = .black
+            }
             .disposed(by: disposeBag)
         
         output.addImageButtonTap
@@ -101,7 +122,7 @@ final class WriteViewController: BaseViewController {
                 cell.deleteButton.rx.tap
                     .bind(with: self) { owner, _ in
                         if let indexPath = owner.collectionView.indexPath(for: cell) {
-                            deleteTerms.onNext(indexPath)
+                            deleteImage.onNext(indexPath)
                         }
                     }
                     .disposed(by: cell.disposeBag)
@@ -140,7 +161,8 @@ final class WriteViewController: BaseViewController {
     }
     
     override func setNavigationBar() {
-        navigationItem.title = "후기 작성하기"
+        navigationItem.title = "수정하기"
+        navigationItem.leftBarButtonItem = cancelButton
         navigationItem.rightBarButtonItem = completeButton
     }
     
@@ -198,7 +220,7 @@ final class WriteViewController: BaseViewController {
     }
 }
 
-extension WriteViewController: PHPickerViewControllerDelegate {
+extension EditPostViewController: PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         picker.dismiss(animated: true)
         showLoadingToast()

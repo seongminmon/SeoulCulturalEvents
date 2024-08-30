@@ -68,10 +68,10 @@ extension ReservationViewController: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: any Error) {
         hideLoadingToast()
-        makeNetworkFailureToast()
+        showToast()
     }
     
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: any Error) {
-        makeNetworkFailureToast()
+        showToast()
     }
 }

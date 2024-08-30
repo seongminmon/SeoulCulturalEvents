@@ -37,7 +37,7 @@ final class LikeEventViewModel: ViewModelType {
         
         // 내 포스트 조회 -> productID 후기인 것들 제외
         let query = PostFetchQuery()
-        LSLPAPIManager.shared.callRequest(
+        LSLPAPIManager.shared.callRequestWithRetry(
             api: .fetchUserPostList(userID: userID, query: query),
             model: PostModelList.self
         )

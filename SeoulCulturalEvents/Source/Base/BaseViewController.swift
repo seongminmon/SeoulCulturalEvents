@@ -44,7 +44,7 @@ class BaseViewController: UIViewController {
 
 extension BaseViewController {
     
-    func makeNetworkFailureToast(_ message: String = "네트워크 통신에 실패하였습니다.") {
+    func showToast(_ message: String = "네트워크 통신에 실패하였습니다.") {
         view.makeToast(message, duration: 1, position: .center)
     }
     
@@ -85,8 +85,28 @@ extension BaseViewController {
         )
         let total = UIAlertAction(title: "모든 행사 보기", style: .default, handler: totalHandler)
         let now = UIAlertAction(title: "진행 중인 행사만 보기", style: .default, handler: nowHandler)
+        let cancel = UIAlertAction(title: "취소", style: .cancel)
         alert.addAction(total)
         alert.addAction(now)
+        alert.addAction(cancel)
+        present(alert, animated: true)
+    }
+    
+    func showEditActionSheet(
+        editHandler: @escaping (UIAlertAction) -> Void,
+        deleteHandler: @escaping (UIAlertAction) -> Void
+    ) {
+        let alert = UIAlertController(
+            title: nil,
+            message: nil,
+            preferredStyle: .actionSheet
+        )
+        let edit = UIAlertAction(title: "게시글 수정", style: .default, handler: editHandler)
+        let delete = UIAlertAction(title: "삭제", style: .destructive, handler: deleteHandler)
+        let cancel = UIAlertAction(title: "취소", style: .cancel)
+        alert.addAction(edit)
+        alert.addAction(delete)
+        alert.addAction(cancel)
         present(alert, animated: true)
     }
 }

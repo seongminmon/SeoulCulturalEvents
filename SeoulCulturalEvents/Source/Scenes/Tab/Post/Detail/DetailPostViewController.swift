@@ -13,11 +13,10 @@ import Then
 
 final class DetailPostViewController: BaseViewController {
     
-    // TODO: - UI 개선
+    // TODO: - 내가 쓴 포스트 -> 수정
     
-    private let likeButton = UIBarButtonItem().then {
-        $0.image = .emptyHeart
-        $0.tintColor = .systemRed
+    private let settingButton = UIBarButtonItem().then {
+        $0.image = .ellipsis
     }
     private let scrollView = UIScrollView()
     private let contentView = UIView()
@@ -43,9 +42,22 @@ final class DetailPostViewController: BaseViewController {
         $0.font = .regular15
         $0.numberOfLines = 0
     }
+    private let likeButton = UIButton().then {
+        var config = UIButton.Configuration.plain()
+        config.image = .emptyHeart
+        config.imagePadding = 4
+        $0.configuration = config
+        $0.setTitle("좋아요", for: .normal)
+        $0.setTitleColor(.black, for: .normal)
+        $0.tintColor = .systemRed
+    }
     private let commentButton = UIButton().then {
+        var config = UIButton.Configuration.plain()
+        config.image = .bubble
+        config.imagePadding = 4
+        $0.configuration = config
         $0.setTitle("댓글", for: .normal)
-        $0.setTitleColor(.gray, for: .normal)
+        $0.tintColor = .black
     }
     
     init(viewModel: DetailPostViewModel) {
@@ -60,11 +72,18 @@ final class DetailPostViewController: BaseViewController {
     }
     
     override func bind() {
+        
+        let editAction = PublishSubject<Void>()
+        let deleteAction = PublishSubject<Void>()
+        
         let input = DetailPostViewModel.Input(
             viewDidLoad: Observable.just(()),
             likeButtonTap: likeButton.rx.tap,
             commentButtonTap: commentButton.rx.tap,
-            userInfoButtonTap: userInfoButton.rx.tap
+            userInfoButtonTap: userInfoButton.rx.tap,
+            settingButtonTap: settingButton.rx.tap,
+            editAction: editAction,
+            deleteAction: deleteAction
         )
         let output = viewModel.transform(input: input)
         
@@ -78,11 +97,6 @@ final class DetailPostViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
-        output.post
-            .map { "댓글 \($0.comments.count)" }
-            .bind(to: commentButton.rx.title())
-            .disposed(by: disposeBag)
-        
         output.imageList
             .bind(to: collectionView.rx.items(
                 cellIdentifier: ImageCollectionViewCell.identifier,
@@ -94,7 +108,7 @@ final class DetailPostViewController: BaseViewController {
         
         output.isLike
             .map { $0 ? UIImage.fillHeart : UIImage.emptyHeart }
-            .bind(to: likeButton.rx.image)
+            .bind(to: likeButton.rx.image())
             .disposed(by: disposeBag)
         
         output.commentButtonTap
@@ -118,10 +132,38 @@ final class DetailPostViewController: BaseViewController {
                 }
             }
             .disposed(by: disposeBag)
+        
+        output.settingButtonTap
+            .subscribe(with: self) { owner, _ in
+                owner.showEditActionSheet { _ in
+                    editAction.onNext(())
+                    
+                } deleteHandler: { _ in
+                    deleteAction.onNext(())
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        output.editPost
+            .subscribe(with: self) { owner, post in
+                let vm = EditPostViewModel(savedPost: post)
+                let vc = EditPostViewController(viewModel: vm)
+                let nav = UINavigationController(rootViewController: vc)
+                nav.modalPresentationStyle = .fullScreen
+                owner.present(nav, animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        output.postDeleteSuccess
+            .subscribe(with: self) { owner, _ in
+                owner.showToast("삭제되었습니다.")
+                owner.navigationController?.popViewController(animated: true)
+            }
+            .disposed(by: disposeBag)
     }
     
     override func setNavigationBar() {
-        navigationItem.rightBarButtonItem = likeButton
+        navigationItem.rightBarButtonItem = settingButton
     }
     
     override func setLayout() {
@@ -131,6 +173,7 @@ final class DetailPostViewController: BaseViewController {
             titleLabel,
             collectionView,
             contentsLabel,
+            likeButton,
             commentButton
         ].forEach { contentView.addSubview($0) }
         scrollView.addSubview(contentView)
@@ -166,9 +209,14 @@ final class DetailPostViewController: BaseViewController {
             make.top.equalTo(collectionView.snp.bottom).offset(16)
             make.horizontalEdges.equalToSuperview().inset(16)
         }
+        likeButton.snp.makeConstraints { make in
+            make.top.equalTo(contentsLabel.snp.bottom).offset(16)
+            make.leading.equalToSuperview().inset(16)
+            make.bottom.equalToSuperview().inset(16)
+        }
         commentButton.snp.makeConstraints { make in
-            make.top.equalTo(contentsLabel.snp.bottom).offset(8)
-            make.horizontalEdges.equalToSuperview().inset(16)
+            make.top.equalTo(contentsLabel.snp.bottom).offset(16)
+            make.trailing.equalToSuperview().inset(16)
             make.bottom.equalToSuperview().inset(16)
         }
     }

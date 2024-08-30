@@ -36,7 +36,7 @@ final class UserPostViewModel: ViewModelType {
         
         // 내 포스트 조회 (productID: 후기)
         let query = PostFetchQuery(productID: ProductID.post)
-        LSLPAPIManager.shared.callRequest(
+        LSLPAPIManager.shared.callRequestWithRetry(
             api: .fetchUserPostList(userID: userID, query: query),
             model: PostModelList.self
         )

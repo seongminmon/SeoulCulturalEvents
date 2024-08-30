@@ -23,6 +23,9 @@ final class DetailPostViewModel: ViewModelType {
         let likeButtonTap: ControlEvent<Void>
         let commentButtonTap: ControlEvent<Void>
         let userInfoButtonTap: ControlEvent<Void>
+        let settingButtonTap: ControlEvent<Void>
+        let editAction: PublishSubject<Void>
+        let deleteAction: PublishSubject<Void>
     }
     
     struct Output {
@@ -32,6 +35,9 @@ final class DetailPostViewModel: ViewModelType {
         let isLike: PublishSubject<Bool>
         let commentButtonTap: PublishSubject<(String, [CommentModel])>
         let userInfoButtonTap: PublishSubject<String>
+        let settingButtonTap: ControlEvent<Void>
+        let postDeleteSuccess: PublishSubject<Void>
+        let editPost: PublishSubject<(PostModel)>
     }
     
     func transform(input: Input) -> Output {
@@ -42,6 +48,8 @@ final class DetailPostViewModel: ViewModelType {
         let isLike = PublishSubject<Bool>()
         let commentButtonTap = PublishSubject<(String, [CommentModel])>()
         let userInfoButtonTap = PublishSubject<String>()
+        let postDeleteSuccess = PublishSubject<Void>()
+        let editPost = PublishSubject<(PostModel)>()
         
         // MARK: - 후기 화면 데이터가 최신 상태가 아닐 수 있으므로 새롭게 통신
         // 특정 포스트 조회 통신
@@ -100,6 +108,33 @@ final class DetailPostViewModel: ViewModelType {
                 userInfoButtonTap.onNext(value.creator.id)
             }
             .disposed(by: disposeBag)
+  
+        // 포스트 수정
+        input.editAction
+            .withLatestFrom(post)
+            .subscribe(with: self) { owner, value in
+                editPost.onNext(value)
+            }
+            .disposed(by: disposeBag)
+        
+        // 포스트 삭제
+        input.deleteAction
+            .withLatestFrom(post)
+            .flatMap { post in
+                LSLPAPIManager.shared.callRequestWithRetry(api: .deletePost(postID: post.postID))
+            }
+            .subscribe(with: self) { owner, result in
+                switch result {
+                case .success(_):
+                    print("포스트 삭제 성공")
+                    postDeleteSuccess.onNext(())
+                    
+                case .failure(let error):
+                    print("포스트 삭제 실패")
+                    print(error)
+                }
+            }
+            .disposed(by: disposeBag)
         
         return Output(
             navigationTitle: navigationTitle,
@@ -107,7 +142,10 @@ final class DetailPostViewModel: ViewModelType {
             imageList: imageList,
             isLike: isLike,
             commentButtonTap: commentButtonTap,
-            userInfoButtonTap: userInfoButtonTap
+            userInfoButtonTap: userInfoButtonTap,
+            settingButtonTap: input.settingButtonTap,
+            postDeleteSuccess: postDeleteSuccess,
+            editPost: editPost
         )
     }
 }

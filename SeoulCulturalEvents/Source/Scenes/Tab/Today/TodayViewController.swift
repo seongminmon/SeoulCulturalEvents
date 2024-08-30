@@ -43,7 +43,7 @@ final class TodayViewController: BaseViewController {
         
         output.networkFailure
             .bind(with: self) { owner, value in
-                owner.makeNetworkFailureToast(value)
+                owner.showToast(value)
             }
             .disposed(by: disposeBag)
         

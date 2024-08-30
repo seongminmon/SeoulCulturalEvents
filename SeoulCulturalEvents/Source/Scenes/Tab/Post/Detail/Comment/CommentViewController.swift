@@ -13,6 +13,10 @@ import Then
 
 final class CommentViewController: BaseViewController {
     
+    // TODO: - 내가 쓴 댓글 -> 수정, 삭제
+    // TODO: - 키보드 활성화 시 댓글 올라가는 문제
+    // TODO: - 댓글 작성 시 키보드 내리기 + 텍스트필드 비워주기
+    
     private let tableView = UITableView().then {
         $0.register(
             CommentTableViewCell.self,
