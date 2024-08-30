@@ -106,9 +106,5 @@ final class SearchUserViewModel: ViewModelType {
                 user.isFollow = following.contains(user.nick)
                 return user
             }
-//        for i in 0..<array.count {
-//            array[i].isFollow = following.contains(array[i].nick)
-//        }
-//        return array
     }
 }

@@ -105,6 +105,7 @@ final class MyProfileViewModel: ViewModelType {
             .subscribe(with: self) { owner, value in
                 searchButtonTap.onNext(value.following)
             }
+            .disposed(by: disposeBag)
         
         return Output(
             sections: sections,

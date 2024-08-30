@@ -11,13 +11,13 @@ import RxCocoa
 
 final class DetailPostViewModel: ViewModelType {
     
-    init(postID: String) {
-        self.postID = postID
-    }
-    
     private let postID: String
     private let disposeBag = DisposeBag()
     
+    init(postID: String) {
+        self.postID = postID
+    }
+
     struct Input {
         let viewDidLoad: Observable<Void>
         let likeButtonTap: ControlEvent<Void>

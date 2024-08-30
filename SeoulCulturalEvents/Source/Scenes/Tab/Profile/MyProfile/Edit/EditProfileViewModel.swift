@@ -13,12 +13,12 @@ import Kingfisher
 
 final class EditProfileViewModel: ViewModelType {
     
+    private var profile: ProfileModel
+    private let disposeBag = DisposeBag()
+    
     init(profile: ProfileModel) {
         self.profile = profile
     }
-    
-    private var profile: ProfileModel
-    private let disposeBag = DisposeBag()
     
     struct Input {
         let nickname: ControlProperty<String>

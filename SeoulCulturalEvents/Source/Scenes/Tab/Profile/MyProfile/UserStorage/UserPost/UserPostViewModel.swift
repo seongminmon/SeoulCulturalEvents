@@ -11,13 +11,13 @@ import RxCocoa
 
 final class UserPostViewModel: ViewModelType {
     
-    init(userID: String) {
-        self.userID = userID
-    }
-    
     private let userID: String
     private var postResponse: PostModelList?
     private let disposeBag = DisposeBag()
+    
+    init(userID: String) {
+        self.userID = userID
+    }
     
     struct Input {
         let cellTap: ControlEvent<PostModel>

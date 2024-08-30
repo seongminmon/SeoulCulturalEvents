@@ -11,12 +11,12 @@ import RxCocoa
 
 final class OthersProfileViewModel: ViewModelType {
     
+    private let userID: String
+    private let disposeBag = DisposeBag()
+    
     init(userID: String) {
         self.userID = userID
     }
-    
-    private let userID: String
-    private let disposeBag = DisposeBag()
     
     struct Input {
         let additionalButtonTap: ControlEvent<Void>

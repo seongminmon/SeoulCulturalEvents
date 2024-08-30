@@ -11,13 +11,13 @@ import RxCocoa
 
 final class CulturalEventViewModel: ViewModelType {
     
-    init(culturalEvent: CulturalEvent) {
-        self.culturalEvent = culturalEvent
-    }
-    
     private let culturalEvent: CulturalEvent
     private var postID: String?
     private let disposeBag = DisposeBag()
+    
+    init(culturalEvent: CulturalEvent) {
+        self.culturalEvent = culturalEvent
+    }
     
     struct Input {
         let viewDidLoad: Observable<Void>

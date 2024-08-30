@@ -11,14 +11,14 @@ import RxSwift
 import RxCocoa
 
 final class EditPostViewModel: ViewModelType {
+        
+    private let savedPost: PostModel
+    private let disposeBag = DisposeBag()
     
     init(savedPost: PostModel) {
         self.savedPost = savedPost
     }
-    
-    private let savedPost: PostModel
-    private let disposeBag = DisposeBag()
-    
+
     struct Input {
         let completeButtonTap: ControlEvent<Void>
         let addImageButtonTap: ControlEvent<Void>

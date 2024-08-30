@@ -11,12 +11,12 @@ import RxCocoa
 
 final class ReservationViewModel: ViewModelType {
     
+    private let link: String
+    private let disposeBag = DisposeBag()
+    
     init(link: String) {
         self.link = link
     }
-    
-    private let link: String
-    private let disposeBag = DisposeBag()
     
     struct Input {
         let viewDidLoad: Observable<Void>

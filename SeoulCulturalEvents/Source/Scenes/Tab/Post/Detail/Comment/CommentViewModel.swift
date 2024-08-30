@@ -19,9 +19,7 @@ final class CommentViewModel {
         self.postID = postID
         self.commentList = commentList
     }
-}
-
-extension CommentViewModel: ViewModelType {
+    
     struct Input {
         let comment: ControlProperty<String>
         let confirmButtonTap: ControlEvent<Void>
