@@ -382,6 +382,15 @@
 			path = Map;
 			sourceTree = "<group>";
 		};
+		2493A4EC2C8192DB00927750 /* Edit */ = {
+			isa = PBXGroup;
+			children = (
+				248928FA2C816A5400911C89 /* EditPostViewController.swift */,
+				248928FC2C816A6900911C89 /* EditPostViewModel.swift */,
+			);
+			path = Edit;
+			sourceTree = "<group>";
+		};
 		24AB4BCC2C7753DB0030558A /* Detail */ = {
 			isa = PBXGroup;
 			children = (
@@ -397,8 +406,6 @@
 			children = (
 				24AB4BD82C78732F0030558A /* WriteViewController.swift */,
 				24AB4BDA2C7873480030558A /* WriteViewModel.swift */,
-				248928FA2C816A5400911C89 /* EditPostViewController.swift */,
-				248928FC2C816A6900911C89 /* EditPostViewModel.swift */,
 			);
 			path = Write;
 			sourceTree = "<group>";
@@ -476,8 +483,9 @@
 			children = (
 				24B2B6422C6C956700190BFC /* PostViewController.swift */,
 				24AB4BC72C7738690030558A /* PostViewModel.swift */,
-				24AB4BD72C7873240030558A /* Write */,
 				24AB4BCC2C7753DB0030558A /* Detail */,
+				24AB4BD72C7873240030558A /* Write */,
+				2493A4EC2C8192DB00927750 /* Edit */,
 			);
 			path = Post;
 			sourceTree = "<group>";

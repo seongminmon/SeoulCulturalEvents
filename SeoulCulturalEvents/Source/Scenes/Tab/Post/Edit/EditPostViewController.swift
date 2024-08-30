@@ -56,6 +56,7 @@ final class EditPostViewController: BaseViewController {
         $0.isScrollEnabled = false
     }
     
+    var editHandler: (() -> Void)?
     private let imageList = BehaviorSubject<[Data?]>(value: [])
     private let viewModel: EditPostViewModel
     
@@ -94,7 +95,6 @@ final class EditPostViewController: BaseViewController {
         
         output.savedPost
             .subscribe(with: self) { owner, post in
-                // TODO: - 기존 이미지뷰 뿌리기
                 owner.titleTextField.text = post.title
                 owner.contentsTextView.text = post.content
                 owner.contentsTextView.textColor = .black
@@ -129,13 +129,15 @@ final class EditPostViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
-        output.uploadSuccess
+        output.editSuccess
             .bind(with: self) { owner, value in
+                owner.editHandler?()
+                owner.dismiss(animated: true)
                 owner.navigationController?.popViewController(animated: true)
             }
             .disposed(by: disposeBag)
         
-        output.uploadFailure
+        output.editFailure
             .bind(with: self) { owner, value in
                 owner.showToast(value)
             }

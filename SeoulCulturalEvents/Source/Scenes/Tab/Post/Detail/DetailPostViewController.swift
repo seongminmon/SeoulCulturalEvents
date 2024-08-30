@@ -13,8 +13,6 @@ import Then
 
 final class DetailPostViewController: BaseViewController {
     
-    // TODO: - 내가 쓴 포스트 -> 수정
-    
     private let settingButton = UIBarButtonItem().then {
         $0.image = .ellipsis
     }
@@ -65,6 +63,7 @@ final class DetailPostViewController: BaseViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
+    private let networkTrigger = PublishSubject<Void>()
     private let viewModel: DetailPostViewModel
     
     override func viewDidLoad() {
@@ -83,7 +82,8 @@ final class DetailPostViewController: BaseViewController {
             userInfoButtonTap: userInfoButton.rx.tap,
             settingButtonTap: settingButton.rx.tap,
             editAction: editAction,
-            deleteAction: deleteAction
+            deleteAction: deleteAction,
+            networkTrigger: networkTrigger
         )
         let output = viewModel.transform(input: input)
         
@@ -148,6 +148,7 @@ final class DetailPostViewController: BaseViewController {
             .subscribe(with: self) { owner, post in
                 let vm = EditPostViewModel(savedPost: post)
                 let vc = EditPostViewController(viewModel: vm)
+                vc.editHandler = { owner.networkTrigger.onNext(()) }
                 let nav = UINavigationController(rootViewController: vc)
                 nav.modalPresentationStyle = .fullScreen
                 owner.present(nav, animated: true)

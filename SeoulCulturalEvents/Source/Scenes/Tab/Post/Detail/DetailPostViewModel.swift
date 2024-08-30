@@ -26,6 +26,7 @@ final class DetailPostViewModel: ViewModelType {
         let settingButtonTap: ControlEvent<Void>
         let editAction: PublishSubject<Void>
         let deleteAction: PublishSubject<Void>
+        let networkTrigger: Observable<Void>
     }
     
     struct Output {
@@ -53,7 +54,7 @@ final class DetailPostViewModel: ViewModelType {
         
         // MARK: - 후기 화면 데이터가 최신 상태가 아닐 수 있으므로 새롭게 통신
         // 특정 포스트 조회 통신
-        input.viewDidLoad
+        Observable.merge(input.viewDidLoad, input.networkTrigger)
             .withUnretained(self)
             .flatMap { _ in
                 LSLPAPIManager.shared.callRequestWithRetry(

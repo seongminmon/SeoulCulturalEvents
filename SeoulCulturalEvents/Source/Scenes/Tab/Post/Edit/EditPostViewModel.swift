@@ -33,8 +33,8 @@ final class EditPostViewModel: ViewModelType {
         let completeButtonEnabled: BehaviorSubject<Bool>
         let addImageButtonTap: ControlEvent<Void>
         let imageList: BehaviorSubject<[Data?]>
-        let uploadSuccess: PublishSubject<Void>
-        let uploadFailure: PublishSubject<String>
+        let editSuccess: PublishSubject<Void>
+        let editFailure: PublishSubject<String>
     }
     
     func transform(input: Input) -> Output {
@@ -42,8 +42,8 @@ final class EditPostViewModel: ViewModelType {
         let savedPost = BehaviorSubject<PostModel>(value: savedPost)
         let completeButtonEnabled = BehaviorSubject<Bool>(value: false)
         let imageList = BehaviorSubject<[Data?]>(value: [])
-        let uploadSuccess = PublishSubject<Void>()
-        let uploadFailure = PublishSubject<String>()
+        let editSuccess = PublishSubject<Void>()
+        let editFailure = PublishSubject<String>()
         let imageUploadSuccess = PublishSubject<[String]>()
         
         let allContents = Observable.combineLatest(input.imageList, input.titleText, input.contentsText)
@@ -87,7 +87,6 @@ final class EditPostViewModel: ViewModelType {
             }
             .disposed(by: disposeBag)
         
-        // TODO: - 포스트 수정하기로 변경
         // 포스트 이미지 업로드
         input.completeButtonTap
             .withLatestFrom(input.imageList)
@@ -109,7 +108,7 @@ final class EditPostViewModel: ViewModelType {
                 case .failure(let error):
                     print("포스트 이미지 업로드 실패")
                     print(error)
-                    uploadFailure.onNext("이미지 업로드 실패")
+                    editFailure.onNext("이미지 업로드 실패")
                 }
             }
             .disposed(by: disposeBag)
@@ -117,26 +116,22 @@ final class EditPostViewModel: ViewModelType {
         // TODO: - 포스트 수정하기로 변경
         // 이미지 업로드 성공 시 포스트 업로드
         Observable.combineLatest(imageUploadSuccess, allContents)
-            .map { files, value in
-                PostQuery(title: value.1, productID: ProductID.post, content: value.2, files: files)
-            }
-            .flatMap { query in
-                LSLPAPIManager.shared.callRequestWithRetry(
-                    api: .createPost(query: query),
-                    model: PostModel.self
-                )
+            .flatMap { files, value in
+                let postID = self.savedPost.postID
+                let query = PostQuery(title: value.1, productID: ProductID.post, content: value.2, files: files)
+                return LSLPAPIManager.shared.callRequestWithRetry(api: .editPost(postID: postID, query: query), model: PostModel.self)
             }
             .subscribe(with: self) { owner, result in
                 switch result {
                 case .success(let data):
-                    print("포스트 업로드 성공")
+                    print("포스트 수정 성공")
                     dump(data)
-                    uploadSuccess.onNext(())
+                    editSuccess.onNext(())
                     
                 case .failure(let error):
-                    print("포스트 업로드 실패")
+                    print("포스트 수정 실패")
                     print(error)
-                    uploadFailure.onNext("후기 업로드 실패")
+                    editFailure.onNext("후기 수정 실패")
                 }
             }
             .disposed(by: disposeBag)
@@ -161,8 +156,8 @@ final class EditPostViewModel: ViewModelType {
             completeButtonEnabled: completeButtonEnabled,
             addImageButtonTap: input.addImageButtonTap,
             imageList: imageList,
-            uploadSuccess: uploadSuccess,
-            uploadFailure: uploadFailure
+            editSuccess: editSuccess,
+            editFailure: editFailure
         )
     }
 }
