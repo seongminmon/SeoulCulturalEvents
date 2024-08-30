@@ -161,6 +161,12 @@ final class DetailPostViewController: BaseViewController {
                 owner.navigationController?.popViewController(animated: true)
             }
             .disposed(by: disposeBag)
+        
+        output.notMyPost
+            .subscribe(with: self) { owner, _ in
+                owner.showToast("다른 사람의 후기입니다!")
+            }
+            .disposed(by: disposeBag)
     }
     
     override func setNavigationBar() {
@@ -226,6 +232,6 @@ final class DetailPostViewController: BaseViewController {
         userInfoView.configureUserInfo(data.creator)
         userInfoView.configureDate(data.createdAt)
         titleLabel.text = data.title
-        contentsLabel.text = data.content
+        contentsLabel.configureLineSpacing(data.content ?? "")
     }
 }

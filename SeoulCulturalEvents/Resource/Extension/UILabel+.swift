@@ -8,7 +8,7 @@
 import UIKit
 
 extension UILabel {
-    func configureAttributedString(_ text: String, _ image: UIImage) {
+    func configureImageAttributedString(_ text: String, _ image: UIImage) {
         let attributedString = NSMutableAttributedString(string: "")
         
         let imageAttachment = NSTextAttachment()
@@ -17,6 +17,14 @@ extension UILabel {
         
         attributedString.append(NSAttributedString(attachment: imageAttachment))
         attributedString.append(NSAttributedString(string: "  \(text)"))
+        self.attributedText = attributedString
+    }
+    
+    func configureLineSpacing(_ text: String) {
+        let attributedString = NSMutableAttributedString(string: text)
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 4
+        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attributedString.length))
         self.attributedText = attributedString
     }
 }

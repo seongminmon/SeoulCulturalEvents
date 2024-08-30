@@ -113,8 +113,7 @@ final class EditPostViewModel: ViewModelType {
             }
             .disposed(by: disposeBag)
         
-        // TODO: - 포스트 수정하기로 변경
-        // 이미지 업로드 성공 시 포스트 업로드
+        // 이미지 업로드 성공 시 포스트 수정
         Observable.combineLatest(imageUploadSuccess, allContents)
             .flatMap { files, value in
                 let postID = self.savedPost.postID

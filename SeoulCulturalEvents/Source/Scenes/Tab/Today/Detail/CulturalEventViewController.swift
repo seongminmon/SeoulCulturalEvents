@@ -223,11 +223,11 @@ final class CulturalEventViewController: BaseViewController {
         }
         
         titleLabel.text = value.title
-        codeNameLabel.configureAttributedString(value.codeName, .hashtag)
-        dateLabel.configureAttributedString("\(value.startDateString) ~ \(value.endDateString)", .calendar)
-        placeLabel.configureAttributedString("\(value.place) | \(value.guName)", .map)
-        priceLabel.configureAttributedString(value.price.isEmpty ? value.isFree : value.price, .wonsign)
-        useTargetLabel.configureAttributedString(value.useTarget, .profile)
+        codeNameLabel.configureImageAttributedString(value.codeName, .hashtag)
+        dateLabel.configureImageAttributedString("\(value.startDateString) ~ \(value.endDateString)", .calendar)
+        placeLabel.configureImageAttributedString("\(value.place) | \(value.guName)", .map)
+        priceLabel.configureImageAttributedString(value.price.isEmpty ? value.isFree : value.price, .wonsign)
+        useTargetLabel.configureImageAttributedString(value.useTarget, .profile)
         
         let coordinate =  CLLocationCoordinate2D(latitude: value.lat, longitude: value.lon)
         let annotation = MKPointAnnotation()

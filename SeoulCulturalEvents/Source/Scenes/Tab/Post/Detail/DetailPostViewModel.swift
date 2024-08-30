@@ -39,6 +39,7 @@ final class DetailPostViewModel: ViewModelType {
         let settingButtonTap: ControlEvent<Void>
         let postDeleteSuccess: PublishSubject<Void>
         let editPost: PublishSubject<(PostModel)>
+        let notMyPost: PublishSubject<Void>
     }
     
     func transform(input: Input) -> Output {
@@ -51,6 +52,7 @@ final class DetailPostViewModel: ViewModelType {
         let userInfoButtonTap = PublishSubject<String>()
         let postDeleteSuccess = PublishSubject<Void>()
         let editPost = PublishSubject<(PostModel)>()
+        let notMyPost = PublishSubject<Void>()
         
         // MARK: - 후기 화면 데이터가 최신 상태가 아닐 수 있으므로 새롭게 통신
         // 특정 포스트 조회 통신
@@ -114,7 +116,11 @@ final class DetailPostViewModel: ViewModelType {
         input.editAction
             .withLatestFrom(post)
             .subscribe(with: self) { owner, value in
-                editPost.onNext(value)
+                if value.creator.id == UserDefaultsManager.userID {
+                    editPost.onNext(value)
+                } else {
+                    notMyPost.onNext(())
+                }
             }
             .disposed(by: disposeBag)
         
@@ -133,6 +139,7 @@ final class DetailPostViewModel: ViewModelType {
                 case .failure(let error):
                     print("포스트 삭제 실패")
                     print(error)
+                    notMyPost.onNext(())
                 }
             }
             .disposed(by: disposeBag)
@@ -146,7 +153,8 @@ final class DetailPostViewModel: ViewModelType {
             userInfoButtonTap: userInfoButtonTap,
             settingButtonTap: input.settingButtonTap,
             postDeleteSuccess: postDeleteSuccess,
-            editPost: editPost
+            editPost: editPost,
+            notMyPost: notMyPost
         )
     }
 }
