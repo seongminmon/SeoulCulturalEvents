@@ -14,8 +14,6 @@ import Then
 
 final class CulturalEventViewController: BaseViewController {
     
-    // TODO: - UI 개선하기
-    
     private let likeButton = UIBarButtonItem().then {
         $0.image = .emptyHeart
         $0.tintColor = .systemRed
@@ -53,7 +51,7 @@ final class CulturalEventViewController: BaseViewController {
     private let mapView = MKMapView().then {
         $0.clipsToBounds = true
         $0.layer.cornerRadius = 10
-        $0.isScrollEnabled = false
+        $0.isUserInteractionEnabled = false
     }
     private let showMapButton = UIButton().then {
         var config = UIButton.Configuration.filled()
@@ -61,11 +59,9 @@ final class CulturalEventViewController: BaseViewController {
         config.image = .arrow
         config.imagePlacement = .trailing
         config.imagePadding = 4
-        config.buttonSize = .mini
         
-        config.baseBackgroundColor = .darkGray
-        config.baseForegroundColor = .white
-        config.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
+        config.baseBackgroundColor = .white
+        config.baseForegroundColor = .black
         $0.configuration = config
     }
     private let reserveButton = PointButton(title: "예매하기")
@@ -192,7 +188,7 @@ final class CulturalEventViewController: BaseViewController {
         mapView.snp.makeConstraints { make in
             make.top.equalTo(useTargetLabel.snp.bottom).offset(16)
             make.horizontalEdges.equalToSuperview().inset(16)
-            make.height.equalTo(150)
+            make.height.equalTo(200)
             make.bottom.equalToSuperview().inset(80)
         }
         showMapButton.snp.makeConstraints { make in

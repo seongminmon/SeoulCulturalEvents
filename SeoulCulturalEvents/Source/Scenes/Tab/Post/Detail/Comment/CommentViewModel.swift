@@ -11,6 +11,8 @@ import RxCocoa
 
 final class CommentViewModel: ViewModelType {
     
+    // TODO: - 댓글 수정 / 삭제
+    // TODO: - 댓글 실시간 갱신
     init(postID: String, commentList: [CommentModel]) {
         self.postID = postID
         self.commentList = commentList
