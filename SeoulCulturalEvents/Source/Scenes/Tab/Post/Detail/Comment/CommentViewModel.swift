@@ -9,31 +9,55 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-final class CommentViewModel: ViewModelType {
-    
-    // TODO: - 댓글 수정 / 삭제
-    // TODO: - 댓글 실시간 갱신
-    init(postID: String, commentList: [CommentModel]) {
-        self.postID = postID
-        self.commentList = commentList
-    }
+final class CommentViewModel {
     
     private let postID: String
     private var commentList: [CommentModel]
     private let disposeBag = DisposeBag()
     
+    init(postID: String, commentList: [CommentModel]) {
+        self.postID = postID
+        self.commentList = commentList
+    }
+}
+
+extension CommentViewModel: ViewModelType {
     struct Input {
         let comment: ControlProperty<String>
         let confirmButtonTap: ControlEvent<Void>
+        let editAction: PublishSubject<(CommentModel, String)>
+        let deleteAction: PublishSubject<CommentModel>
     }
     
     struct Output {
         let commentList: BehaviorSubject<[CommentModel]>
+        let commentCreate: PublishSubject<Void>
+        let notMyComment: PublishSubject<Void>
     }
     
     func transform(input: Input) -> Output {
         
+        let commentNetwork = BehaviorSubject<Void>(value: ())
         let commentList = BehaviorSubject<[CommentModel]>(value: self.commentList)
+        let commentCreate = PublishSubject<Void>()
+        let notMyComment = PublishSubject<Void>()
+        
+        // 특정 포스트 조회 -> 댓글 업데이트
+        commentNetwork
+            .flatMap { [weak self] _ in
+                LSLPAPIManager.shared.callRequestWithRetry(api: .fetchPost(postID: self?.postID ?? ""), model: PostModel.self)
+            }
+            .subscribe(with: self) { owner, result in
+                switch result {
+                case .success(let data):
+                    print("댓글 갱신 성공")
+                    commentList.onNext(data.comments)
+                case .failure(let error):
+                    print("댓글 갱신 실패")
+                    print(error)
+                }
+            }
+            .disposed(by: disposeBag)
         
         // 댓글 작성 통신
         input.confirmButtonTap
@@ -50,8 +74,8 @@ final class CommentViewModel: ViewModelType {
                 case .success(let data):
                     print("댓글 작성 성공")
                     dump(data)
-                    owner.commentList.insert(data, at: 0)
-                    commentList.onNext(owner.commentList)
+                    commentNetwork.onNext(())
+                    commentCreate.onNext(())
                     
                 case .failure(let error):
                     print("댓글 작성 실패")
@@ -60,8 +84,54 @@ final class CommentViewModel: ViewModelType {
             }
             .disposed(by: disposeBag)
         
+        // 댓글 수정
+        input.editAction
+            .flatMap { [weak self] value in
+                let (comment, newText) = (value.0, value.1)
+                return LSLPAPIManager.shared.callRequestWithRetry(
+                    api: .editComment(postID: self?.postID ?? "", commentID: comment.id, query: CommentQuery(content: newText)),
+                    model: CommentModel.self
+                )
+            }
+            .subscribe(with: self) { owner, result in
+                switch result {
+                case .success(_):
+                    print("댓글 수정 성공")
+                    commentNetwork.onNext(())
+                    
+                case .failure(let error):
+                    print("댓글 수정 실패")
+                    print(error)
+                    notMyComment.onNext(())
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        // 댓글 삭제
+        input.deleteAction
+            .flatMap { [weak self] comment in
+                LSLPAPIManager.shared.callRequestWithRetry(
+                    api: .deleteComment(postID: self?.postID ?? "", commentID: comment.id)
+                )
+            }
+            .subscribe(with: self) { owner, result in
+                switch result {
+                case .success(_):
+                    print("댓글 삭제 성공")
+                    commentNetwork.onNext(())
+                    
+                case .failure(let error):
+                    print("댓글 삭제 실패")
+                    print(error)
+                    notMyComment.onNext(())
+                }
+            }
+            .disposed(by: disposeBag)
+        
         return Output(
-            commentList: commentList
+            commentList: commentList,
+            commentCreate: commentCreate,
+            notMyComment: notMyComment
         )
     }
 }

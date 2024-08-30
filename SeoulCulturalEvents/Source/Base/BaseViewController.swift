@@ -28,13 +28,9 @@ class BaseViewController: UIViewController {
     func setLayout() {}
     func bind() {}
     
-    
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
-//    init(nibName: nil, bundle: nil) {
-//        super.init(nibName: nil, bundle: nil)
-//    }
     
     @available(*, unavailable)
     required init?(coder: NSCoder) {
@@ -44,6 +40,7 @@ class BaseViewController: UIViewController {
 
 extension BaseViewController {
     
+    // MARK: - Toast
     func showToast(_ message: String = "네트워크 통신에 실패하였습니다.") {
         view.makeToast(message, duration: 1, position: .center)
     }
@@ -56,6 +53,7 @@ extension BaseViewController {
         view.hideToastActivity()
     }
     
+    // MARK: - Alert
     func showWithdrawAlert(
         title: String,
         message: String,
@@ -101,11 +99,30 @@ extension BaseViewController {
             message: nil,
             preferredStyle: .actionSheet
         )
-        let edit = UIAlertAction(title: "게시글 수정", style: .default, handler: editHandler)
+        let edit = UIAlertAction(title: "수정", style: .default, handler: editHandler)
         let delete = UIAlertAction(title: "삭제", style: .destructive, handler: deleteHandler)
         let cancel = UIAlertAction(title: "취소", style: .cancel)
         alert.addAction(edit)
         alert.addAction(delete)
+        alert.addAction(cancel)
+        present(alert, animated: true)
+    }
+    
+    func showEditCommentAlert(
+        comment: String,
+        editHandler: @escaping (String) -> Void
+    ) {
+        let alert = UIAlertController(title: "댓글 수정", message: nil, preferredStyle: .alert)
+        alert.addTextField { textField in
+            textField.text = comment
+        }
+        
+        let save = UIAlertAction(title: "저장", style: .default) { _ in
+            guard let text = alert.textFields?.first?.text else { return }
+            editHandler(text)
+        }
+        let cancel = UIAlertAction(title: "취소", style: .cancel)
+        alert.addAction(save)
         alert.addAction(cancel)
         present(alert, animated: true)
     }

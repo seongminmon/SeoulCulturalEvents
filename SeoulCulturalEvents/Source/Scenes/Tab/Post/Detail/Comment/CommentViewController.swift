@@ -12,11 +12,7 @@ import SnapKit
 import Then
 
 final class CommentViewController: BaseViewController {
-    
-    // TODO: - 내가 쓴 댓글 -> 수정, 삭제
-    // TODO: - 키보드 활성화 시 댓글 올라가는 문제
-    // TODO: - 댓글 작성 시 키보드 내리기 + 텍스트필드 비워주기
-    
+
     private let tableView = UITableView().then {
         $0.register(
             CommentTableViewCell.self,
@@ -31,7 +27,6 @@ final class CommentViewController: BaseViewController {
         $0.setImage(.paperplane, for: .normal)
         $0.tintColor = .systemGreen
     }
-    
     private let viewModel: CommentViewModel
     
     init(viewModel: CommentViewModel) {
@@ -44,9 +39,15 @@ final class CommentViewController: BaseViewController {
     }
     
     override func bind() {
+        
+        let editAction = PublishSubject<(CommentModel, String)>()
+        let deleteAction = PublishSubject<CommentModel>()
+        
         let input = CommentViewModel.Input(
             comment: textField.rx.text.orEmpty,
-            confirmButtonTap: confirmButton.rx.tap
+            confirmButtonTap: confirmButton.rx.tap,
+            editAction: editAction,
+            deleteAction: deleteAction
         )
         let output = viewModel.transform(input: input)
         
@@ -56,9 +57,33 @@ final class CommentViewController: BaseViewController {
                 cellType: CommentTableViewCell.self
             )) { row, element, cell in
                 cell.configureCell(element)
+                cell.settingButton.rx.tap
+                    .subscribe(with: self) { owner, _ in
+                        owner.showEditActionSheet { _ in
+                            owner.showEditCommentAlert(comment: element.content) { newText in
+                                editAction.onNext((element, newText))
+                            }
+                        } deleteHandler: { _ in
+                            deleteAction.onNext(element)
+                        }
+                    }
+                    .disposed(by: cell.disposeBag)
             }
             .disposed(by: disposeBag)
         
+        output.commentCreate
+            .subscribe(with: self) { owner, _ in
+                owner.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+                owner.textField.text = nil
+                owner.view.endEditing(true)
+            }
+            .disposed(by: disposeBag)
+        
+        output.notMyComment
+            .subscribe(with: self) { owner, _ in
+                owner.showToast("다른 사람의 댓글입니다!")
+            }
+            .disposed(by: disposeBag)
     }
     
     override func setNavigationBar() {

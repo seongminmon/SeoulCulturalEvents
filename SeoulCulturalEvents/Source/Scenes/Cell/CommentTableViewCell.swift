@@ -6,25 +6,41 @@
 //
 
 import UIKit
+import RxSwift
 import SnapKit
 import Then
 
 final class CommentTableViewCell: BaseTableViewCell {
     
     private let userInfoView = UserInfoView()
+    let settingButton = UIButton().then {
+        $0.setImage(.ellipsis, for: .normal)
+        $0.tintColor = .black
+    }
     private let commentLabel = UILabel().then {
         $0.font = .regular14
         $0.numberOfLines = 0
     }
     
+    var disposeBag = DisposeBag()
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        disposeBag = DisposeBag()
+    }
+    
     override func setLayout() {
-        [userInfoView, commentLabel].forEach {
-            addSubview($0)
+        [userInfoView, settingButton, commentLabel].forEach {
+            contentView.addSubview($0)
         }
         
         userInfoView.snp.makeConstraints { make in
             make.top.horizontalEdges.equalToSuperview().inset(8)
             make.height.equalTo(40)
+        }
+        settingButton.snp.makeConstraints { make in
+            make.top.equalTo(userInfoView)
+            make.trailing.equalTo(userInfoView).inset(8)
         }
         commentLabel.snp.makeConstraints { make in
             make.top.equalTo(userInfoView.snp.bottom).offset(8)
