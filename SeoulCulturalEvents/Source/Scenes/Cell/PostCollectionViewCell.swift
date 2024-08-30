@@ -12,7 +12,7 @@ import Then
 final class PostCollectionViewCell: BaseCollectionViewCell {
     
     private let titleLabel = UILabel().then {
-        $0.font = .bold15
+        $0.font = .bold16
         $0.numberOfLines = 2
     }
     private let contentsLabel = UILabel().then {
@@ -21,7 +21,7 @@ final class PostCollectionViewCell: BaseCollectionViewCell {
         $0.numberOfLines = 2
     }
     private let dateLabel = UILabel().then {
-        $0.font = .regular13
+        $0.font = .bold13
         $0.textColor = .gray
     }
     private let imageView = UIImageView().then {
@@ -71,12 +71,12 @@ final class PostCollectionViewCell: BaseCollectionViewCell {
             make.trailing.equalTo(imageView.snp.leading).offset(-8)
         }
         contentsLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(4)
+            make.top.equalTo(titleLabel.snp.bottom).offset(8)
             make.leading.equalToSuperview()
             make.trailing.equalTo(imageView.snp.leading).offset(-8)
         }
         dateLabel.snp.makeConstraints { make in
-            make.top.equalTo(contentsLabel.snp.bottom).offset(4)
+            make.top.equalTo(imageView.snp.bottom)
             make.leading.bottom.equalToSuperview()
             make.trailing.equalTo(likeCountLabel.snp.leading).offset(-8)
         }
