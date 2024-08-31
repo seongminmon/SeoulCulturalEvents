@@ -9,7 +9,6 @@ import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
-    // TODO: - 댓글 수정, 삭제
     // TODO: - 결제 기능
 
     var window: UIWindow?

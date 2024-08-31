@@ -19,9 +19,6 @@ final class MyProfileViewController: BaseViewController {
         $0.image = .searchUser
     }
     private let profileView = ProfileView()
-    private let separator = UIView().then {
-        $0.backgroundColor = .systemGray6
-    }
     private let collectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: .settingLayout()
@@ -31,11 +28,10 @@ final class MyProfileViewController: BaseViewController {
             forCellWithReuseIdentifier: ProfileCollectionViewCell.identifier
         )
         $0.register(
-            SearchCollectionHeaderView.self,
+            SettingCollectionHeaderView.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: SearchCollectionHeaderView.identifier
+            withReuseIdentifier: SettingCollectionHeaderView.identifier
         )
-        $0.isScrollEnabled = false
     }
     
     private let viewModel = MyProfileViewModel()
@@ -74,9 +70,9 @@ final class MyProfileViewController: BaseViewController {
         } configureSupplementaryView: { dataSource, collectionView, kind, indexPath in
             guard let header = collectionView.dequeueReusableSupplementaryView(
                 ofKind: kind,
-                withReuseIdentifier: SearchCollectionHeaderView.identifier,
+                withReuseIdentifier: SettingCollectionHeaderView.identifier,
                 for: indexPath
-            ) as? SearchCollectionHeaderView else {
+            ) as? SettingCollectionHeaderView else {
                 return UICollectionReusableView()
             }
             let section = dataSource.sectionModels[indexPath.section]
@@ -163,7 +159,7 @@ final class MyProfileViewController: BaseViewController {
     }
     
     override func setLayout() {
-        [profileView, separator, collectionView].forEach {
+        [profileView, collectionView].forEach {
             view.addSubview($0)
         }
         
@@ -172,16 +168,9 @@ final class MyProfileViewController: BaseViewController {
             make.height.equalTo(260)
         }
         
-        separator.snp.makeConstraints { make in
-            make.top.equalTo(profileView.snp.bottom)
-            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(20)
-        }
-        
         collectionView.snp.makeConstraints { make in
-            make.top.equalTo(separator.snp.bottom).offset(16)
-            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(16)
-            make.height.equalTo(200)
+            make.top.equalTo(profileView.snp.bottom)
+            make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
         }
     }
 }

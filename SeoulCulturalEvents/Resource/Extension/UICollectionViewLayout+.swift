@@ -9,7 +9,7 @@ import UIKit
 
 extension UICollectionViewLayout {
     
-    static func searchLayout() -> UICollectionViewLayout {
+    static func searchLayout() -> UICollectionViewCompositionalLayout {
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .estimated(80),
             heightDimension: .estimated(30)
@@ -25,7 +25,7 @@ extension UICollectionViewLayout {
 
         let section = NSCollectionLayoutSection(group: group)
         section.interGroupSpacing = 10
-        section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20)
         
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(30))
         let headerSupplementary = NSCollectionLayoutBoundarySupplementaryItem(
@@ -39,7 +39,7 @@ extension UICollectionViewLayout {
         return layout
     }
     
-    static func imageLayout() -> UICollectionViewLayout {
+    static func imageLayout() -> UICollectionViewCompositionalLayout {
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
             heightDimension: .fractionalWidth(1)
@@ -60,7 +60,7 @@ extension UICollectionViewLayout {
         return layout
     }
     
-    static func postLayout() -> UICollectionViewLayout {
+    static func postLayout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         
         let spacing: CGFloat = 10
@@ -68,16 +68,14 @@ extension UICollectionViewLayout {
         
         let totalWidth = UIScreen.main.bounds.width - 2 * spacing - (cellCount-1) * spacing
         let width = totalWidth / cellCount
-        let height: CGFloat = 100
+        let height: CGFloat = 120
         layout.itemSize = CGSize(width: width, height: height)
         layout.scrollDirection = .vertical
-        layout.minimumInteritemSpacing = spacing
-        layout.minimumLineSpacing = spacing
-        
+        layout.sectionInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
         return layout
     }
     
-    static func uploadImageLayout() -> UICollectionViewLayout {
+    static func uploadImageLayout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         let spacing: CGFloat = 10
         let width: CGFloat = 80
@@ -89,7 +87,7 @@ extension UICollectionViewLayout {
         return layout
     }
     
-    static func settingLayout() -> UICollectionViewLayout {
+    static func settingLayout() -> UICollectionViewCompositionalLayout {
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(0.33),
             heightDimension: .absolute(120)
@@ -103,8 +101,9 @@ extension UICollectionViewLayout {
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
 
         let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .continuous
         
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(30))
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(60))
         let headerSupplementary = NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: headerSize,
             elementKind: UICollectionView.elementKindSectionHeader,

@@ -43,7 +43,7 @@ final class SearchUserViewModel: ViewModelType {
             }
             .subscribe(with: self) { owner, result in
                 switch result {
-                case .success(var data):
+                case .success(let data):
                     print("유저 검색 성공")
                     let list = owner.configureIsFollow(data.data)
                     userList.onNext(list)

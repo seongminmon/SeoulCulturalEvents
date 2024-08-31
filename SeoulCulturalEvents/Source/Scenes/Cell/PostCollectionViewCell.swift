@@ -57,14 +57,12 @@ final class PostCollectionViewCell: BaseCollectionViewCell {
             make.size.equalTo(80)
         }
         likeCountLabel.snp.makeConstraints { make in
-            make.top.equalTo(imageView.snp.bottom)
+            make.top.equalTo(imageView.snp.bottom).offset(8)
             make.trailing.equalTo(commentCountLabel.snp.leading).offset(-4)
-            make.bottom.equalToSuperview()
         }
         commentCountLabel.snp.makeConstraints { make in
-            make.top.equalTo(imageView.snp.bottom)
-            make.trailing.equalToSuperview().inset(4)
-            make.bottom.equalToSuperview()
+            make.top.equalTo(imageView.snp.bottom).offset(8)
+            make.trailing.equalToSuperview()
         }
         titleLabel.snp.makeConstraints { make in
             make.top.leading.equalToSuperview()
@@ -76,8 +74,8 @@ final class PostCollectionViewCell: BaseCollectionViewCell {
             make.trailing.equalTo(imageView.snp.leading).offset(-8)
         }
         dateLabel.snp.makeConstraints { make in
-            make.top.equalTo(imageView.snp.bottom)
-            make.leading.bottom.equalToSuperview()
+            make.centerY.equalTo(likeCountLabel)
+            make.leading.equalToSuperview()
             make.trailing.equalTo(likeCountLabel.snp.leading).offset(-8)
         }
     }

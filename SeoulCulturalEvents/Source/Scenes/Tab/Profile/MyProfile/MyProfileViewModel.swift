@@ -17,7 +17,8 @@ final class MyProfileViewModel: ViewModelType {
         SettingItem(image: .myPost, text: "내 후기"),
     ]
     private lazy var sections: [SettingSection] = [
-        SettingSection(model: "보관함", items: settingItems)
+        SettingSection(model: "보관함", items: settingItems),
+//        SettingSection(model: "설정", items: settingItems)
     ]
     
     private let disposeBag = DisposeBag()

@@ -109,9 +109,8 @@ final class SearchViewController: BaseViewController {
         }
         
         searchCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(searchBar.snp.bottom)
-            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(16)
-            make.bottom.equalTo(view.safeAreaLayoutGuide)
+            make.top.equalTo(searchBar.snp.bottom).offset(16)
+            make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
         }
     }
     

@@ -72,8 +72,11 @@ final class CommentViewController: BaseViewController {
             .disposed(by: disposeBag)
         
         output.commentCreate
-            .subscribe(with: self) { owner, _ in
-                owner.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+            .withLatestFrom(output.commentList)
+            .subscribe(with: self) { owner, commentList in
+                if !commentList.isEmpty {
+                    owner.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+                }
                 owner.textField.text = nil
                 owner.view.endEditing(true)
             }
