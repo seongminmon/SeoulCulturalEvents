@@ -8,8 +8,6 @@
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-    
-    // TODO: - 결제 기능
 
     var window: UIWindow?
 

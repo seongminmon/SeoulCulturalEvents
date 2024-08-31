@@ -28,6 +28,7 @@
 		240E0A9E2C6C7E8C003A212B /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 240E0A9D2C6C7E8C003A212B /* Base */; };
 		240E0AA62C6C7F69003A212B /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 240E0AA52C6C7F69003A212B /* .gitignore */; };
 		240E0AA82C6C7F83003A212B /* APIInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240E0AA72C6C7F83003A212B /* APIInfo.swift */; };
+		241A574F2C83270C00232D8B /* iamport-ios in Frameworks */ = {isa = PBXBuildFile; productRef = 241A574E2C83270C00232D8B /* iamport-ios */; };
 		245D38552C75A3B4006E282D /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245D38542C75A3B4006E282D /* SearchViewModel.swift */; };
 		245D38592C75A7CA006E282D /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245D38582C75A7CA006E282D /* BaseCollectionViewCell.swift */; };
 		245D385B2C75B954006E282D /* UICollectionViewLayout+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245D385A2C75B954006E282D /* UICollectionViewLayout+.swift */; };
@@ -68,7 +69,6 @@
 		24B2B65D2C6CCA5700190BFC /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B65C2C6CCA5700190BFC /* SignInViewController.swift */; };
 		24B2B65F2C6CCA7000190BFC /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B65E2C6CCA7000190BFC /* SignUpViewController.swift */; };
 		24B2B6622C6CCAA900190BFC /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 24B2B6612C6CCAA900190BFC /* Kingfisher */; };
-		24B2B6652C6CCAB200190BFC /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 24B2B6642C6CCAB200190BFC /* Then */; };
 		24B2B6682C6CCABE00190BFC /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 24B2B6672C6CCABE00190BFC /* SnapKit */; };
 		24B2B66B2C6CCAD700190BFC /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 24B2B66A2C6CCAD700190BFC /* RxCocoa */; };
 		24B2B66D2C6CCAD700190BFC /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 24B2B66C2C6CCAD700190BFC /* RxSwift */; };
@@ -242,6 +242,7 @@
 				24B2B6682C6CCABE00190BFC /* SnapKit in Frameworks */,
 				24B2B6622C6CCAA900190BFC /* Kingfisher in Frameworks */,
 				24B2B66D2C6CCAD700190BFC /* RxSwift in Frameworks */,
+				241A574F2C83270C00232D8B /* iamport-ios in Frameworks */,
 				24B2B66B2C6CCAD700190BFC /* RxCocoa in Frameworks */,
 				24B2B6842C6CD50F00190BFC /* Toast in Frameworks */,
 				24AB4BE32C78B50B0030558A /* IQKeyboardManagerSwift in Frameworks */,
@@ -250,7 +251,6 @@
 				24B2B6C82C6F138700190BFC /* Differentiator in Frameworks */,
 				24B2B69B2C6CE0CD00190BFC /* RxMoya in Frameworks */,
 				24B2B6972C6CE0CD00190BFC /* Moya in Frameworks */,
-				24B2B6652C6CCAB200190BFC /* Then in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -723,7 +723,6 @@
 			name = SeoulCulturalEvents;
 			packageProductDependencies = (
 				24B2B6612C6CCAA900190BFC /* Kingfisher */,
-				24B2B6642C6CCAB200190BFC /* Then */,
 				24B2B6672C6CCABE00190BFC /* SnapKit */,
 				24B2B66A2C6CCAD700190BFC /* RxCocoa */,
 				24B2B66C2C6CCAD700190BFC /* RxSwift */,
@@ -734,6 +733,7 @@
 				24B2B6C72C6F138700190BFC /* Differentiator */,
 				24B2B6C92C6F138700190BFC /* RxDataSources */,
 				24AB4BE22C78B50B0030558A /* IQKeyboardManagerSwift */,
+				241A574E2C83270C00232D8B /* iamport-ios */,
 			);
 			productName = SeoulCulturalEvents;
 			productReference = 240E0A8E2C6C7E8B003A212B /* SeoulCulturalEvents.app */;
@@ -765,13 +765,13 @@
 			mainGroup = 240E0A852C6C7E8B003A212B;
 			packageReferences = (
 				24B2B6602C6CCAA900190BFC /* XCRemoteSwiftPackageReference "Kingfisher" */,
-				24B2B6632C6CCAB200190BFC /* XCRemoteSwiftPackageReference "Then" */,
 				24B2B6662C6CCABE00190BFC /* XCRemoteSwiftPackageReference "SnapKit" */,
 				24B2B6692C6CCAD700190BFC /* XCRemoteSwiftPackageReference "RxSwift" */,
 				24B2B6822C6CD50F00190BFC /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 				24B2B6952C6CE0CD00190BFC /* XCRemoteSwiftPackageReference "Moya" */,
 				24B2B6C62C6F138700190BFC /* XCRemoteSwiftPackageReference "RxDataSources" */,
 				24AB4BE12C78B50B0030558A /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
+				241A574D2C83270C00232D8B /* XCRemoteSwiftPackageReference "iamport-ios" */,
 			);
 			productRefGroup = 240E0A8F2C6C7E8B003A212B /* Products */;
 			projectDirPath = "";
@@ -1052,6 +1052,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1085,6 +1086,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1127,6 +1129,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		241A574D2C83270C00232D8B /* XCRemoteSwiftPackageReference "iamport-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/iamport/iamport-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.4.2;
+			};
+		};
 		24AB4BE12C78B50B0030558A /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager.git";
@@ -1141,14 +1151,6 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 7.12.0;
-			};
-		};
-		24B2B6632C6CCAB200190BFC /* XCRemoteSwiftPackageReference "Then" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/devxoul/Then.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.0.0;
 			};
 		};
 		24B2B6662C6CCABE00190BFC /* XCRemoteSwiftPackageReference "SnapKit" */ = {
@@ -1194,6 +1196,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		241A574E2C83270C00232D8B /* iamport-ios */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 241A574D2C83270C00232D8B /* XCRemoteSwiftPackageReference "iamport-ios" */;
+			productName = "iamport-ios";
+		};
 		24AB4BE22C78B50B0030558A /* IQKeyboardManagerSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 24AB4BE12C78B50B0030558A /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
@@ -1203,11 +1210,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 24B2B6602C6CCAA900190BFC /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
-		};
-		24B2B6642C6CCAB200190BFC /* Then */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 24B2B6632C6CCAB200190BFC /* XCRemoteSwiftPackageReference "Then" */;
-			productName = Then;
 		};
 		24B2B6672C6CCABE00190BFC /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
