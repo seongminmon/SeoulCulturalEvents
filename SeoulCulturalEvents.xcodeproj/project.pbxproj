@@ -29,6 +29,8 @@
 		240E0AA62C6C7F69003A212B /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 240E0AA52C6C7F69003A212B /* .gitignore */; };
 		240E0AA82C6C7F83003A212B /* APIInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240E0AA72C6C7F83003A212B /* APIInfo.swift */; };
 		241A574F2C83270C00232D8B /* iamport-ios in Frameworks */ = {isa = PBXBuildFile; productRef = 241A574E2C83270C00232D8B /* iamport-ios */; };
+		241A57512C8419A100232D8B /* PaymentQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 241A57502C8419A000232D8B /* PaymentQuery.swift */; };
+		241A57532C841A1500232D8B /* PaymentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 241A57522C841A1500232D8B /* PaymentModel.swift */; };
 		245D38552C75A3B4006E282D /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245D38542C75A3B4006E282D /* SearchViewModel.swift */; };
 		245D38592C75A7CA006E282D /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245D38582C75A7CA006E282D /* BaseCollectionViewCell.swift */; };
 		245D385B2C75B954006E282D /* UICollectionViewLayout+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245D385A2C75B954006E282D /* UICollectionViewLayout+.swift */; };
@@ -149,6 +151,8 @@
 		240E0A9F2C6C7E8C003A212B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		240E0AA52C6C7F69003A212B /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		240E0AA72C6C7F83003A212B /* APIInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIInfo.swift; sourceTree = "<group>"; };
+		241A57502C8419A000232D8B /* PaymentQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentQuery.swift; sourceTree = "<group>"; };
+		241A57522C841A1500232D8B /* PaymentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentModel.swift; sourceTree = "<group>"; };
 		245D38542C75A3B4006E282D /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		245D38582C75A7CA006E282D /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		245D385A2C75B954006E282D /* UICollectionViewLayout+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewLayout+.swift"; sourceTree = "<group>"; };
@@ -648,6 +652,7 @@
 				24B3C0E72C73649F0008B597 /* PostModel.swift */,
 				24AB4BC52C7734890030558A /* PostImageModel.swift */,
 				24B3C0EB2C73659E0008B597 /* CommentModel.swift */,
+				241A57522C841A1500232D8B /* PaymentModel.swift */,
 			);
 			path = ResponseModel;
 			sourceTree = "<group>";
@@ -663,6 +668,7 @@
 				24AB4BC92C7751D20030558A /* KFParameter.swift */,
 				24AB4BD52C7854750030558A /* LikeModel.swift */,
 				240784DE2C7B03B300E06A5E /* CommentQuery.swift */,
+				241A57502C8419A000232D8B /* PaymentQuery.swift */,
 			);
 			path = RequestModel;
 			sourceTree = "<group>";
@@ -807,6 +813,7 @@
 				24AB4BC42C7724FA0030558A /* BaseView.swift in Sources */,
 				24B2B67F2C6CD21B00190BFC /* Color.swift in Sources */,
 				24B3C0D52C721E6E0008B597 /* CulturalEventTableViewCell.swift in Sources */,
+				241A57512C8419A100232D8B /* PaymentQuery.swift in Sources */,
 				248928FB2C816A5400911C89 /* EditPostViewController.swift in Sources */,
 				245D38592C75A7CA006E282D /* BaseCollectionViewCell.swift in Sources */,
 				240784D82C7AF14B00E06A5E /* CommentViewController.swift in Sources */,
@@ -873,6 +880,7 @@
 				24AB4BE72C78C4610030558A /* Typealias.swift in Sources */,
 				248928FD2C816A6900911C89 /* EditPostViewModel.swift in Sources */,
 				24B2B6452C6C957300190BFC /* MyProfileViewController.swift in Sources */,
+				241A57532C841A1500232D8B /* PaymentModel.swift in Sources */,
 				240784DB2C7AF16C00E06A5E /* CommentViewModel.swift in Sources */,
 				24B2B67A2C6CD01E00190BFC /* ViewModelType.swift in Sources */,
 				24B2B6AF2C6E130600190BFC /* SignUpQuery.swift in Sources */,

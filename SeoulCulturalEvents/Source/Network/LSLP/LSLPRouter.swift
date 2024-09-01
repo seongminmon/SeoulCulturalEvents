@@ -51,6 +51,10 @@ import Moya
     [✅] 내 프로필 수정
     [✅] 다른유저 프로필 조회
     [✅] 유저검색
+ 
+ - 결제
+    [✅] 결제 영수증 검증
+    [✅] 결제 내역 리스트
  */
 
 enum LSLPRouter {
@@ -82,6 +86,10 @@ enum LSLPRouter {
     case createComment(postID: String, query: CommentQuery)
     case editComment(postID: String, commentID: String, query: CommentQuery)
     case deleteComment(postID: String, commentID: String)
+    
+    // MARK: - 결제
+    case paymentsValidation(query: PaymentQuery)
+    case fetchPayments
 }
 
 extension LSLPRouter: TargetType {
@@ -137,6 +145,11 @@ extension LSLPRouter: TargetType {
             return "posts/\(postID)/comments/\(commentID)"
         case .deleteComment(let postID, let commentID):
             return "posts/\(postID)/comments/\(commentID)"
+            
+        case .paymentsValidation:
+            return "payments/validation"
+        case .fetchPayments:
+            return "payments/me"
         }
     }
     
@@ -188,6 +201,10 @@ extension LSLPRouter: TargetType {
             return .put
         case .deleteComment:
             return .delete
+        case .paymentsValidation:
+            return .post
+        case .fetchPayments:
+            return .get
         }
     }
     
@@ -290,6 +307,11 @@ extension LSLPRouter: TargetType {
         case .editComment(_, _, let query):
             return .requestJSONEncodable(query)
         case .deleteComment:
+            return .requestPlain
+            
+        case .paymentsValidation(let query):
+            return .requestJSONEncodable(query)
+        case .fetchPayments:
             return .requestPlain
         }
     }
@@ -425,6 +447,19 @@ extension LSLPRouter: TargetType {
                 LSLPHeader.authorization: UserDefaultsManager.accessToken
             ]
         case .deleteComment:
+            return [
+                LSLPHeader.sesacKey: APIKey.lslpKey,
+                LSLPHeader.contentType: LSLPHeader.json,
+                LSLPHeader.authorization: UserDefaultsManager.accessToken
+            ]
+            
+        case .paymentsValidation:
+            return [
+                LSLPHeader.sesacKey: APIKey.lslpKey,
+                LSLPHeader.contentType: LSLPHeader.json,
+                LSLPHeader.authorization: UserDefaultsManager.accessToken
+            ]
+        case .fetchPayments:
             return [
                 LSLPHeader.sesacKey: APIKey.lslpKey,
                 LSLPHeader.contentType: LSLPHeader.json,
