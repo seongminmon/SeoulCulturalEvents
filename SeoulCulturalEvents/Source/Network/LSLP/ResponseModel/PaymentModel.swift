@@ -14,13 +14,17 @@ struct PaymentList: Decodable {
 
 // 결제 영수증 검증
 struct PaymentModel: Decodable {
-    let id: String
-    let content: String
-    let createdAt: String
-    let creator: UserModel
+    let buyerID: String
+    let postID: String
+    let merchantUID: String
+    let productName: String
+    let price: Int
+    let paidAt: String
     
     enum CodingKeys: String, CodingKey {
-        case id = "comment_id"
-        case content, createdAt, creator
+        case buyerID = "buyer_id"
+        case postID = "post_id"
+        case merchantUID = "merchant_uid"
+        case productName, price, paidAt
     }
 }

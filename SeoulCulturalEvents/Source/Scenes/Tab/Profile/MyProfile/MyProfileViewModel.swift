@@ -38,6 +38,7 @@ final class MyProfileViewModel: ViewModelType {
         let withdrawAction: PublishSubject<Void>
         let newProfile: PublishSubject<ProfileModel>
         let searchButtonTap: ControlEvent<Void>
+        let paymentsValidationTrigger: PublishSubject<String>
     }
     
     struct Output {
@@ -108,6 +109,23 @@ final class MyProfileViewModel: ViewModelType {
             .withLatestFrom(profile)
             .subscribe(with: self) { owner, value in
                 searchButtonTap.onNext(value.following)
+            }
+            .disposed(by: disposeBag)
+        
+        input.paymentsValidationTrigger
+            .map { PaymentQuery(impUID: $0, postID: PortOne.postID) }
+            .flatMap { query in
+                LSLPAPIManager.shared.callRequestWithRetry(api: .paymentsValidation(query: query), model: PaymentModel.self)
+            }
+            .subscribe(with: self) { owner, result in
+                switch result {
+                case .success(let data):
+                    print("결제 영수증 검증 성공")
+                    print(data)
+                case .failure(let error):
+                    print("결제 영수증 검증 실패")
+                    print(error)
+                }
             }
             .disposed(by: disposeBag)
         

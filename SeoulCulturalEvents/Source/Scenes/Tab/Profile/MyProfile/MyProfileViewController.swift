@@ -46,6 +46,7 @@ final class MyProfileViewController: BaseViewController {
         
         let withdrawAction = PublishSubject<Void>()
         let newProfile = PublishSubject<ProfileModel>()
+        let paymentsValidationTrigger = PublishSubject<String>()
         
         let input = MyProfileViewModel.Input(
             viewWillAppear: rx.viewWillAppear,
@@ -55,7 +56,8 @@ final class MyProfileViewController: BaseViewController {
             cellTap: collectionView.rx.itemSelected,
             withdrawAction: withdrawAction,
             newProfile: newProfile,
-            searchButtonTap: searchButton.rx.tap
+            searchButtonTap: searchButton.rx.tap,
+            paymentsValidationTrigger: paymentsValidationTrigger
         )
         let output = viewModel.transform(input: input)
         
@@ -173,11 +175,12 @@ final class MyProfileViewController: BaseViewController {
                             print(String(describing: iamportResponse))
                             if let success = iamportResponse?.success {
                                 print("결제 성공!")
-                                
+                                let impUID = iamportResponse?.imp_uid ?? ""
+                                paymentsValidationTrigger.onNext(impUID)
                             } else {
                                 print("결제 실패!")
                             }
-                            Iamport.shared.close()
+                            // Iamport.shared.close()
                         }
                         
                     default:
