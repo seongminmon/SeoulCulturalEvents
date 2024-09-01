@@ -71,7 +71,6 @@ final class CommentViewModel {
                 switch result {
                 case .success(let data):
                     print("댓글 작성 성공")
-                    dump(data)
                     commentNetwork.onNext(())
                     commentCreate.onNext(())
                     

@@ -124,7 +124,6 @@ final class EditPostViewModel: ViewModelType {
                 switch result {
                 case .success(let data):
                     print("포스트 수정 성공")
-                    dump(data)
                     editSuccess.onNext(())
                     
                 case .failure(let error):

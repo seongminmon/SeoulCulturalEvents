@@ -89,7 +89,6 @@ final class WriteViewModel: ViewModelType {
                 switch result {
                 case .success(let data):
                     print("포스트 업로드 성공")
-                    dump(data)
                     uploadSuccess.onNext(())
                     
                 case .failure(let error):

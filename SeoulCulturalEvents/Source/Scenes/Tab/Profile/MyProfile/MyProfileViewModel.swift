@@ -116,7 +116,10 @@ final class MyProfileViewModel: ViewModelType {
         input.paymentsValidationTrigger
             .map { PaymentQuery(impUID: $0, postID: PortOne.postID) }
             .flatMap { query in
-                LSLPAPIManager.shared.callRequestWithRetry(api: .paymentsValidation(query: query), model: PaymentModel.self)
+                LSLPAPIManager.shared.callRequestWithRetry(
+                    api: .paymentsValidation(query: query),
+                    model: PaymentModel.self
+                )
             }
             .subscribe(with: self) { owner, result in
                 switch result {
@@ -136,7 +139,7 @@ final class MyProfileViewModel: ViewModelType {
                 switch result {
                 case .success(let data):
                     print("결제 내역 리스트 성공")
-                    dump(data)
+                    print(data)
                 case .failure(let error):
                     print("결제 내역 리스트 실패")
                     print(error)

@@ -88,7 +88,6 @@ final class DetailPostViewModel: ViewModelType {
                 switch result {
                 case .success(let data):
                     print("포스트 좋아요 통신 성공")
-                    print(data)
                     isLike.onNext(data.likeStatus)
                     
                 case .failure(let error):

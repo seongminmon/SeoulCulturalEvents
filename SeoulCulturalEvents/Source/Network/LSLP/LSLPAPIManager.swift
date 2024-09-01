@@ -43,7 +43,6 @@ final class LSLPAPIManager {
     func callRequestWithRetry<T: Decodable>(api: LSLPRouter, model: T.Type) -> Single<Result<T, LSLPError>> {
         return Single<Result<T, LSLPError>>.create { observer in
             let provider = MoyaProvider<LSLPRouter>(session: Session(interceptor: AuthInterceptor.shared))
-            
             provider.request(api) { result in
                 switch result {
                 case .success(let response):
@@ -90,6 +89,7 @@ final class LSLPAPIManager {
     }
     
     // 엑세스 토큰 갱신
+    // 1. escaping closure
     func refresh(handler: @escaping (Result<RefreshModel, LSLPError>) -> Void) {
         let provider = MoyaProvider<LSLPRouter>()
         provider.request(.refresh) { result in
@@ -112,6 +112,32 @@ final class LSLPAPIManager {
             }
         }
     }
+    
+    // 2. single<Result>
+//    func refresh() -> Single<Result<RefreshModel, LSLPError>> {
+//        return Single<Result<RefreshModel, LSLPError>>.create { observer in
+//            let provider = MoyaProvider<LSLPRouter>()
+//            provider.request(.refresh) { result in
+//                switch result {
+//                case .success(let response):
+//                    print("상태코드: \(response.statusCode)")
+//                    
+//                    do {
+//                        let data = try response.map(RefreshModel.self)
+//                        observer(.success(.success(data)))
+//                    } catch {
+//                        observer(.success(.failure(.decoding)))
+//                    }
+//                    
+//                case .failure(let error):
+//                    print("에러코드: \(error.response?.statusCode ?? -1)")
+//                    observer(.success(.failure(.unknown)))
+//                }
+//            }
+//            return Disposables.create()
+//        }
+//    }
+    
 }
 
 // MARK: - 엑세스 토큰 갱신
@@ -141,6 +167,7 @@ final class AuthInterceptor: RequestInterceptor {
         }
         
         // 토큰 갱신 API 호출
+        // 1. escaping closure
         LSLPAPIManager.shared.refresh { result in
             switch result {
             case .success(_):
@@ -153,5 +180,22 @@ final class AuthInterceptor: RequestInterceptor {
                 SceneDelegate.changeWindow(SignInViewController())
             }
         }
+        
+        // 2. single<Result>
+//        LSLPAPIManager.shared.refresh()
+//            .subscribe(with: self) { owner, result in
+//                switch result {
+//                case .success(_):
+//                    print("Retry - 토큰 재발급 성공")
+//                    completion(.retry)
+//                case .failure(let error):
+//                    // 갱신 실패 -> 로그인 화면으로 전환
+//                    print("Retry - 토큰 재발급 실패")
+//                    completion(.doNotRetryWithError(error))
+//                    SceneDelegate.changeWindow(SignInViewController())
+//                }
+//            }
+//            .disposed(by: disposeBag)
+        
     }
 }

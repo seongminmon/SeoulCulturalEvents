@@ -45,7 +45,6 @@ final class OthersProfileViewModel: ViewModelType {
             switch result {
             case .success(let data):
                 print("다른 유저 프로필 조회 성공")
-                dump(data)
                 profile.onNext(data)
                 
             case .failure(let error):
@@ -77,7 +76,6 @@ final class OthersProfileViewModel: ViewModelType {
                 switch result {
                 case .success(let data):
                     print("팔로우 성공")
-                    dump(data)
                     isFollow.onNext(data.followingStatus)
                     
                 case .failure(let error):
@@ -102,7 +100,6 @@ final class OthersProfileViewModel: ViewModelType {
                 switch result {
                 case .success(let data):
                     print("팔로우 취소 성공")
-                    dump(data)
                     isFollow.onNext(data.followingStatus)
                     
                 case .failure(let error):

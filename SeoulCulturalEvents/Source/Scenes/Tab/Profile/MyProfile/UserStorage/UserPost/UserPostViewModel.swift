@@ -44,7 +44,6 @@ final class UserPostViewModel: ViewModelType {
             switch result {
             case .success(let data):
                 print("내 포스트 조회 성공")
-                dump(data)
                 owner.postResponse = data
                 postList.onNext(data.data)
                 
