@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import WebKit
+import iamport_ios
 import Kingfisher
 import RxSwift
 import RxCocoa
@@ -105,22 +107,82 @@ final class MyProfileViewController: BaseViewController {
         output.cellTap
             .bind(with: self) { owner, value in
                 let (indexPath, userID) = value
-                switch indexPath.item {
+                
+                switch indexPath.section {
+                // 보관함
                 case 0:
-                    // 관심 행사
-                    let vm = LikeEventViewModel(userID: userID)
-                    let vc = LikeEventViewController(viewModel: vm)
-                    owner.navigationController?.pushViewController(vc, animated: true)
+                    switch indexPath.item {
+                    case 0:
+                        // 관심 행사
+                        let vm = LikeEventViewModel(userID: userID)
+                        let vc = LikeEventViewController(viewModel: vm)
+                        owner.navigationController?.pushViewController(vc, animated: true)
+                    case 1:
+                        // 관심 후기
+                        let vm = LikePostViewModel(userID: userID)
+                        let vc = LikePostViewController(viewModel: vm)
+                        owner.navigationController?.pushViewController(vc, animated: true)
+                    case 2:
+                        // 내 후기
+                        let vm = UserPostViewModel(userID: userID)
+                        let vc = UserPostViewController(viewModel: vm)
+                        owner.navigationController?.pushViewController(vc, animated: true)
+                    default:
+                        break
+                    }
+                // 설정
                 case 1:
-                    // 관심 후기
-                    let vm = LikePostViewModel(userID: userID)
-                    let vc = LikePostViewController(viewModel: vm)
-                    owner.navigationController?.pushViewController(vc, animated: true)
-                case 2:
-                    // 내 후기
-                    let vm = UserPostViewModel(userID: userID)
-                    let vc = UserPostViewController(viewModel: vm)
-                    owner.navigationController?.pushViewController(vc, animated: true)
+                    switch indexPath.item {
+                    case 0:
+                        // 로그아웃
+                        UserDefaultsManager.removeAll()
+                        SceneDelegate.changeWindow(SignInViewController())
+                    case 1:
+                        // 탈퇴하기
+                        owner.showWithdrawAlert(
+                            title: "탈퇴하기",
+                            message: "모든 정보가 사라집니다. 정말 탈퇴하시겠습니까?",
+                            actionTitle: "탈퇴하기") { _ in
+                                withdrawAction.onNext(())
+                            }
+                    case 2:
+                        // MARK: - 결제 기능
+                        // 후원하기 (100원)
+                        
+                        // 1. 결제 요청 데이터 구성
+                        print("1. 결제 요청 데이터 구성")
+                        let payment = IamportPayment(
+                            pg: PG.html5_inicis.makePgRawName(pgId: "INIpayTest"),
+                            merchant_uid: "ios_\(APIKey.lslpKey)_\(Int(Date().timeIntervalSince1970))",
+                            amount: "100"
+                        ).then {
+                            $0.pay_method = PayMethod.card.rawValue
+                            $0.name = "후원하기"
+                            $0.buyer_name = "김성민"
+                            $0.app_scheme = "lslp"
+                        }
+                        
+                        // 2. 포트원 SDK에 결제 요청
+                        print("2. 포트원 SDK에 결제 요청")
+                        Iamport.shared.payment(
+                            navController: owner.navigationController ?? UINavigationController(),
+                            userCode: PortOne.userCode,
+                            payment: payment
+                        ) { iamportResponse in
+                            print("포트원 결제 정보")
+                            print(String(describing: iamportResponse))
+                            if let success = iamportResponse?.success {
+                                print("결제 성공!")
+                                
+                            } else {
+                                print("결제 실패!")
+                            }
+                            Iamport.shared.close()
+                        }
+                        
+                    default:
+                        break
+                    }
                 default:
                     break
                 }
@@ -134,23 +196,12 @@ final class MyProfileViewController: BaseViewController {
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
-        
-//        output.withdrawTap
-//            .bind(with: self) { owner, _ in
-//                owner.showWithdrawAlert(
-//                    title: "탈퇴하기",
-//                    message: "모든 정보가 사라집니다. 정말 탈퇴하시겠습니까?",
-//                    actionTitle: "탈퇴하기") { _ in
-//                    withdrawAction.onNext(())
-//                }
-//            }
-//            .disposed(by: disposeBag)
-//
-//        output.withdrawActionSuccess
-//            .bind(with: self) { owner, _ in
-//                SceneDelegate.changeWindow(SignInViewController())
-//            }
-//            .disposed(by: disposeBag)
+
+        output.withdrawActionSuccess
+            .bind(with: self) { owner, _ in
+                SceneDelegate.changeWindow(SignInViewController())
+            }
+            .disposed(by: disposeBag)
     }
     
     override func setNavigationBar() {

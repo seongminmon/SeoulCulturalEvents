@@ -11,14 +11,20 @@ import RxCocoa
 
 final class MyProfileViewModel: ViewModelType {
     
-    private let settingItems: [SettingItem] = [
+    private let storageItems: [SettingItem] = [
         SettingItem(image: .likeEvent, text: "관심 행사"),
         SettingItem(image: .likePost, text: "관심 후기"),
         SettingItem(image: .myPost, text: "내 후기"),
     ]
+    
+    private let settingItems: [SettingItem] = [
+        SettingItem(image: .signOut, text: "로그아웃"),
+        SettingItem(image: .withdraw, text: "탈퇴하기"),
+        SettingItem(image: .donate, text: "후원하기"),
+    ]
     private lazy var sections: [SettingSection] = [
-        SettingSection(model: "보관함", items: settingItems),
-//        SettingSection(model: "설정", items: settingItems)
+        SettingSection(model: "보관함", items: storageItems),
+        SettingSection(model: "설정", items: settingItems)
     ]
     
     private let disposeBag = DisposeBag()
@@ -39,7 +45,6 @@ final class MyProfileViewModel: ViewModelType {
         let editButtonTap: ControlEvent<Void>
         let profile: PublishSubject<ProfileModel>
         let cellTap: PublishSubject<(IndexPath, String)>
-        let withdrawTap: PublishSubject<Void>
         let withdrawActionSuccess: PublishSubject<Void>
         let searchButtonTap: PublishSubject<[UserModel]>
     }
@@ -49,7 +54,6 @@ final class MyProfileViewModel: ViewModelType {
         let sections = BehaviorSubject(value: sections)
         let profile = PublishSubject<ProfileModel>()
         let cellTap = PublishSubject<(IndexPath, String)>()
-        let withdrawTap = PublishSubject<Void>()
         let withdrawActionSuccess = PublishSubject<Void>()
         let searchButtonTap = PublishSubject<[UserModel]>()
         
@@ -62,7 +66,6 @@ final class MyProfileViewModel: ViewModelType {
                 switch result {
                 case .success(let data):
                     print("프로필 조회 성공")
-                    dump(data)
                     profile.onNext(data)
                 case .failure(let error):
                     print("프로필 조회 실패")
@@ -79,20 +82,20 @@ final class MyProfileViewModel: ViewModelType {
             .disposed(by: disposeBag)
         
         // MARK: - 탈퇴 기능 막아두기
-//        input.withdrawAction
-//            .flatMap { LSLPAPIManager.shared.callRequestWithRetry(api: .withdraw, model: SignUpModel.self) }
-//            .subscribe(with: self) { owner, result in
-//                switch result {
-//                case .success(let data):
-//                    print("탈퇴 성공")
-//                    withdrawActionSuccess.onNext(())
-//                    
-//                case .failure(let error):
-//                    print("탈퇴 실패")
-//                    print(error.localizedDescription)
-//                }
-//            }
-//            .disposed(by: disposeBag)
+        input.withdrawAction
+            .flatMap { LSLPAPIManager.shared.callRequestWithRetry(api: .withdraw, model: SignUpModel.self) }
+            .subscribe(with: self) { owner, result in
+                switch result {
+                case .success(_):
+                    print("탈퇴 성공")
+                    withdrawActionSuccess.onNext(())
+                    
+                case .failure(let error):
+                    print("탈퇴 실패")
+                    print(error.localizedDescription)
+                }
+            }
+            .disposed(by: disposeBag)
         
         // 프로필 수정 화면에서 받아온 데이터 넘겨주기
         input.newProfile
@@ -113,7 +116,6 @@ final class MyProfileViewModel: ViewModelType {
             editButtonTap: input.editButtonTap,
             profile: profile,
             cellTap: cellTap,
-            withdrawTap: withdrawTap,
             withdrawActionSuccess: withdrawActionSuccess,
             searchButtonTap: searchButtonTap
         )

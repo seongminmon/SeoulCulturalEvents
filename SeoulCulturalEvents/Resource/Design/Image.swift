@@ -36,4 +36,8 @@ extension UIImage {
     static let calendar = UIImage(systemName: "calendar")!
     static let map = UIImage(systemName: "map")!
     static let wonsign = UIImage(systemName: "wonsign")!
+    
+    static let signOut = UIImage(systemName: "person.fill.badge.minus")!
+    static let withdraw = UIImage(systemName: "person.slash.fill")!
+    static let donate = UIImage(systemName: "creditcard")!
 }
