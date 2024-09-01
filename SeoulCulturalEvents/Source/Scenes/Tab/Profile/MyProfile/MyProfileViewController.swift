@@ -173,14 +173,15 @@ final class MyProfileViewController: BaseViewController {
                         ) { iamportResponse in
                             print("포트원 결제 정보")
                             print(String(describing: iamportResponse))
-                            if let success = iamportResponse?.success {
+                            if let success = iamportResponse?.success, success {
                                 print("결제 성공!")
+                                owner.showToast("결제 성공!")
                                 let impUID = iamportResponse?.imp_uid ?? ""
                                 paymentsValidationTrigger.onNext(impUID)
                             } else {
                                 print("결제 실패!")
+                                owner.showToast("결제 실패!")
                             }
-                            // Iamport.shared.close()
                         }
                         
                     default:

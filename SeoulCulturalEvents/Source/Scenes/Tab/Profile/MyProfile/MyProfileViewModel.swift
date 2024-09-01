@@ -112,6 +112,7 @@ final class MyProfileViewModel: ViewModelType {
             }
             .disposed(by: disposeBag)
         
+        // 결제 영수증 검증 통신
         input.paymentsValidationTrigger
             .map { PaymentQuery(impUID: $0, postID: PortOne.postID) }
             .flatMap { query in
@@ -124,6 +125,20 @@ final class MyProfileViewModel: ViewModelType {
                     print(data)
                 case .failure(let error):
                     print("결제 영수증 검증 실패")
+                    print(error)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        // 결제 내역 리스트 통신 (출력 확인)
+        LSLPAPIManager.shared.callRequestWithRetry(api: .fetchPayments, model: PaymentList.self)
+            .subscribe(with: self) { owner, result in
+                switch result {
+                case .success(let data):
+                    print("결제 내역 리스트 성공")
+                    dump(data)
+                case .failure(let error):
+                    print("결제 내역 리스트 실패")
                     print(error)
                 }
             }
