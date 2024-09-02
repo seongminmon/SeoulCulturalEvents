@@ -60,18 +60,24 @@ extension UICollectionViewLayout {
         return layout
     }
     
-    static func postLayout() -> UICollectionViewFlowLayout {
-        let layout = UICollectionViewFlowLayout()
+    static func postLayout() -> UICollectionViewCompositionalLayout {
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .estimated(100)
+        )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .estimated(100)
+        )
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+
+        let section = NSCollectionLayoutSection(group: group)
+        section.interGroupSpacing = 16
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
         
-        let spacing: CGFloat = 10
-        let cellCount: CGFloat = 1
-        
-        let totalWidth = UIScreen.main.bounds.width - 2 * spacing - (cellCount-1) * spacing
-        let width = totalWidth / cellCount
-        let height: CGFloat = 120
-        layout.itemSize = CGSize(width: width, height: height)
-        layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
+        let layout = UICollectionViewCompositionalLayout(section: section)
         return layout
     }
     

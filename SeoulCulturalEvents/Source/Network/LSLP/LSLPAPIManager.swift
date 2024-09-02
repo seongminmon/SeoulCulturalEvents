@@ -19,6 +19,7 @@ final class LSLPAPIManager {
         return Single<Result<T, LSLPError>>.create { observer in
             let provider = MoyaProvider<LSLPRouter>()
             provider.request(api) { result in
+                
                 switch result {
                 case .success(let response):
                     print("상태코드: \(response.statusCode)")

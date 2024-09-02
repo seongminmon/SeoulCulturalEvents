@@ -57,6 +57,10 @@ import Moya
     [✅] 결제 내역 리스트
  */
 
+protocol MyTargetType: TargetType {
+    
+}
+
 enum LSLPRouter {
     
     // MARK: - 유저
@@ -90,6 +94,10 @@ enum LSLPRouter {
     // MARK: - 결제
     case paymentsValidation(query: PaymentQuery)
     case fetchPayments
+}
+
+extension LSLPRouter: MyTargetType {
+    
 }
 
 extension LSLPRouter: TargetType {

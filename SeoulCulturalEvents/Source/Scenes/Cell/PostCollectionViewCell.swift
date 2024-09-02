@@ -42,7 +42,6 @@ final class PostCollectionViewCell: BaseCollectionViewCell {
     }
     
     override func setLayout() {
-        
         [
             titleLabel,
             contentsLabel,
@@ -59,10 +58,11 @@ final class PostCollectionViewCell: BaseCollectionViewCell {
         likeCountLabel.snp.makeConstraints { make in
             make.top.equalTo(imageView.snp.bottom).offset(8)
             make.trailing.equalTo(commentCountLabel.snp.leading).offset(-4)
+            make.bottom.equalToSuperview()
         }
         commentCountLabel.snp.makeConstraints { make in
             make.top.equalTo(imageView.snp.bottom).offset(8)
-            make.trailing.equalToSuperview()
+            make.trailing.bottom.equalToSuperview()
         }
         titleLabel.snp.makeConstraints { make in
             make.top.leading.equalToSuperview()
@@ -74,9 +74,8 @@ final class PostCollectionViewCell: BaseCollectionViewCell {
             make.trailing.equalTo(imageView.snp.leading).offset(-8)
         }
         dateLabel.snp.makeConstraints { make in
-            make.centerY.equalTo(likeCountLabel)
-            make.leading.equalToSuperview()
-            make.trailing.equalTo(likeCountLabel.snp.leading).offset(-8)
+            make.leading.bottom.equalToSuperview()
+//            make.trailing.lessThanOrEqualTo(likeCountLabel.snp.leading).offset(-8)
         }
     }
     
