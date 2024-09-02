@@ -61,7 +61,10 @@ final class MyProfileViewModel: ViewModelType {
         // 내 프로필 조회 통신하기
         input.viewWillAppear
             .flatMap { _ in
-                LSLPAPIManager.shared.callRequestWithRetry(api: .fetchMyProfile, model: ProfileModel.self)
+                LSLPAPIManager.shared.callRequestWithRetry(
+                    api: ProfileRouter.fetchMyProfile,
+                    model: ProfileModel.self
+                )
             }
             .subscribe(with: self) { owner, result in
                 switch result {
@@ -84,7 +87,10 @@ final class MyProfileViewModel: ViewModelType {
         
         // MARK: - 탈퇴 기능 막아두기
         input.withdrawAction
-            .flatMap { LSLPAPIManager.shared.callRequestWithRetry(api: .withdraw, model: SignUpModel.self) }
+            .flatMap { LSLPAPIManager.shared.callRequestWithRetry(
+                api: AuthRouter.withdraw,
+                model: SignUpModel.self
+            ) }
             .subscribe(with: self) { owner, result in
                 switch result {
                 case .success(_):
@@ -117,7 +123,7 @@ final class MyProfileViewModel: ViewModelType {
             .map { PaymentQuery(impUID: $0, postID: PortOne.postID) }
             .flatMap { query in
                 LSLPAPIManager.shared.callRequestWithRetry(
-                    api: .paymentsValidation(query: query),
+                    api: PaymentRouter.paymentsValidation(query: query),
                     model: PaymentModel.self
                 )
             }
@@ -134,7 +140,7 @@ final class MyProfileViewModel: ViewModelType {
             .disposed(by: disposeBag)
         
         // 결제 내역 리스트 통신 (출력 확인)
-        LSLPAPIManager.shared.callRequestWithRetry(api: .fetchPayments, model: PaymentList.self)
+        LSLPAPIManager.shared.callRequestWithRetry(api: PaymentRouter.fetchPayments, model: PaymentList.self)
             .subscribe(with: self) { owner, result in
                 switch result {
                 case .success(let data):

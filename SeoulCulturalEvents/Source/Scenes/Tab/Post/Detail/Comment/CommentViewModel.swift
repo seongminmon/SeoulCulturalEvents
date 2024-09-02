@@ -43,7 +43,10 @@ final class CommentViewModel {
         // 특정 포스트 조회 -> 댓글 업데이트
         commentNetwork
             .flatMap { [weak self] _ in
-                LSLPAPIManager.shared.callRequestWithRetry(api: .fetchPost(postID: self?.postID ?? ""), model: PostModel.self)
+                LSLPAPIManager.shared.callRequestWithRetry(
+                    api: PostRouter.fetchPost(postID: self?.postID ?? ""),
+                    model: PostModel.self
+                )
             }
             .subscribe(with: self) { owner, result in
                 switch result {
@@ -63,7 +66,7 @@ final class CommentViewModel {
             .flatMap { content in
                 let query = CommentQuery(content: content)
                 return LSLPAPIManager.shared.callRequestWithRetry(
-                    api: .createComment(postID: self.postID, query: query),
+                    api: CommentRouter.createComment(postID: self.postID, query: query),
                     model: CommentModel.self
                 )
             }
@@ -86,7 +89,7 @@ final class CommentViewModel {
             .flatMap { [weak self] value in
                 let (comment, newText) = (value.0, value.1)
                 return LSLPAPIManager.shared.callRequestWithRetry(
-                    api: .editComment(postID: self?.postID ?? "", commentID: comment.id, query: CommentQuery(content: newText)),
+                    api: CommentRouter.editComment(postID: self?.postID ?? "", commentID: comment.id, query: CommentQuery(content: newText)),
                     model: CommentModel.self
                 )
             }
@@ -108,7 +111,7 @@ final class CommentViewModel {
         input.deleteAction
             .flatMap { [weak self] comment in
                 LSLPAPIManager.shared.callRequestWithRetry(
-                    api: .deleteComment(postID: self?.postID ?? "", commentID: comment.id)
+                    api: CommentRouter.deleteComment(postID: self?.postID ?? "", commentID: comment.id)
                 )
             }
             .subscribe(with: self) { owner, result in

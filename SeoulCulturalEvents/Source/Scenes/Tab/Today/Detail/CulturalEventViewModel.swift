@@ -54,7 +54,10 @@ final class CulturalEventViewModel: ViewModelType {
             .flatMap { _ in
                 let productID = self.culturalEvent.title + UserDefaultsManager.userID
                 let query = PostFetchQuery(productID: productID)
-                return LSLPAPIManager.shared.callRequestWithRetry(api: .fetchPostList(query: query), model: PostModelList.self)
+                return LSLPAPIManager.shared.callRequestWithRetry(
+                    api: PostRouter.fetchPostList(query: query),
+                    model: PostModelList.self
+                )
             }
             .subscribe(with: self) { owner, result in
                 switch result {
@@ -80,7 +83,10 @@ final class CulturalEventViewModel: ViewModelType {
                 let content = self.culturalEvent.toString()
                 let productID = self.culturalEvent.title + UserDefaultsManager.userID
                 let query = PostQuery(title: self.culturalEvent.title, productID: productID, content: content, files: [])
-                return LSLPAPIManager.shared.callRequestWithRetry(api: .createPost(query: query), model: PostModel.self)
+                return LSLPAPIManager.shared.callRequestWithRetry(
+                    api: PostRouter.createPost(query: query),
+                    model: PostModel.self
+                )
             }
             .subscribe(with: self) { owner, result in
                 switch result {
@@ -101,7 +107,9 @@ final class CulturalEventViewModel: ViewModelType {
             .withUnretained(self)
             .compactMap { _ in self.postID }
             .flatMap { value in
-                return LSLPAPIManager.shared.callRequestWithRetry(api: .deletePost(postID: value))
+                return LSLPAPIManager.shared.callRequestWithRetry(
+                    api: PostRouter.deletePost(postID: value)
+                )
             }
             .subscribe(with: self) { owner, result in
                 switch result {

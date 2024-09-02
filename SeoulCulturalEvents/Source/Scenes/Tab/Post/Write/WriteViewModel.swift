@@ -56,7 +56,7 @@ final class WriteViewModel: ViewModelType {
             }
             .flatMap { files in
                 return LSLPAPIManager.shared.callRequestWithRetry(
-                    api: .postImageFiles(files: files),
+                    api: PostRouter.postImageFiles(files: files),
                     model: PostImageModel.self
                 )
             }
@@ -81,7 +81,7 @@ final class WriteViewModel: ViewModelType {
             }
             .flatMap { query in
                 LSLPAPIManager.shared.callRequestWithRetry(
-                    api: .createPost(query: query),
+                    api: PostRouter.createPost(query: query),
                     model: PostModel.self
                 )
             }

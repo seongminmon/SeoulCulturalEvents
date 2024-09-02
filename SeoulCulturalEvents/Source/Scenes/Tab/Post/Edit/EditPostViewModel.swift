@@ -95,7 +95,7 @@ final class EditPostViewModel: ViewModelType {
             }
             .flatMap { files in
                 return LSLPAPIManager.shared.callRequestWithRetry(
-                    api: .postImageFiles(files: files),
+                    api: PostRouter.postImageFiles(files: files),
                     model: PostImageModel.self
                 )
             }
@@ -118,7 +118,10 @@ final class EditPostViewModel: ViewModelType {
             .flatMap { files, value in
                 let postID = self.savedPost.postID
                 let query = PostQuery(title: value.1, productID: ProductID.post, content: value.2, files: files)
-                return LSLPAPIManager.shared.callRequestWithRetry(api: .editPost(postID: postID, query: query), model: PostModel.self)
+                return LSLPAPIManager.shared.callRequestWithRetry(
+                    api: PostRouter.editPost(postID: postID, query: query),
+                    model: PostModel.self
+                )
             }
             .subscribe(with: self) { owner, result in
                 switch result {

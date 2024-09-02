@@ -38,7 +38,7 @@ final class LikePostViewModel: ViewModelType {
         // 좋아요한 포스트 조회
         let query = PostFetchQuery(productID: ProductID.post)
         LSLPAPIManager.shared.callRequestWithRetry(
-            api: .fetchLikePostList(query: query),
+            api: LikeRouter.fetchLikePostList(query: query),
             model: PostModelList.self
         )
         .subscribe(with: self) { owner, result in

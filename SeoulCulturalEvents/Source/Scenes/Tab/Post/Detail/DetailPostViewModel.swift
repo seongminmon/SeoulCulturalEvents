@@ -60,7 +60,7 @@ final class DetailPostViewModel: ViewModelType {
             .withUnretained(self)
             .flatMap { _ in
                 LSLPAPIManager.shared.callRequestWithRetry(
-                    api: .fetchPost(postID: self.postID),
+                    api: PostRouter.fetchPost(postID: self.postID),
                     model: PostModel.self
                 )
             }
@@ -83,7 +83,7 @@ final class DetailPostViewModel: ViewModelType {
         // 포스트 좋아요 통신
         input.likeButtonTap
             .withLatestFrom(Observable.combineLatest(post, isLike))
-            .flatMap { LSLPAPIManager.shared.callRequestWithRetry(api: .postLike(postID: $0.0.postID, query: LikeModel(likeStatus: !$0.1)), model: LikeModel.self) }
+            .flatMap { LSLPAPIManager.shared.callRequestWithRetry(api: LikeRouter.postLike(postID: $0.0.postID, query: LikeModel(likeStatus: !$0.1)), model: LikeModel.self) }
             .subscribe(with: self) { owner, result in
                 switch result {
                 case .success(let data):
@@ -127,7 +127,7 @@ final class DetailPostViewModel: ViewModelType {
         input.deleteAction
             .withLatestFrom(post)
             .flatMap { post in
-                LSLPAPIManager.shared.callRequestWithRetry(api: .deletePost(postID: post.postID))
+                LSLPAPIManager.shared.callRequestWithRetry(api: PostRouter.deletePost(postID: post.postID))
             }
             .subscribe(with: self) { owner, result in
                 switch result {

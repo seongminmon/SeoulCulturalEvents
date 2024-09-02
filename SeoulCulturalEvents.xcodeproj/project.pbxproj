@@ -31,6 +31,14 @@
 		241A574F2C83270C00232D8B /* iamport-ios in Frameworks */ = {isa = PBXBuildFile; productRef = 241A574E2C83270C00232D8B /* iamport-ios */; };
 		241A57512C8419A100232D8B /* PaymentQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 241A57502C8419A000232D8B /* PaymentQuery.swift */; };
 		241A57532C841A1500232D8B /* PaymentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 241A57522C841A1500232D8B /* PaymentModel.swift */; };
+		241A57AB2C85EEE300232D8B /* AuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 241A57AA2C85EEE300232D8B /* AuthRouter.swift */; };
+		241A57AD2C85F06600232D8B /* PostRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 241A57AC2C85F06600232D8B /* PostRouter.swift */; };
+		241A57AF2C85F17C00232D8B /* CommentRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 241A57AE2C85F17C00232D8B /* CommentRouter.swift */; };
+		241A57B12C85F23D00232D8B /* LikeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 241A57B02C85F23D00232D8B /* LikeRouter.swift */; };
+		241A57B32C85F2BA00232D8B /* FollowRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 241A57B22C85F2BA00232D8B /* FollowRouter.swift */; };
+		241A57B52C85F34100232D8B /* PaymentRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 241A57B42C85F34100232D8B /* PaymentRouter.swift */; };
+		241A57B72C85F3A900232D8B /* ProfileRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 241A57B62C85F3A900232D8B /* ProfileRouter.swift */; };
+		241A57CE2C85F6BF00232D8B /* AuthInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 241A57CD2C85F6BF00232D8B /* AuthInterceptor.swift */; };
 		245D38552C75A3B4006E282D /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245D38542C75A3B4006E282D /* SearchViewModel.swift */; };
 		245D38592C75A7CA006E282D /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245D38582C75A7CA006E282D /* BaseCollectionViewCell.swift */; };
 		245D385B2C75B954006E282D /* UICollectionViewLayout+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245D385A2C75B954006E282D /* UICollectionViewLayout+.swift */; };
@@ -153,6 +161,14 @@
 		240E0AA72C6C7F83003A212B /* APIInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIInfo.swift; sourceTree = "<group>"; };
 		241A57502C8419A000232D8B /* PaymentQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentQuery.swift; sourceTree = "<group>"; };
 		241A57522C841A1500232D8B /* PaymentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentModel.swift; sourceTree = "<group>"; };
+		241A57AA2C85EEE300232D8B /* AuthRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRouter.swift; sourceTree = "<group>"; };
+		241A57AC2C85F06600232D8B /* PostRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRouter.swift; sourceTree = "<group>"; };
+		241A57AE2C85F17C00232D8B /* CommentRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentRouter.swift; sourceTree = "<group>"; };
+		241A57B02C85F23D00232D8B /* LikeRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeRouter.swift; sourceTree = "<group>"; };
+		241A57B22C85F2BA00232D8B /* FollowRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowRouter.swift; sourceTree = "<group>"; };
+		241A57B42C85F34100232D8B /* PaymentRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentRouter.swift; sourceTree = "<group>"; };
+		241A57B62C85F3A900232D8B /* ProfileRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRouter.swift; sourceTree = "<group>"; };
+		241A57CD2C85F6BF00232D8B /* AuthInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInterceptor.swift; sourceTree = "<group>"; };
 		245D38542C75A3B4006E282D /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		245D38582C75A7CA006E282D /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		245D385A2C75B954006E282D /* UICollectionViewLayout+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewLayout+.swift"; sourceTree = "<group>"; };
@@ -353,6 +369,185 @@
 				240E0A9F2C6C7E8C003A212B /* Info.plist */,
 			);
 			path = SeoulCulturalEvents;
+			sourceTree = "<group>";
+		};
+		241A57B82C85F43A00232D8B /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				241A57AA2C85EEE300232D8B /* AuthRouter.swift */,
+				241A57B92C85F46D00232D8B /* RequestModel */,
+				241A57BA2C85F47200232D8B /* ResponseModel */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		241A57B92C85F46D00232D8B /* RequestModel */ = {
+			isa = PBXGroup;
+			children = (
+				24B2B6AE2C6E130600190BFC /* SignUpQuery.swift */,
+				24B2B6AC2C6DBF1D00190BFC /* SignInQuery.swift */,
+			);
+			path = RequestModel;
+			sourceTree = "<group>";
+		};
+		241A57BA2C85F47200232D8B /* ResponseModel */ = {
+			isa = PBXGroup;
+			children = (
+				24B2B6B02C6E14B100190BFC /* SignUpModel.swift */,
+				24B2B6A72C6DBF0300190BFC /* SignInModel.swift */,
+				24B2B6B22C6EEB9200190BFC /* RefreshModel.swift */,
+			);
+			path = ResponseModel;
+			sourceTree = "<group>";
+		};
+		241A57BB2C85F4AD00232D8B /* Post */ = {
+			isa = PBXGroup;
+			children = (
+				241A57AC2C85F06600232D8B /* PostRouter.swift */,
+				241A57BC2C85F4C000232D8B /* RequestModel */,
+				241A57BD2C85F4C600232D8B /* ResponseModel */,
+			);
+			path = Post;
+			sourceTree = "<group>";
+		};
+		241A57BC2C85F4C000232D8B /* RequestModel */ = {
+			isa = PBXGroup;
+			children = (
+				24AB4BC92C7751D20030558A /* KFParameter.swift */,
+				24B3C0F62C74B5AB0008B597 /* PostFetchQuery.swift */,
+				24B3C0E52C7361A90008B597 /* PostQuery.swift */,
+			);
+			path = RequestModel;
+			sourceTree = "<group>";
+		};
+		241A57BD2C85F4C600232D8B /* ResponseModel */ = {
+			isa = PBXGroup;
+			children = (
+				24AB4BC52C7734890030558A /* PostImageModel.swift */,
+				24B3C0E92C7365920008B597 /* UserModel.swift */,
+				24B3C0E72C73649F0008B597 /* PostModel.swift */,
+			);
+			path = ResponseModel;
+			sourceTree = "<group>";
+		};
+		241A57BE2C85F53A00232D8B /* Comment */ = {
+			isa = PBXGroup;
+			children = (
+				241A57AE2C85F17C00232D8B /* CommentRouter.swift */,
+				241A57BF2C85F54B00232D8B /* RequestModel */,
+				241A57C02C85F55000232D8B /* ResponseModel */,
+			);
+			path = Comment;
+			sourceTree = "<group>";
+		};
+		241A57BF2C85F54B00232D8B /* RequestModel */ = {
+			isa = PBXGroup;
+			children = (
+				240784DE2C7B03B300E06A5E /* CommentQuery.swift */,
+			);
+			path = RequestModel;
+			sourceTree = "<group>";
+		};
+		241A57C02C85F55000232D8B /* ResponseModel */ = {
+			isa = PBXGroup;
+			children = (
+				24B3C0EB2C73659E0008B597 /* CommentModel.swift */,
+			);
+			path = ResponseModel;
+			sourceTree = "<group>";
+		};
+		241A57C12C85F57400232D8B /* Like */ = {
+			isa = PBXGroup;
+			children = (
+				241A57B02C85F23D00232D8B /* LikeRouter.swift */,
+				241A57C52C85F5B000232D8B /* RequestModel */,
+			);
+			path = Like;
+			sourceTree = "<group>";
+		};
+		241A57C22C85F57C00232D8B /* Follow */ = {
+			isa = PBXGroup;
+			children = (
+				241A57B22C85F2BA00232D8B /* FollowRouter.swift */,
+				241A57C82C85F60300232D8B /* RequestModel */,
+				241A57C72C85F5FC00232D8B /* ResponseModel */,
+			);
+			path = Follow;
+			sourceTree = "<group>";
+		};
+		241A57C32C85F58F00232D8B /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				241A57B62C85F3A900232D8B /* ProfileRouter.swift */,
+				241A57CA2C85F61100232D8B /* RequestModel */,
+				241A57C92C85F60B00232D8B /* ResponseModel */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		241A57C42C85F59600232D8B /* Payment */ = {
+			isa = PBXGroup;
+			children = (
+				241A57B42C85F34100232D8B /* PaymentRouter.swift */,
+				241A57CB2C85F61500232D8B /* RequestModel */,
+				241A57CC2C85F61D00232D8B /* ResponseModel */,
+			);
+			path = Payment;
+			sourceTree = "<group>";
+		};
+		241A57C52C85F5B000232D8B /* RequestModel */ = {
+			isa = PBXGroup;
+			children = (
+				24AB4BD52C7854750030558A /* LikeModel.swift */,
+			);
+			path = RequestModel;
+			sourceTree = "<group>";
+		};
+		241A57C72C85F5FC00232D8B /* ResponseModel */ = {
+			isa = PBXGroup;
+			children = (
+				240784F82C7CBAD600E06A5E /* FollowModel.swift */,
+			);
+			path = ResponseModel;
+			sourceTree = "<group>";
+		};
+		241A57C82C85F60300232D8B /* RequestModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = RequestModel;
+			sourceTree = "<group>";
+		};
+		241A57C92C85F60B00232D8B /* ResponseModel */ = {
+			isa = PBXGroup;
+			children = (
+				24B2B6B62C6EF43200190BFC /* ProfileModel.swift */,
+			);
+			path = ResponseModel;
+			sourceTree = "<group>";
+		};
+		241A57CA2C85F61100232D8B /* RequestModel */ = {
+			isa = PBXGroup;
+			children = (
+				24B2B6B42C6EF33600190BFC /* EditProfileQuery.swift */,
+			);
+			path = RequestModel;
+			sourceTree = "<group>";
+		};
+		241A57CB2C85F61500232D8B /* RequestModel */ = {
+			isa = PBXGroup;
+			children = (
+				241A57502C8419A000232D8B /* PaymentQuery.swift */,
+			);
+			path = RequestModel;
+			sourceTree = "<group>";
+		};
+		241A57CC2C85F61D00232D8B /* ResponseModel */ = {
+			isa = PBXGroup;
+			children = (
+				241A57522C841A1500232D8B /* PaymentModel.swift */,
+			);
+			path = ResponseModel;
 			sourceTree = "<group>";
 		};
 		245D38602C75E058006E282D /* Result */ = {
@@ -611,9 +806,9 @@
 		24B2B69E2C6CE95A00190BFC /* Culture */ = {
 			isa = PBXGroup;
 			children = (
+				24B2B69C2C6CE67F00190BFC /* CultureRouter.swift */,
 				245D38662C7601EF006E282D /* CultureParameter.swift */,
 				24B2B6492C6CA08200190BFC /* CultureResponse.swift */,
-				24B2B69C2C6CE67F00190BFC /* CultureRouter.swift */,
 				24B2B64D2C6CA0D500190BFC /* CultureAPIManager.swift */,
 			);
 			path = Culture;
@@ -622,12 +817,18 @@
 		24B2B6A02C6CE96800190BFC /* LSLP */ = {
 			isa = PBXGroup;
 			children = (
-				24B2B6AB2C6DBF1600190BFC /* RequestModel */,
-				24B2B6A62C6DBEF000190BFC /* ResponseModel */,
 				24B2B6A42C6CEB9F00190BFC /* LSLPHeader.swift */,
-				24B3C0F42C748A100008B597 /* LSLPError.swift */,
 				24B2B6912C6CDDC800190BFC /* LSLPRouter.swift */,
+				24B3C0F42C748A100008B597 /* LSLPError.swift */,
 				24B2B68D2C6CDD7100190BFC /* LSLPAPIManager.swift */,
+				241A57CD2C85F6BF00232D8B /* AuthInterceptor.swift */,
+				241A57B82C85F43A00232D8B /* Auth */,
+				241A57BB2C85F4AD00232D8B /* Post */,
+				241A57BE2C85F53A00232D8B /* Comment */,
+				241A57C12C85F57400232D8B /* Like */,
+				241A57C22C85F57C00232D8B /* Follow */,
+				241A57C32C85F58F00232D8B /* Profile */,
+				241A57C42C85F59600232D8B /* Payment */,
 			);
 			path = LSLP;
 			sourceTree = "<group>";
@@ -638,39 +839,6 @@
 				24B2B6A12C6CEA5C00190BFC /* UserDefaultsManager.swift */,
 			);
 			path = Manager;
-			sourceTree = "<group>";
-		};
-		24B2B6A62C6DBEF000190BFC /* ResponseModel */ = {
-			isa = PBXGroup;
-			children = (
-				24B2B6A72C6DBF0300190BFC /* SignInModel.swift */,
-				24B2B6B02C6E14B100190BFC /* SignUpModel.swift */,
-				24B2B6B22C6EEB9200190BFC /* RefreshModel.swift */,
-				24B2B6B62C6EF43200190BFC /* ProfileModel.swift */,
-				24B3C0E92C7365920008B597 /* UserModel.swift */,
-				240784F82C7CBAD600E06A5E /* FollowModel.swift */,
-				24B3C0E72C73649F0008B597 /* PostModel.swift */,
-				24AB4BC52C7734890030558A /* PostImageModel.swift */,
-				24B3C0EB2C73659E0008B597 /* CommentModel.swift */,
-				241A57522C841A1500232D8B /* PaymentModel.swift */,
-			);
-			path = ResponseModel;
-			sourceTree = "<group>";
-		};
-		24B2B6AB2C6DBF1600190BFC /* RequestModel */ = {
-			isa = PBXGroup;
-			children = (
-				24B2B6AC2C6DBF1D00190BFC /* SignInQuery.swift */,
-				24B2B6AE2C6E130600190BFC /* SignUpQuery.swift */,
-				24B2B6B42C6EF33600190BFC /* EditProfileQuery.swift */,
-				24B3C0F62C74B5AB0008B597 /* PostFetchQuery.swift */,
-				24B3C0E52C7361A90008B597 /* PostQuery.swift */,
-				24AB4BC92C7751D20030558A /* KFParameter.swift */,
-				24AB4BD52C7854750030558A /* LikeModel.swift */,
-				240784DE2C7B03B300E06A5E /* CommentQuery.swift */,
-				241A57502C8419A000232D8B /* PaymentQuery.swift */,
-			);
-			path = RequestModel;
 			sourceTree = "<group>";
 		};
 		24B2B6CF2C6F264700190BFC /* Edit */ = {
@@ -848,17 +1016,20 @@
 				240785092C7DEFFE00E06A5E /* OthersProfileViewController.swift in Sources */,
 				24AB4BDB2C7873480030558A /* WriteViewModel.swift in Sources */,
 				24AB4BC62C7734890030558A /* PostImageModel.swift in Sources */,
+				241A57CE2C85F6BF00232D8B /* AuthInterceptor.swift in Sources */,
 				240784F12C7C989F00E06A5E /* UserPostViewController.swift in Sources */,
 				24B2B65F2C6CCA7000190BFC /* SignUpViewController.swift in Sources */,
 				240784F32C7C98A700E06A5E /* UserPostViewModel.swift in Sources */,
 				24B2B67D2C6CD17C00190BFC /* Font.swift in Sources */,
 				24AB4BD62C7854750030558A /* LikeModel.swift in Sources */,
 				24AB4BD92C78732F0030558A /* WriteViewController.swift in Sources */,
+				241A57AF2C85F17C00232D8B /* CommentRouter.swift in Sources */,
 				249DB8C92C806E7B0076A163 /* UILabel+.swift in Sources */,
 				24B3C0EE2C744E000008B597 /* ReservationViewController.swift in Sources */,
 				24B3C0E82C73649F0008B597 /* PostModel.swift in Sources */,
 				24CDA1862C7F23B1007D844E /* SearchUserViewController.swift in Sources */,
 				24B2B6CC2C6F25AC00190BFC /* EditProfileViewController.swift in Sources */,
+				241A57B72C85F3A900232D8B /* ProfileRouter.swift in Sources */,
 				240784F72C7CB64000E06A5E /* LikePostViewModel.swift in Sources */,
 				24B2B68E2C6CDD7100190BFC /* LSLPAPIManager.swift in Sources */,
 				245D38622C75E061006E282D /* SearchResultViewController.swift in Sources */,
@@ -872,12 +1043,14 @@
 				24B3C0F52C748A100008B597 /* LSLPError.swift in Sources */,
 				24AB4BCE2C7753F50030558A /* DetailPostViewController.swift in Sources */,
 				24B3C0D72C7224520008B597 /* TodayViewModel.swift in Sources */,
+				241A57B12C85F23D00232D8B /* LikeRouter.swift in Sources */,
 				240784DD2C7AFE5300E06A5E /* CommentTableViewCell.swift in Sources */,
 				24B3C0E62C7361A90008B597 /* PostQuery.swift in Sources */,
 				24B2B63F2C6C948100190BFC /* TabBarController.swift in Sources */,
 				24B2B6C32C6F0F9F00190BFC /* ReuseIdentifierProtocol.swift in Sources */,
 				24B2B6782C6CCFDF00190BFC /* SignInViewModel.swift in Sources */,
 				24AB4BE72C78C4610030558A /* Typealias.swift in Sources */,
+				241A57B52C85F34100232D8B /* PaymentRouter.swift in Sources */,
 				248928FD2C816A6900911C89 /* EditPostViewModel.swift in Sources */,
 				24B2B6452C6C957300190BFC /* MyProfileViewController.swift in Sources */,
 				241A57532C841A1500232D8B /* PaymentModel.swift in Sources */,
@@ -889,9 +1062,11 @@
 				24AB4BC82C7738690030558A /* PostViewModel.swift in Sources */,
 				24B2B6D12C6F2C2000190BFC /* Reactive+.swift in Sources */,
 				245D385B2C75B954006E282D /* UICollectionViewLayout+.swift in Sources */,
+				241A57B32C85F2BA00232D8B /* FollowRouter.swift in Sources */,
 				245D385D2C75BA25006E282D /* CategoryCollectionViewCell.swift in Sources */,
 				24B3C0F12C744E2F0008B597 /* ReservationViewModel.swift in Sources */,
 				24B2B6582C6CB05B00190BFC /* String+.swift in Sources */,
+				241A57AB2C85EEE300232D8B /* AuthRouter.swift in Sources */,
 				245D385F2C75D7FB006E282D /* SettingCollectionHeaderView.swift in Sources */,
 				24B2B6A82C6DBF0300190BFC /* SignInModel.swift in Sources */,
 				245D386C2C76223C006E282D /* MapViewController.swift in Sources */,
@@ -899,6 +1074,7 @@
 				24B2B6B32C6EEB9200190BFC /* RefreshModel.swift in Sources */,
 				24B2B6C52C6F107000190BFC /* BaseTableViewCell.swift in Sources */,
 				24B2B6BB2C6EFB4500190BFC /* CircleImageView.swift in Sources */,
+				241A57AD2C85F06600232D8B /* PostRouter.swift in Sources */,
 				240784EC2C7C72E300E06A5E /* LikeEventViewModel.swift in Sources */,
 				247A60092C79D01500906909 /* ProfileView.swift in Sources */,
 				24B2B6B92C6EF6B700190BFC /* MyProfileViewModel.swift in Sources */,

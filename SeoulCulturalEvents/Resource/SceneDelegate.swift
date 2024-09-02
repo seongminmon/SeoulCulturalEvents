@@ -38,26 +38,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 window?.makeKeyAndVisible()
             }
         }
-        
-        // 2. single<Result>
-//        LSLPAPIManager.shared.refresh()
-//            .subscribe(with: self) { owner, result in
-//                switch result {
-//                case .success(_):
-//                    print("토큰 갱신 성공 (리프레시 토큰 유효)")
-//                    let tab = TabBarController()
-//                    owner.window?.rootViewController = tab
-//                    owner.window?.makeKeyAndVisible()
-//                    
-//                case .failure(_):
-//                    print("토큰 갱신 실패 (리프레시 토큰 없음 or 만료)")
-//                    let vc = SignInViewController()
-//                    let nav = UINavigationController(rootViewController: vc)
-//                    owner.window?.rootViewController = nav
-//                    owner.window?.makeKeyAndVisible()
-//                }
-//            }
-//            .disposed(by: disposeBag)
     }
 }
 

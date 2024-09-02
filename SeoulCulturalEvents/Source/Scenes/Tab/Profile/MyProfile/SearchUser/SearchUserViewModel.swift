@@ -37,7 +37,7 @@ final class SearchUserViewModel: ViewModelType {
             .withLatestFrom(input.searchText)
             .flatMap { nick in
                 LSLPAPIManager.shared.callRequestWithRetry(
-                    api: .searchUser(nick: nick),
+                    api: ProfileRouter.searchUser(nick: nick),
                     model: SearchUserModel.self
                 )
             }
@@ -61,13 +61,13 @@ final class SearchUserViewModel: ViewModelType {
                 if $0.isFollow {
                     // 팔로우 취소
                     return LSLPAPIManager.shared.callRequestWithRetry(
-                        api: .cancelFollow(userID: $0.id),
+                        api: FollowRouter.cancelFollow(userID: $0.id),
                         model: FollowModel.self
                     )
                 } else {
                     // 팔로우
                     return LSLPAPIManager.shared.callRequestWithRetry(
-                        api: .follow(userID: $0.id),
+                        api: FollowRouter.follow(userID: $0.id),
                         model: FollowModel.self
                     )
                 }

@@ -46,7 +46,7 @@ final class EditProfileViewModel: ViewModelType {
             .flatMap { value in
                 let query = EditProfileQuery(nick: value.0, phoneNum: nil, birthDay: nil, profile: value.1)
                 return LSLPAPIManager.shared.callRequestWithRetry(
-                    api: .editProfile(query: query),
+                    api: ProfileRouter.editProfile(query: query),
                     model: ProfileModel.self
                 )
             }

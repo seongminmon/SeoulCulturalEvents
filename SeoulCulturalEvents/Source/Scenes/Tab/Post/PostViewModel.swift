@@ -49,7 +49,7 @@ final class PostViewModel: ViewModelType {
                 // 커서 초기화
                 postFetchQuery.next = nil
                 return LSLPAPIManager.shared.callRequestWithRetry(
-                    api: .fetchPostList(query: postFetchQuery),
+                    api: PostRouter.fetchPostList(query: postFetchQuery),
                     model: PostModelList.self
                 )
             }
@@ -89,7 +89,7 @@ final class PostViewModel: ViewModelType {
             }
             .flatMap { query in
                 LSLPAPIManager.shared.callRequestWithRetry(
-                    api: .fetchPostList(query: query),
+                    api: PostRouter.fetchPostList(query: query),
                     model: PostModelList.self
                 )
             }

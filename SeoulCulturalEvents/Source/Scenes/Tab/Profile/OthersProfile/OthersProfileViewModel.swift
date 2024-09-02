@@ -38,7 +38,7 @@ final class OthersProfileViewModel: ViewModelType {
         
         // 다른 유저 프로필 조회 통신
         LSLPAPIManager.shared.callRequestWithRetry(
-            api: .fetchProfile(userID: userID),
+            api: ProfileRouter.fetchProfile(userID: userID),
             model: ProfileModel.self
         )
         .subscribe(with: self) { owner, result in
@@ -70,7 +70,9 @@ final class OthersProfileViewModel: ViewModelType {
             .withLatestFrom(profile)
             .map { $0.id }
             .flatMap { userID in
-                LSLPAPIManager.shared.callRequestWithRetry(api: .follow(userID: userID), model: FollowModel.self)
+                LSLPAPIManager.shared.callRequestWithRetry(
+                    api: FollowRouter.follow(userID: userID),
+                    model: FollowModel.self)
             }
             .subscribe(with: self) { owner, result in
                 switch result {
@@ -94,7 +96,10 @@ final class OthersProfileViewModel: ViewModelType {
             .withLatestFrom(profile)
             .map { $0.id }
             .flatMap { userID in
-                LSLPAPIManager.shared.callRequestWithRetry(api: .cancelFollow(userID: userID), model: FollowModel.self)
+                LSLPAPIManager.shared.callRequestWithRetry(
+                    api: FollowRouter.cancelFollow(userID: userID),
+                    model: FollowModel.self
+                )
             }
             .subscribe(with: self) { owner, result in
                 switch result {
@@ -112,7 +117,7 @@ final class OthersProfileViewModel: ViewModelType {
         // 유저별 작성한 포스트 조회 통신
         let query = PostFetchQuery(productID: ProductID.post)
         LSLPAPIManager.shared.callRequestWithRetry(
-            api: .fetchUserPostList(userID: userID, query: query),
+            api: PostRouter.fetchUserPostList(userID: userID, query: query),
             model: PostModelList.self
         )
         .subscribe(with: self) { owner, result in

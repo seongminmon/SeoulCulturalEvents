@@ -41,7 +41,7 @@ final class SignUpViewModel: ViewModelType {
             .map { SignUpQuery(email: $0.0, password: $0.1, nick: $0.2) }
             .flatMap { query in
                 LSLPAPIManager.shared.callRequest(
-                    api: .signUp(query: query),
+                    api: AuthRouter.signUp(query: query),
                     model: SignUpModel.self
                 )
             }
@@ -64,7 +64,7 @@ final class SignUpViewModel: ViewModelType {
             .map { SignInQuery(email: $0.0, password: $0.1) }
             .flatMap { query in
                 LSLPAPIManager.shared.callRequest(
-                    api: .signIn(query: query),
+                    api: AuthRouter.signIn(query: query),
                     model: SignInModel.self
                 )
             }
