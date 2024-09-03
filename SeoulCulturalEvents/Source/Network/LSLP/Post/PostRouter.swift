@@ -25,7 +25,7 @@ enum PostRouter {
     case fetchUserPostList(userID: String, query: PostFetchQuery)
 }
 
-extension PostRouter: LSLPRouter {
+extension PostRouter: TargetType {
     var path: String {
         switch self {
         case .postImageFiles:

@@ -15,7 +15,7 @@ enum LikeRouter {
     case fetchLikePostList(query: PostFetchQuery)
 }
 
-extension LikeRouter: LSLPRouter {
+extension LikeRouter: TargetType {
     var path: String {
         switch self {
         case .postLike(let id, _):

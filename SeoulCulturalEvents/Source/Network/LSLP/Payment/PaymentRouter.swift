@@ -15,7 +15,7 @@ enum PaymentRouter {
     case fetchPayments
 }
 
-extension PaymentRouter: LSLPRouter {
+extension PaymentRouter: TargetType {
     var path: String {
         switch self {
         case .paymentsValidation:

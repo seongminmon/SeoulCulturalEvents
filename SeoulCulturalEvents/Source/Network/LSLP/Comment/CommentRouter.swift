@@ -17,7 +17,7 @@ enum CommentRouter {
     case deleteComment(postID: String, commentID: String)
 }
 
-extension CommentRouter: LSLPRouter {
+extension CommentRouter: TargetType {
     var path: String {
         switch self {
         case .createComment(let id, _):

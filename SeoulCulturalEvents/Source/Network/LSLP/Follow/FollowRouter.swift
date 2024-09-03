@@ -15,7 +15,7 @@ enum FollowRouter {
     case cancelFollow(userID: String)
 }
 
-extension FollowRouter: LSLPRouter {
+extension FollowRouter: TargetType {
     var path: String {
         switch self {
         case .follow(let id):

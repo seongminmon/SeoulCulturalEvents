@@ -6,10 +6,12 @@
 //
 
 import Foundation
+import Moya
 
 struct EditProfileQuery: Encodable {
     var nick: String?
     var phoneNum: String?
     var birthDay: String?
     var profile: Data?
+    
 }

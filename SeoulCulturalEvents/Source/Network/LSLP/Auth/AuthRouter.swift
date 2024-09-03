@@ -19,7 +19,7 @@ enum AuthRouter {
     case withdraw
 }
 
-extension AuthRouter: LSLPRouter {
+extension AuthRouter: TargetType {
     var path: String {
         switch self {
         case .signUp:

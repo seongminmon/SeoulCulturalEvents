@@ -39,6 +39,7 @@
 		241A57B52C85F34100232D8B /* PaymentRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 241A57B42C85F34100232D8B /* PaymentRouter.swift */; };
 		241A57B72C85F3A900232D8B /* ProfileRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 241A57B62C85F3A900232D8B /* ProfileRouter.swift */; };
 		241A57CE2C85F6BF00232D8B /* AuthInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 241A57CD2C85F6BF00232D8B /* AuthInterceptor.swift */; };
+		241A57E22C87026F00232D8B /* TargetType+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 241A57E12C87026F00232D8B /* TargetType+.swift */; };
 		245D38552C75A3B4006E282D /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245D38542C75A3B4006E282D /* SearchViewModel.swift */; };
 		245D38592C75A7CA006E282D /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245D38582C75A7CA006E282D /* BaseCollectionViewCell.swift */; };
 		245D385B2C75B954006E282D /* UICollectionViewLayout+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245D385A2C75B954006E282D /* UICollectionViewLayout+.swift */; };
@@ -92,7 +93,6 @@
 		24B2B6862C6CD60000190BFC /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B6852C6CD60000190BFC /* SignUpViewModel.swift */; };
 		24B2B6892C6CD6FA00190BFC /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B6882C6CD6FA00190BFC /* BaseViewController.swift */; };
 		24B2B68E2C6CDD7100190BFC /* LSLPAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B68D2C6CDD7100190BFC /* LSLPAPIManager.swift */; };
-		24B2B6922C6CDDC800190BFC /* LSLPRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2B6912C6CDDC800190BFC /* LSLPRouter.swift */; };
 		24B2B6972C6CE0CD00190BFC /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 24B2B6962C6CE0CD00190BFC /* Moya */; };
 		24B2B6992C6CE0CD00190BFC /* ReactiveMoya in Frameworks */ = {isa = PBXBuildFile; productRef = 24B2B6982C6CE0CD00190BFC /* ReactiveMoya */; };
 		24B2B69B2C6CE0CD00190BFC /* RxMoya in Frameworks */ = {isa = PBXBuildFile; productRef = 24B2B69A2C6CE0CD00190BFC /* RxMoya */; };
@@ -169,6 +169,7 @@
 		241A57B42C85F34100232D8B /* PaymentRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentRouter.swift; sourceTree = "<group>"; };
 		241A57B62C85F3A900232D8B /* ProfileRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRouter.swift; sourceTree = "<group>"; };
 		241A57CD2C85F6BF00232D8B /* AuthInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInterceptor.swift; sourceTree = "<group>"; };
+		241A57E12C87026F00232D8B /* TargetType+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TargetType+.swift"; sourceTree = "<group>"; };
 		245D38542C75A3B4006E282D /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		245D38582C75A7CA006E282D /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		245D385A2C75B954006E282D /* UICollectionViewLayout+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewLayout+.swift"; sourceTree = "<group>"; };
@@ -216,7 +217,6 @@
 		24B2B6852C6CD60000190BFC /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		24B2B6882C6CD6FA00190BFC /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		24B2B68D2C6CDD7100190BFC /* LSLPAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LSLPAPIManager.swift; sourceTree = "<group>"; };
-		24B2B6912C6CDDC800190BFC /* LSLPRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LSLPRouter.swift; sourceTree = "<group>"; };
 		24B2B69C2C6CE67F00190BFC /* CultureRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CultureRouter.swift; sourceTree = "<group>"; };
 		24B2B6A12C6CEA5C00190BFC /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		24B2B6A42C6CEB9F00190BFC /* LSLPHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LSLPHeader.swift; sourceTree = "<group>"; };
@@ -818,7 +818,7 @@
 			isa = PBXGroup;
 			children = (
 				24B2B6A42C6CEB9F00190BFC /* LSLPHeader.swift */,
-				24B2B6912C6CDDC800190BFC /* LSLPRouter.swift */,
+				241A57E12C87026F00232D8B /* TargetType+.swift */,
 				24B3C0F42C748A100008B597 /* LSLPError.swift */,
 				24B2B68D2C6CDD7100190BFC /* LSLPAPIManager.swift */,
 				241A57CD2C85F6BF00232D8B /* AuthInterceptor.swift */,
@@ -1006,6 +1006,7 @@
 				245D38672C7601EF006E282D /* CultureParameter.swift in Sources */,
 				24B2B64A2C6CA08200190BFC /* CultureResponse.swift in Sources */,
 				24AB4BD22C775D460030558A /* ImageCollectionViewCell.swift in Sources */,
+				241A57E22C87026F00232D8B /* TargetType+.swift in Sources */,
 				24B2B6BD2C6EFBF900190BFC /* Image.swift in Sources */,
 				24B2B6732C6CCEF700190BFC /* SignTextField.swift in Sources */,
 				245D38552C75A3B4006E282D /* SearchViewModel.swift in Sources */,
@@ -1084,7 +1085,6 @@
 				24B3C0E22C7327280008B597 /* CulturalEventViewController.swift in Sources */,
 				24B2B6862C6CD60000190BFC /* SignUpViewModel.swift in Sources */,
 				240E0A942C6C7E8B003A212B /* SceneDelegate.swift in Sources */,
-				24B2B6922C6CDDC800190BFC /* LSLPRouter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
