@@ -15,7 +15,10 @@ final class LSLPAPIManager {
     private init() {}
     
     // 토큰 갱신 필요없는 경우(로그인, 회원가입)
-    func callRequest<Router: TargetType, T: Decodable>(api: Router, model: T.Type) -> Single<Result<T, LSLPError>> {
+    func callRequest<Router: TargetType, T: Decodable>(
+        api: Router,
+        model: T.Type
+    ) -> Single<Result<T, LSLPError>> {
         return Single<Result<T, LSLPError>>.create { observer in
             let provider = MoyaProvider<Router>()
             provider.request(api) { result in
@@ -41,7 +44,10 @@ final class LSLPAPIManager {
     }
     
     // 응답값 있는 경우
-    func callRequestWithRetry<Router: TargetType, T: Decodable>(api: Router, model: T.Type) -> Single<Result<T, LSLPError>> {
+    func callRequestWithRetry<Router: TargetType, T: Decodable>(
+        api: Router,
+        model: T.Type
+    ) -> Single<Result<T, LSLPError>> {
         return Single<Result<T, LSLPError>>.create { observer in
             let provider = MoyaProvider<Router>(session: Session(interceptor: AuthInterceptor.shared))
             provider.request(api) { result in
@@ -66,7 +72,9 @@ final class LSLPAPIManager {
     }
     
     // 응답값이 없는 경우(포스트 삭제, 댓글 삭제)
-    func callRequestWithRetry<Router: TargetType>(api: Router) -> Single<Result<Void, LSLPError>> {
+    func callRequestWithRetry<Router: TargetType>(
+        api: Router
+    ) -> Single<Result<Void, LSLPError>> {
         return Single<Result<Void, LSLPError>>.create { observer in
             let provider = MoyaProvider<Router>(session: Session(interceptor: AuthInterceptor.shared))
             provider.request(api) { result in
