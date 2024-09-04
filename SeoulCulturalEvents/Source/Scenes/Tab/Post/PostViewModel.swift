@@ -75,7 +75,6 @@ final class PostViewModel: ViewModelType {
         input.prefetchItems
             .compactMap { [weak self] indexPaths -> PostFetchQuery? in
                 guard let self else { return nil }
-                
                 // nextCursor가 "0"이면 패스
                 guard let postResponse = postResponse,
                         postFetchQuery.next != "0" else { return nil }

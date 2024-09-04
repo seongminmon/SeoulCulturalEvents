@@ -9,10 +9,8 @@ import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
-    // TODO: - 더미데이터 작성
-    // TODO: - 상태코드 처리
-    // TODO: - 라우터 나누기
-    // TODO: - 네트워크 감지 (모니터)
+    // TODO: - 상태코드 예외처리
+    // TODO: - 네트워크 모니터링
 
     var window: UIWindow?
 
