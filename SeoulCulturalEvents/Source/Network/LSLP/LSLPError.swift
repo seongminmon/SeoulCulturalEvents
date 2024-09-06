@@ -30,6 +30,12 @@ enum LSLPError: Int, Error {
     
     // 탈퇴
     case accessToken = 419
+    
+    // 포스트 작성
+    case saveFail = 410
+    
+    // 포스트 수정
+    case authFail = 445
 }
 
 extension LSLPError: LocalizedError {
@@ -61,11 +67,10 @@ extension LSLPError: LocalizedError {
             return "인증할 수 없습니다."
         case .forbidden:
             return "접근 권한이 없습니다."
+        case .saveFail:
+            return "저장에 실패하였습니다."
+        case .authFail:
+            return "권한이 없습니다."
         }
     }
 }
-
-//// 내 프로필 조회
-//    case invalidAccessToken = 401
-//    case forbidden = 403
-//    case accessToken = 419
