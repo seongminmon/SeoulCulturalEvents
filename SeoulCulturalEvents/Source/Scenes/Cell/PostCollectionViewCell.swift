@@ -75,7 +75,6 @@ final class PostCollectionViewCell: BaseCollectionViewCell {
         }
         dateLabel.snp.makeConstraints { make in
             make.leading.bottom.equalToSuperview()
-//            make.trailing.lessThanOrEqualTo(likeCountLabel.snp.leading).offset(-8)
         }
     }
     

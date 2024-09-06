@@ -25,13 +25,13 @@ final class SignUpViewModel: ViewModelType {
     struct Output {
         let closeButtonTap: ControlEvent<Void>
         let signInSuccess: PublishSubject<Void>
-        let signUpFailure: PublishSubject<String>
+        let signUpFailure: PublishSubject<String?>
     }
     
     func transform(input: Input) -> Output {
         
         let signUpSuccess = PublishSubject<Void>()
-        let signUpFailure = PublishSubject<String>()
+        let signUpFailure = PublishSubject<String?>()
         let signInSuccess = PublishSubject<Void>()
         
         // 가입하기 버튼 누를 시 사용자가 입력한 이메일, 패스워드, 닉네임으로 회원가입 통신
@@ -52,8 +52,7 @@ final class SignUpViewModel: ViewModelType {
                     signUpSuccess.onNext(())
                 case .failure(let error):
                     print("회원 가입 실패")
-                    print(error)
-                    signUpFailure.onNext("회원 가입 실패")
+                    signUpFailure.onNext(error.errorDescription)
                 }
             }
             .disposed(by: disposeBag)
@@ -79,8 +78,7 @@ final class SignUpViewModel: ViewModelType {
                     
                 case .failure(let error):
                     print("로그인 실패")
-                    print(error)
-                    signUpFailure.onNext("로그인 실패")
+                    signUpFailure.onNext(error.errorDescription)
                 }
             }
             .disposed(by: disposeBag)

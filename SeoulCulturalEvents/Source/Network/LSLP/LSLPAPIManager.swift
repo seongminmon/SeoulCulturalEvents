@@ -35,14 +35,10 @@ final class LSLPAPIManager {
                     }
                     
                 case .failure(let error):
-                    print("에러코드: \(error.response?.statusCode ?? -1)")
-                    switch error {
-                    case .statusCode(let response):
-                        let lslpError = LSLPError(rawValue: response.statusCode) ?? .unknown
-                        observer(.success(.failure(lslpError)))
-                    default:
-                        observer(.success(.failure(.unknown)))
-                    }
+                    let statusCode = error.response?.statusCode ?? -1
+                    print("에러코드: \(statusCode)")
+                    let lslpError = LSLPError(rawValue: statusCode) ?? .unknown
+                    observer(.success(.failure(lslpError)))
                 }
             }
             return Disposables.create()
@@ -69,14 +65,10 @@ final class LSLPAPIManager {
                     }
                     
                 case .failure(let error):
-                    print("에러코드: \(error.response?.statusCode ?? -1)")
-                    switch error {
-                    case .statusCode(let response):
-                        let lslpError = LSLPError(rawValue: response.statusCode) ?? .unknown
-                        observer(.success(.failure(lslpError)))
-                    default:
-                        observer(.success(.failure(.unknown)))
-                    }
+                    let statusCode = error.response?.statusCode ?? -1
+                    print("에러코드: \(statusCode)")
+                    let lslpError = LSLPError(rawValue: statusCode) ?? .unknown
+                    observer(.success(.failure(lslpError)))
                 }
             }
             return Disposables.create()
@@ -100,14 +92,10 @@ final class LSLPAPIManager {
                     }
                     
                 case .failure(let error):
-                    print("에러코드: \(error.response?.statusCode ?? -1)")
-                    switch error {
-                    case .statusCode(let response):
-                        let lslpError = LSLPError(rawValue: response.statusCode) ?? .unknown
-                        observer(.success(.failure(lslpError)))
-                    default:
-                        observer(.success(.failure(.unknown)))
-                    }
+                    let statusCode = error.response?.statusCode ?? -1
+                    print("에러코드: \(statusCode)")
+                    let lslpError = LSLPError(rawValue: statusCode) ?? .unknown
+                    observer(.success(.failure(lslpError)))
                 }
             }
             return Disposables.create()
@@ -130,10 +118,13 @@ final class LSLPAPIManager {
                     handler(.failure(.decoding))
                 }
                 
-            case .failure(_):
+            case .failure(let error):
                 print("엑세스 토큰 갱신 실패")
+                let statusCode = error.response?.statusCode ?? -1
+                print("에러코드: \(statusCode)")
+                let lslpError = LSLPError(rawValue: statusCode) ?? .unknown
                 UserDefaultsManager.removeAll()
-                handler(.failure(.refreshToken))
+                handler(.failure(lslpError))
             }
         }
     }

@@ -16,8 +16,20 @@ enum LSLPError: Int, Error {
     case decoding = -1
     case unknown = -2
     
-    case accessToken = 419
+    // 회원 가입
+    case emptyRequired = 400
+    case whiteSpace = 402
+    case duplicated = 409
+    
+    // 로그인
+    case invalid = 401
+    
+    // 엑세스 토큰 갱신
+    case forbidden = 403
     case refreshToken = 418
+    
+    // 탈퇴
+    case accessToken = 419
 }
 
 extension LSLPError: LocalizedError {
@@ -33,42 +45,25 @@ extension LSLPError: LocalizedError {
             return "서버 에러"
         case .decoding:
             return "디코딩 에러"
+        case .accessToken:
+            return "엑세스 토큰이 만료되었습니다."
+        case .refreshToken:
+            return "리프레시 토큰이 만료되었습니다.\n다시 로그인 해주세요."
         case .unknown:
             return "알 수 없는 에러"
-        case .accessToken:
-            return "엑세스 토큰 만료"
-        case .refreshToken:
-            return "리프레시 토큰 만료"
+        case .emptyRequired:
+            return "필수값을 채워주세요."
+        case .whiteSpace:
+            return "공백이 포함된 닉네임은 사용할 수 없습니다."
+        case .duplicated:
+            return "이미 가입된 유저입니다."
+        case .invalid:
+            return "인증할 수 없습니다."
+        case .forbidden:
+            return "접근 권한이 없습니다."
         }
     }
 }
-
-//// 회원가입
-//enum AuthError: Int, Error {
-//    case emptyRequired = 400
-//    case whiteSpace = 402
-//    case duplicated = 409
-//}
-//
-//// 로그인
-//enum SignInError: Int, Error {
-//    case emptyRequired = 400
-//    case invalidPassword = 401
-//}
-//
-//// 엑세스 토큰 갱신
-//enum RefreshError: Int, Error, LSLPErrorType {
-//    case invalidAccessToken = 401
-//    case forbidden = 403
-//    case refreshToken = 418
-//}
-//
-//// 탈퇴
-//enum WithdrawError: Int, Error {
-//    case invalidAccessToken = 401
-//    case forbidden = 403
-//    case accessToken = 419
-//}
 
 //// 내 프로필 조회
 //    case invalidAccessToken = 401

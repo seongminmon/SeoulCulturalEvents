@@ -91,7 +91,6 @@ final class CulturalEventTableViewCell: BaseTableViewCell {
         
         descriptionView.snp.makeConstraints { make in
             make.horizontalEdges.bottom.equalToSuperview()
-//            make.height.lessThanOrEqualTo(120)
         }
         
         titleLabel.snp.makeConstraints { make in

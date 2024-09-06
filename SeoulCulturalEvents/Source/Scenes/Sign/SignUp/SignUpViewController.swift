@@ -15,15 +15,10 @@ final class SignUpViewController: BaseViewController {
     
     private let closeButton = UIBarButtonItem(title: "닫기")
     private let emailTextField = SignTextField(placeholderText: "이메일을 입력해주세요")
-    private let passwordTextField = SignTextField(placeholderText: "비밀번호를 입력해주세요")//.then {
-//        $0.isSecureTextEntry = true
-//    }
+    private let passwordTextField = SignTextField(placeholderText: "비밀번호를 입력해주세요").then {
+        $0.isSecureTextEntry = true
+    }
     private let nicknameTextField = SignTextField(placeholderText: "닉네임을 입력해주세요")
-    
-    // MARK: - 선택 사항
-//    private let phoneNumberTextField = SignTextField(placeholderText: "전화번호를 입력해주세요")
-//    private let birthDayTextField = SignTextField(placeholderText: "생일을 입력해주세요")
-    
     private let signUpButton = PointButton(title: "가입하기")
     
     private let viewModel = SignUpViewModel()
