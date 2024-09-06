@@ -28,6 +28,7 @@ final class OthersProfileViewModel: ViewModelType {
         let isFollow: PublishSubject<Bool>
         let postList: BehaviorSubject<[PostModel]>
         let cellTap: ControlEvent<PostModel>
+        let networkFailure: PublishSubject<String?>
     }
     
     func transform(input: Input) -> Output {
@@ -35,6 +36,7 @@ final class OthersProfileViewModel: ViewModelType {
         let profile = PublishSubject<ProfileModel>()
         let isFollow = PublishSubject<Bool>()
         let postList = BehaviorSubject<[PostModel]>(value: [])
+        let networkFailure = PublishSubject<String?>()
         
         // 다른 유저 프로필 조회 통신
         LSLPAPIManager.shared.callRequestWithRetry(
@@ -82,7 +84,7 @@ final class OthersProfileViewModel: ViewModelType {
                     
                 case .failure(let error):
                     print("팔로우 실패")
-                    print(error)
+                    networkFailure.onNext(error.errorDescription)
                 }
             }
             .disposed(by: disposeBag)
@@ -109,7 +111,7 @@ final class OthersProfileViewModel: ViewModelType {
                     
                 case .failure(let error):
                     print("팔로우 취소 실패")
-                    print(error)
+                    networkFailure.onNext(error.errorDescription)
                 }
             }
             .disposed(by: disposeBag)
@@ -128,7 +130,7 @@ final class OthersProfileViewModel: ViewModelType {
                 
             case .failure(let error):
                 print("유저별 포스트 조회 실패")
-                print(error)
+                networkFailure.onNext(error.errorDescription)
             }
         }
         .disposed(by: disposeBag)
@@ -137,7 +139,8 @@ final class OthersProfileViewModel: ViewModelType {
             profile: profile,
             isFollow: isFollow,
             postList: postList, 
-            cellTap: input.cellTap
+            cellTap: input.cellTap,
+            networkFailure: networkFailure
         )
     }
 }

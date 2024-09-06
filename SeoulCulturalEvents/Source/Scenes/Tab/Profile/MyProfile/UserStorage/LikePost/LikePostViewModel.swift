@@ -27,13 +27,13 @@ final class LikePostViewModel: ViewModelType {
     struct Output {
         let postList: BehaviorSubject<[PostModel]>
         let cellTap: ControlEvent<PostModel>
-        let networkFailure: PublishSubject<String>
+        let networkFailure: PublishSubject<String?>
     }
     
     func transform(input: Input) -> Output {
         
         let postList = BehaviorSubject<[PostModel]>(value: [])
-        let networkFailure = PublishSubject<String>()
+        let networkFailure = PublishSubject<String?>()
         
         // 좋아요한 포스트 조회
         let query = PostFetchQuery(productID: ProductID.post)
@@ -51,7 +51,7 @@ final class LikePostViewModel: ViewModelType {
             case .failure(let error):
                 print("좋아요한 포스트 조회 실패")
                 print(error)
-                networkFailure.onNext(error.localizedDescription)
+                networkFailure.onNext(error.errorDescription)
             }
         }
         .disposed(by: disposeBag)

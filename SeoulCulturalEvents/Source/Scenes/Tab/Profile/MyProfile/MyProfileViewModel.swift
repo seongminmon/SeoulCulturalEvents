@@ -48,6 +48,7 @@ final class MyProfileViewModel: ViewModelType {
         let cellTap: PublishSubject<(IndexPath, String)>
         let withdrawActionSuccess: PublishSubject<Void>
         let searchButtonTap: PublishSubject<[UserModel]>
+        let networkFailure: PublishSubject<String?>
     }
     
     func transform(input: Input) -> Output {
@@ -57,6 +58,7 @@ final class MyProfileViewModel: ViewModelType {
         let cellTap = PublishSubject<(IndexPath, String)>()
         let withdrawActionSuccess = PublishSubject<Void>()
         let searchButtonTap = PublishSubject<[UserModel]>()
+        let networkFailure = PublishSubject<String?>()
         
         // 내 프로필 조회 통신하기
         input.viewWillAppear
@@ -73,7 +75,7 @@ final class MyProfileViewModel: ViewModelType {
                     profile.onNext(data)
                 case .failure(let error):
                     print("프로필 조회 실패")
-                    print(error.localizedDescription)
+                    networkFailure.onNext(error.errorDescription)
                 }
             }
             .disposed(by: disposeBag)
@@ -85,12 +87,13 @@ final class MyProfileViewModel: ViewModelType {
             }
             .disposed(by: disposeBag)
         
-        // MARK: - 탈퇴 기능 막아두기
         input.withdrawAction
-            .flatMap { LSLPAPIManager.shared.callRequestWithRetry(
-                api: AuthRouter.withdraw,
-                model: SignUpModel.self
-            ) }
+            .flatMap {
+                LSLPAPIManager.shared.callRequestWithRetry(
+                    api: AuthRouter.withdraw,
+                    model: SignUpModel.self
+                )
+            }
             .subscribe(with: self) { owner, result in
                 switch result {
                 case .success(_):
@@ -99,7 +102,7 @@ final class MyProfileViewModel: ViewModelType {
                     
                 case .failure(let error):
                     print("탈퇴 실패")
-                    print(error.localizedDescription)
+                    networkFailure.onNext(error.errorDescription)
                 }
             }
             .disposed(by: disposeBag)
@@ -134,24 +137,27 @@ final class MyProfileViewModel: ViewModelType {
                     print(data)
                 case .failure(let error):
                     print("결제 영수증 검증 실패")
-                    print(error)
+                    networkFailure.onNext(error.errorDescription)
                 }
             }
             .disposed(by: disposeBag)
         
         // 결제 내역 리스트 통신 (출력 확인)
-        LSLPAPIManager.shared.callRequestWithRetry(api: PaymentRouter.fetchPayments, model: PaymentList.self)
-            .subscribe(with: self) { owner, result in
-                switch result {
-                case .success(let data):
-                    print("결제 내역 리스트 성공")
-                    print(data)
-                case .failure(let error):
-                    print("결제 내역 리스트 실패")
-                    print(error)
-                }
+        LSLPAPIManager.shared.callRequestWithRetry(
+            api: PaymentRouter.fetchPayments,
+            model: PaymentList.self
+        )
+        .subscribe(with: self) { owner, result in
+            switch result {
+            case .success(let data):
+                print("결제 내역 리스트 성공")
+                print(data)
+            case .failure(let error):
+                print("결제 내역 리스트 실패")
+                networkFailure.onNext(error.errorDescription)
             }
-            .disposed(by: disposeBag)
+        }
+        .disposed(by: disposeBag)
         
         return Output(
             sections: sections,
@@ -159,7 +165,8 @@ final class MyProfileViewModel: ViewModelType {
             profile: profile,
             cellTap: cellTap,
             withdrawActionSuccess: withdrawActionSuccess,
-            searchButtonTap: searchButtonTap
+            searchButtonTap: searchButtonTap,
+            networkFailure: networkFailure
         )
     }
 }

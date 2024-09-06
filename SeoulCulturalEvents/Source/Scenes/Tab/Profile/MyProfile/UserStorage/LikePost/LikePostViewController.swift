@@ -57,6 +57,12 @@ final class LikePostViewController: BaseViewController {
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
+        
+        output.networkFailure
+            .subscribe(with: self) { owner, value in
+                owner.showToast(value)
+            }
+            .disposed(by: disposeBag)
     }
     
     override func setNavigationBar() {

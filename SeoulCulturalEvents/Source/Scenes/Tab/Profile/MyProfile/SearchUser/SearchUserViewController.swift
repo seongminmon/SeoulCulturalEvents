@@ -49,7 +49,8 @@ final class SearchUserViewController: BaseViewController {
         let input = SearchUserViewModel.Input(
         searchText: searchController.searchBar.rx.text.orEmpty,
         searchButtonTap: searchController.searchBar.rx.searchButtonClicked,
-        followButtonTap: followButtonTap
+        followButtonTap: followButtonTap,
+        modelSelected: tableView.rx.modelSelected(UserModel.self)
         )
         let output = viewModel.transform(input: input)
         
@@ -77,16 +78,24 @@ final class SearchUserViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
-        tableView.rx.modelSelected(UserModel.self)
-            .subscribe(with: self) { owner, user in
-                if user.id == UserDefaultsManager.userID {
-                    let vc = MyProfileViewController()
-                    owner.navigationController?.pushViewController(vc, animated: true)
-                } else {
-                    let vm = OthersProfileViewModel(userID: user.id)
-                    let vc = OthersProfileViewController(viewModel: vm)
-                    owner.navigationController?.pushViewController(vc, animated: true)
-                }
+        output.myProfile
+            .subscribe(with: self) { owner, _ in
+                let vc = MyProfileViewController()
+                owner.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        output.othersProfile
+            .subscribe(with: self) { owner, id in
+                let vm = OthersProfileViewModel(userID: id)
+                let vc = OthersProfileViewController(viewModel: vm)
+                owner.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        output.networkFailure
+            .subscribe(with: self) { owner, value in
+                owner.showToast(value)
             }
             .disposed(by: disposeBag)
     }

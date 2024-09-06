@@ -22,15 +22,22 @@ final class SearchUserViewModel: ViewModelType {
         let searchText: ControlProperty<String>
         let searchButtonTap: ControlEvent<Void>
         let followButtonTap: PublishSubject<UserModel>
+        let modelSelected: ControlEvent<UserModel>
     }
     
     struct Output {
         let userList: BehaviorSubject<[UserModel]>
+        let networkFailure: PublishSubject<String?>
+        let myProfile: PublishSubject<Void>
+        let othersProfile: PublishSubject<String>
     }
     
     func transform(input: Input) -> Output {
         
         let userList = BehaviorSubject<[UserModel]>(value: [])
+        let networkFailure = PublishSubject<String?>()
+        let myProfile = PublishSubject<Void>()
+        let othersProfile = PublishSubject<String>()
         
         // 유저 검색 통신
         input.searchButtonTap
@@ -50,7 +57,7 @@ final class SearchUserViewModel: ViewModelType {
                     
                 case .failure(let error):
                     print("유저 검색 실패")
-                    print(error)
+                    networkFailure.onNext(error.errorDescription)
                 }
             }
             .disposed(by: disposeBag)
@@ -89,13 +96,26 @@ final class SearchUserViewModel: ViewModelType {
                     
                 case .failure(let error):
                     print("팔로우 통신 실패")
-                    print(error)
+                    networkFailure.onNext(error.errorDescription)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        input.modelSelected
+            .subscribe(with: self) { owner, user in
+                if user.id == UserDefaultsManager.userID {
+                    myProfile.onNext(())
+                } else {
+                    othersProfile.onNext(user.id)
                 }
             }
             .disposed(by: disposeBag)
         
         return Output(
-            userList: userList
+            userList: userList,
+            networkFailure: networkFailure,
+            myProfile: myProfile,
+            othersProfile: othersProfile
         )
     }
     

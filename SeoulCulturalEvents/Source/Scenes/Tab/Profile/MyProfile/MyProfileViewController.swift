@@ -206,6 +206,12 @@ final class MyProfileViewController: BaseViewController {
                 SceneDelegate.changeWindow(SignInViewController())
             }
             .disposed(by: disposeBag)
+        
+        output.networkFailure
+            .subscribe(with: self) { owner, value in
+                owner.showToast(value)
+            }
+            .disposed(by: disposeBag)
     }
     
     override func setNavigationBar() {

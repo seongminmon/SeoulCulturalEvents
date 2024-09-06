@@ -31,14 +31,14 @@ final class EditProfileViewModel: ViewModelType {
         let profile: Observable<ProfileModel>
         let profileSelectButtonTap: ControlEvent<Void>
         let editProfileSuccess: Observable<ProfileModel>
-        let editProfileFailure: Observable<String>
+        let editProfileFailure: Observable<String?>
     }
     
     func transform(input: Input) -> Output {
         
         let profile = BehaviorSubject(value: profile)
         let editProfileSuccess = PublishSubject<ProfileModel>()
-        let editProfileFailure = PublishSubject<String>()
+        let editProfileFailure = PublishSubject<String?>()
         
         // 프로필 수정 통신
         input.saveButtonTap
@@ -57,7 +57,7 @@ final class EditProfileViewModel: ViewModelType {
                     editProfileSuccess.onNext(data)
                 case .failure(let error):
                     print("프로필 수정 실패")
-                    editProfileFailure.onNext(error.localizedDescription)
+                    editProfileFailure.onNext(error.errorDescription)
                 }
             }
             .disposed(by: disposeBag)

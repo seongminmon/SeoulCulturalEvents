@@ -25,14 +25,14 @@ final class LikeEventViewModel: ViewModelType {
     
     struct Output {
         let eventList: BehaviorSubject<[CulturalEvent]>
-        let networkFailure: PublishSubject<String>
+        let networkFailure: PublishSubject<String?>
         let cellTap: PublishSubject<CulturalEvent>
     }
     
     func transform(input: Input) -> Output {
         
         let eventList = BehaviorSubject<[CulturalEvent]>(value: [])
-        let networkFailure = PublishSubject<String>()
+        let networkFailure = PublishSubject<String?>()
         let cellTap = PublishSubject<CulturalEvent>()
         
         // 내 포스트 조회 -> productID 후기인 것들 제외
@@ -54,7 +54,7 @@ final class LikeEventViewModel: ViewModelType {
             case .failure(let error):
                 print("내 포스트 조회 실패")
                 print(error)
-                networkFailure.onNext(error.localizedDescription)
+                networkFailure.onNext(error.errorDescription)
             }
         }
         .disposed(by: disposeBag)

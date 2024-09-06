@@ -30,10 +30,6 @@ final class EditProfileViewController: BaseViewController {
         $0.becomeFirstResponder()
     }
     
-    // MARK: - 선택 사항
-//    private let phoneNumberTextField = SignTextField(placeholderText: "전화번호를 입력해주세요")
-//    private let birthDayTextField = SignTextField(placeholderText: "생일을 입력해주세요")
-    
     init(viewModel: EditProfileViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
