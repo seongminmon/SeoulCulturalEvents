@@ -57,7 +57,7 @@ final class SearchUserTableViewCell: BaseTableViewCell {
         } else {
             followButton.setTitle("팔로우", for: .normal)
             followButton.setTitleColor(.white, for: .normal)
-            followButton.backgroundColor = .systemPink
+            followButton.backgroundColor = .systemGreen
         }
     }
 }

@@ -55,11 +55,26 @@ extension BaseViewController {
     }
     
     // MARK: - Alert
+    func showSignOutAlert(
+        completionHandler: @escaping (UIAlertAction) -> Void
+    ) {
+        let alert = UIAlertController(
+            title: "로그아웃",
+            message: "로그아웃 하시겠습니까?",
+            preferredStyle: .alert
+        )
+        let confirm = UIAlertAction(title: "확인", style: .default, handler: completionHandler)
+        let cancel = UIAlertAction(title: "취소", style: .cancel)
+        alert.addAction(confirm)
+        alert.addAction(cancel)
+        present(alert, animated: true)
+    }
+    
     func showWithdrawAlert(
         completionHandler: @escaping (UIAlertAction) -> Void
     ) {
         let alert = UIAlertController(
-            title: "탈퇴하기",
+            title: "탈퇴",
             message: "모든 정보가 사라집니다. 정말 탈퇴하시겠습니까?",
             preferredStyle: .alert
         )

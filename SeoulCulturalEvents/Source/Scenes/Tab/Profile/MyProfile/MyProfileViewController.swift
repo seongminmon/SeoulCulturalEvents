@@ -44,6 +44,7 @@ final class MyProfileViewController: BaseViewController {
     
     override func bind() {
         
+        let signOutAction = PublishSubject<Void>()
         let withdrawAction = PublishSubject<Void>()
         let newProfile = PublishSubject<ProfileModel>()
         let paymentsValidationTrigger = PublishSubject<String>()
@@ -54,6 +55,7 @@ final class MyProfileViewController: BaseViewController {
             followerButtonTap: profileView.followerButton.rx.tap,
             followingButtonTap: profileView.followingButton.rx.tap,
             cellTap: collectionView.rx.itemSelected,
+            signOutAction: signOutAction,
             withdrawAction: withdrawAction,
             newProfile: newProfile,
             searchButtonTap: searchButton.rx.tap,
@@ -137,8 +139,9 @@ final class MyProfileViewController: BaseViewController {
                     switch indexPath.item {
                     case 0:
                         // 로그아웃
-                        UserDefaultsManager.removeAll()
-                        SceneDelegate.changeWindow(SignInViewController())
+                        owner.showSignOutAlert() { _ in
+                            signOutAction.onNext(())
+                        }
                     case 1:
                         // 탈퇴하기
                         owner.showWithdrawAlert() { _ in
@@ -198,7 +201,7 @@ final class MyProfileViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
 
-        output.withdrawActionSuccess
+        output.changeSignInWindow
             .bind(with: self) { owner, _ in
                 SceneDelegate.changeWindow(SignInViewController())
             }

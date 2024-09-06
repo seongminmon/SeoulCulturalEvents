@@ -26,7 +26,7 @@ final class SignInViewController: BaseViewController {
     private let signInButton = PointButton(title: "로그인")
     private let signUpButton = UIButton().then {
         $0.setTitle("이메일로 회원가입", for: .normal)
-        $0.setTitleColor(.systemBlue, for: .normal)
+        $0.setTitleColor(.black, for: .normal)
     }
     
     private let viewModel = SignInViewModel()

@@ -35,6 +35,7 @@ final class MyProfileViewModel: ViewModelType {
         let followerButtonTap: ControlEvent<Void>
         let followingButtonTap: ControlEvent<Void>
         let cellTap: ControlEvent<IndexPath>
+        let signOutAction: PublishSubject<Void>
         let withdrawAction: PublishSubject<Void>
         let newProfile: PublishSubject<ProfileModel>
         let searchButtonTap: ControlEvent<Void>
@@ -46,7 +47,7 @@ final class MyProfileViewModel: ViewModelType {
         let editButtonTap: ControlEvent<Void>
         let profile: PublishSubject<ProfileModel>
         let cellTap: PublishSubject<(IndexPath, String)>
-        let withdrawActionSuccess: PublishSubject<Void>
+        let changeSignInWindow: PublishSubject<Void>
         let searchButtonTap: PublishSubject<[UserModel]>
         let networkFailure: PublishSubject<String?>
     }
@@ -56,7 +57,7 @@ final class MyProfileViewModel: ViewModelType {
         let sections = BehaviorSubject(value: sections)
         let profile = PublishSubject<ProfileModel>()
         let cellTap = PublishSubject<(IndexPath, String)>()
-        let withdrawActionSuccess = PublishSubject<Void>()
+        let changeSignInWindow = PublishSubject<Void>()
         let searchButtonTap = PublishSubject<[UserModel]>()
         let networkFailure = PublishSubject<String?>()
         
@@ -87,6 +88,13 @@ final class MyProfileViewModel: ViewModelType {
             }
             .disposed(by: disposeBag)
         
+        input.signOutAction
+            .subscribe(with: self) { owner, _ in
+                UserDefaultsManager.removeAll()
+                changeSignInWindow.onNext(())
+            }
+            .disposed(by: disposeBag)
+        
         input.withdrawAction
             .flatMap {
                 LSLPAPIManager.shared.callRequestWithRetry(
@@ -98,7 +106,7 @@ final class MyProfileViewModel: ViewModelType {
                 switch result {
                 case .success(_):
                     print("탈퇴 성공")
-                    withdrawActionSuccess.onNext(())
+                    changeSignInWindow.onNext(())
                     
                 case .failure(let error):
                     print("탈퇴 실패")
@@ -164,7 +172,7 @@ final class MyProfileViewModel: ViewModelType {
             editButtonTap: input.editButtonTap,
             profile: profile,
             cellTap: cellTap,
-            withdrawActionSuccess: withdrawActionSuccess,
+            changeSignInWindow: changeSignInWindow,
             searchButtonTap: searchButtonTap,
             networkFailure: networkFailure
         )

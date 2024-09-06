@@ -92,7 +92,7 @@ final class ProfileView: BaseView {
         } else {
             additionalButton.setTitle("팔로우", for: .normal)
             additionalButton.setTitleColor(.white, for: .normal)
-            additionalButton.backgroundColor = .systemPink
+            additionalButton.backgroundColor = .systemGreen
             additionalButton.layer.borderColor = UIColor.white.cgColor
         }
     }
