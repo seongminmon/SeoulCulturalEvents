@@ -40,4 +40,6 @@ extension UIImage {
     static let signOut = UIImage(systemName: "person.fill.badge.minus")!
     static let withdraw = UIImage(systemName: "person.slash.fill")!
     static let donate = UIImage(systemName: "creditcard")!
+    
+    static let noNetwork = UIImage(systemName: "wifi.slash")!
 }

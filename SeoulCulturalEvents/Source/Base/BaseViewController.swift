@@ -56,19 +56,39 @@ extension BaseViewController {
     
     // MARK: - Alert
     func showWithdrawAlert(
-        title: String,
-        message: String,
-        actionTitle: String,
         completionHandler: @escaping (UIAlertAction) -> Void
     ) {
         let alert = UIAlertController(
-            title: title,
-            message: message,
+            title: "탈퇴하기",
+            message: "모든 정보가 사라집니다. 정말 탈퇴하시겠습니까?",
             preferredStyle: .alert
         )
         let confirm = UIAlertAction(title: "탈퇴하기", style: .destructive, handler: completionHandler)
         let cancel = UIAlertAction(title: "취소", style: .cancel)
         alert.addAction(confirm)
+        alert.addAction(cancel)
+        present(alert, animated: true)
+    }
+    
+    func showEditCommentAlert(
+        comment: String,
+        editHandler: @escaping (String) -> Void
+    ) {
+        let alert = UIAlertController(
+            title: "댓글 수정",
+            message: nil,
+            preferredStyle: .alert
+        )
+        alert.addTextField { textField in
+            textField.text = comment
+        }
+        
+        let save = UIAlertAction(title: "저장", style: .default) { _ in
+            guard let text = alert.textFields?.first?.text else { return }
+            editHandler(text)
+        }
+        let cancel = UIAlertAction(title: "취소", style: .cancel)
+        alert.addAction(save)
         alert.addAction(cancel)
         present(alert, animated: true)
     }
@@ -105,25 +125,6 @@ extension BaseViewController {
         let cancel = UIAlertAction(title: "취소", style: .cancel)
         alert.addAction(edit)
         alert.addAction(delete)
-        alert.addAction(cancel)
-        present(alert, animated: true)
-    }
-    
-    func showEditCommentAlert(
-        comment: String,
-        editHandler: @escaping (String) -> Void
-    ) {
-        let alert = UIAlertController(title: "댓글 수정", message: nil, preferredStyle: .alert)
-        alert.addTextField { textField in
-            textField.text = comment
-        }
-        
-        let save = UIAlertAction(title: "저장", style: .default) { _ in
-            guard let text = alert.textFields?.first?.text else { return }
-            editHandler(text)
-        }
-        let cancel = UIAlertAction(title: "취소", style: .cancel)
-        alert.addAction(save)
         alert.addAction(cancel)
         present(alert, animated: true)
     }

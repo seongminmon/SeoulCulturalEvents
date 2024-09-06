@@ -141,12 +141,9 @@ final class MyProfileViewController: BaseViewController {
                         SceneDelegate.changeWindow(SignInViewController())
                     case 1:
                         // 탈퇴하기
-                        owner.showWithdrawAlert(
-                            title: "탈퇴하기",
-                            message: "모든 정보가 사라집니다. 정말 탈퇴하시겠습니까?",
-                            actionTitle: "탈퇴하기") { _ in
-                                withdrawAction.onNext(())
-                            }
+                        owner.showWithdrawAlert() { _ in
+                            withdrawAction.onNext(())
+                        }
                     case 2:
                         // MARK: - 결제 기능
                         // 후원하기 (100원)

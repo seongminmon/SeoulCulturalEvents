@@ -9,15 +9,14 @@ import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
-    // TODO: - 상태코드 예외처리
-    // TODO: - 네트워크 모니터링
-
     var window: UIWindow?
-
+    var errorWindow: UIWindow?
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         
+        // 로그인 여부 분기 처리
         LSLPAPIManager.shared.refresh { [weak self] result in
             guard let self else { return }
             switch result {
@@ -35,6 +34,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 window?.makeKeyAndVisible()
             }
         }
+        
+        // 네트워크 감지
+        NetworkMonitor.shared.startMonitoring { [weak self] isConnected in
+            guard let self else { return }
+            if isConnected {
+                print("네트워크 연결됨")
+                removeNetworkErrorWindow()
+            } else {
+                print("네트워크 연결 오류")
+                loadNetworkErrorWindow(on: scene)
+            }
+        }
+    }
+    
+    func sceneDidDisconnect(_ scene: UIScene) {
+        NetworkMonitor.shared.stopMonitoring()
     }
 }
 
@@ -53,5 +68,25 @@ extension SceneDelegate {
             animations: nil,
             completion: nil
         )
+    }
+}
+
+// MARK: - 네트워크 감지
+extension SceneDelegate {
+    private func loadNetworkErrorWindow(on scene: UIScene) {
+        guard let windowScene = scene as? UIWindowScene else { return }
+        let window = UIWindow(windowScene: windowScene)
+        window.windowLevel = .statusBar
+        window.makeKeyAndVisible()
+        
+        let noNetworkView = NoNetworkView(frame: window.bounds)
+        window.addSubview(noNetworkView)
+        self.errorWindow = window
+    }
+    
+    private func removeNetworkErrorWindow() {
+        errorWindow?.resignKey()
+        errorWindow?.isHidden = true
+        errorWindow = nil
     }
 }
