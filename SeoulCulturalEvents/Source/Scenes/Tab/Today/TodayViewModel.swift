@@ -23,14 +23,14 @@ final class TodayViewModel: ViewModelType {
     
     struct Output {
         let cultureList: BehaviorSubject<[CulturalEvent]>
-        let networkFailure: PublishSubject<String>
+        let networkFailure: PublishSubject<String?>
         let cellTap: PublishSubject<CulturalEvent>
     }
     
     func transform(input: Input) -> Output {
         
         let cultureList = BehaviorSubject<[CulturalEvent]>(value: [])
-        let networkFailure = PublishSubject<String>()
+        let networkFailure = PublishSubject<String?>()
         let cellTap = PublishSubject<CulturalEvent>()
         
         // 첫 통신
@@ -49,7 +49,7 @@ final class TodayViewModel: ViewModelType {
                     
                 case .failure(let error):
                     print("문화 행사 통신 실패")
-                    networkFailure.onNext(error.localizedDescription)
+                    networkFailure.onNext(error.errorDescription)
                 }
             }
             .disposed(by: disposeBag)

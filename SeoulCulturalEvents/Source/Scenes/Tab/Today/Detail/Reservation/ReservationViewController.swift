@@ -29,10 +29,18 @@ final class ReservationViewController: BaseViewController {
         super.viewDidLoad()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = true
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        tabBarController?.tabBar.isHidden = false
+    }
+    
     override func bind() {
-        let input = ReservationViewModel.Input(
-            viewDidLoad: Observable.just(())
-        )
+        let input = ReservationViewModel.Input()
         let output = viewModel.transform(input: input)
         
         output.link

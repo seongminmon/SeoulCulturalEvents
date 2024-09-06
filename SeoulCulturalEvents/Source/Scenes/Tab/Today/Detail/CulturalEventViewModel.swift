@@ -29,7 +29,7 @@ final class CulturalEventViewModel: ViewModelType {
     struct Output {
         let data: Observable<CulturalEvent>
         let likeFlag: Observable<Bool>
-        let networkFailure: Observable<String>
+        let networkFailure: PublishSubject<String?>
         let showMapButtonTap: PublishSubject<(lat: Double, lon: Double)>
         let reserveLink: Observable<String>
     }
@@ -38,7 +38,7 @@ final class CulturalEventViewModel: ViewModelType {
         
         let data = BehaviorSubject<CulturalEvent>(value: culturalEvent)
         let likeFlag = BehaviorSubject<Bool>(value: postID == nil)
-        let networkFailure = PublishSubject<String>()
+        let networkFailure = PublishSubject<String?>()
         let showMapButtonTap = PublishSubject<(lat: Double, lon: Double)>()
         let reserveLink = PublishSubject<String>()
         
@@ -68,7 +68,7 @@ final class CulturalEventViewModel: ViewModelType {
                     
                 case .failure(let error):
                     print("포스트 조회 실패")
-                    print(error.errorDescription ?? "포스트 조회 실패")
+                    networkFailure.onNext(error.errorDescription)
                 }
             }
             .disposed(by: disposeBag)
@@ -97,7 +97,7 @@ final class CulturalEventViewModel: ViewModelType {
                     
                 case .failure(let error):
                     print("포스트 업로드 실패")
-                    print(error)
+                    networkFailure.onNext(error.errorDescription)
                 }
             }
             .disposed(by: disposeBag)
@@ -120,7 +120,7 @@ final class CulturalEventViewModel: ViewModelType {
                     
                 case .failure(let error):
                     print("포스트 삭제 실패")
-                    print(error)
+                    networkFailure.onNext(error.errorDescription)
                 }
             }
             .disposed(by: disposeBag)

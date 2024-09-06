@@ -18,24 +18,13 @@ final class ReservationViewModel: ViewModelType {
         self.link = link
     }
     
-    struct Input {
-        let viewDidLoad: Observable<Void>
-    }
+    struct Input {}
     
     struct Output {
         let link: Observable<URL?>
     }
     
     func transform(input: Input) -> Output {
-        
-        let link = BehaviorSubject<URL?>(value: nil)
-        
-        input.viewDidLoad
-            .subscribe(with: self) { owner, _ in
-                link.onNext(URL(string: owner.link))
-            }
-            .disposed(by: disposeBag)
-        
-        return Output(link: link)
+        return Output(link: Observable.just(URL(string: link)))
     }
 }

@@ -47,9 +47,6 @@ final class MapViewController: BaseViewController {
         tabBarController?.tabBar.isHidden = false
     }
     
-    override func setNavigationBar() {
-    }
-    
     override func setLayout() {
         view.addSubview(mapView)
         
