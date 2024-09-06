@@ -18,7 +18,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         
-        // 1. escaping closure
         LSLPAPIManager.shared.refresh { [weak self] result in
             guard let self else { return }
             switch result {

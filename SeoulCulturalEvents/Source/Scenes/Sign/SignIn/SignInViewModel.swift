@@ -22,15 +22,15 @@ final class SignInViewModel: ViewModelType {
     
     struct Output {
         let signInSuccess: PublishSubject<Void>
-        let signInFailure: PublishSubject<String>
+        let signInFailure: PublishSubject<String?>
         let signUpTap: ControlEvent<Void>
     }
     
     func transform(input: Input) -> Output {
         let signInSuccess = PublishSubject<Void>()
-        let signInFailure = PublishSubject<String>()
+        let signInFailure = PublishSubject<String?>()
         
-        // 로그인 버튼 누를 시 사용자가 입력한 이메일, 패스워드로 SignIn 통신
+        // 로그인 버튼 누를 시 사용자가 입력한 이메일, 패스워드로 로그인 통신
         input.signInTap
             .debounce(.seconds(1), scheduler: MainScheduler.instance)
             .withLatestFrom(Observable.combineLatest(input.emailText, input.passwordText))
@@ -51,7 +51,7 @@ final class SignInViewModel: ViewModelType {
                     
                 case .failure(let error):
                     print("로그인 실패")
-                    signInFailure.onNext(error.localizedDescription)
+                    signInFailure.onNext(error.errorDescription)
                 }
             }
             .disposed(by: disposeBag)

@@ -41,7 +41,8 @@ class BaseViewController: UIViewController {
 extension BaseViewController {
     
     // MARK: - Toast
-    func showToast(_ message: String = "네트워크 통신에 실패하였습니다.") {
+    func showToast(_ message: String?) {
+        let message: String = message ?? "네트워크 통신에 실패하였습니다."
         view.makeToast(message, duration: 1, position: .center)
     }
     

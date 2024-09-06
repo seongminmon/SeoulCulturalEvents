@@ -36,7 +36,13 @@ final class LSLPAPIManager {
                     
                 case .failure(let error):
                     print("에러코드: \(error.response?.statusCode ?? -1)")
-                    observer(.success(.failure(.unknown)))
+                    switch error {
+                    case .statusCode(let response):
+                        let lslpError = LSLPError(rawValue: response.statusCode) ?? .unknown
+                        observer(.success(.failure(lslpError)))
+                    default:
+                        observer(.success(.failure(.unknown)))
+                    }
                 }
             }
             return Disposables.create()
@@ -64,7 +70,13 @@ final class LSLPAPIManager {
                     
                 case .failure(let error):
                     print("에러코드: \(error.response?.statusCode ?? -1)")
-                    observer(.success(.failure(.unknown)))
+                    switch error {
+                    case .statusCode(let response):
+                        let lslpError = LSLPError(rawValue: response.statusCode) ?? .unknown
+                        observer(.success(.failure(lslpError)))
+                    default:
+                        observer(.success(.failure(.unknown)))
+                    }
                 }
             }
             return Disposables.create()
@@ -89,7 +101,13 @@ final class LSLPAPIManager {
                     
                 case .failure(let error):
                     print("에러코드: \(error.response?.statusCode ?? -1)")
-                    observer(.success(.failure(.unknown)))
+                    switch error {
+                    case .statusCode(let response):
+                        let lslpError = LSLPError(rawValue: response.statusCode) ?? .unknown
+                        observer(.success(.failure(lslpError)))
+                    default:
+                        observer(.success(.failure(.unknown)))
+                    }
                 }
             }
             return Disposables.create()
