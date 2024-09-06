@@ -82,8 +82,14 @@ final class PostViewController: BaseViewController {
         
         output.remainTime
             .bind(with: self) { owner, value in
-                owner.view.makeToast("잠시 후 시도해주세요!", duration: 1, position: .center)
+                owner.showToast("잠시 후 시도해주세요!")
                 owner.refreshControl.endRefreshing()
+            }
+            .disposed(by: disposeBag)
+        
+        output.networkFailure
+            .bind(with: self) { owner, value in
+                owner.showToast(value)
             }
             .disposed(by: disposeBag)
         

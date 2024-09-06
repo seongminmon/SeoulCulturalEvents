@@ -34,7 +34,7 @@ final class EditPostViewModel: ViewModelType {
         let addImageButtonTap: ControlEvent<Void>
         let imageList: BehaviorSubject<[Data?]>
         let editSuccess: PublishSubject<Void>
-        let editFailure: PublishSubject<String>
+        let networkFailure: PublishSubject<String?>
     }
     
     func transform(input: Input) -> Output {
@@ -43,7 +43,7 @@ final class EditPostViewModel: ViewModelType {
         let completeButtonEnabled = BehaviorSubject<Bool>(value: false)
         let imageList = BehaviorSubject<[Data?]>(value: [])
         let editSuccess = PublishSubject<Void>()
-        let editFailure = PublishSubject<String>()
+        let networkFailure = PublishSubject<String?>()
         let imageUploadSuccess = PublishSubject<[String]>()
         
         let allContents = Observable.combineLatest(input.imageList, input.titleText, input.contentsText)
@@ -107,8 +107,7 @@ final class EditPostViewModel: ViewModelType {
                     
                 case .failure(let error):
                     print("포스트 이미지 업로드 실패")
-                    print(error)
-                    editFailure.onNext("이미지 업로드 실패")
+                    networkFailure.onNext(error.errorDescription)
                 }
             }
             .disposed(by: disposeBag)
@@ -131,8 +130,7 @@ final class EditPostViewModel: ViewModelType {
                     
                 case .failure(let error):
                     print("포스트 수정 실패")
-                    print(error)
-                    editFailure.onNext("후기 수정 실패")
+                    networkFailure.onNext(error.errorDescription)
                 }
             }
             .disposed(by: disposeBag)
@@ -158,7 +156,7 @@ final class EditPostViewModel: ViewModelType {
             addImageButtonTap: input.addImageButtonTap,
             imageList: imageList,
             editSuccess: editSuccess,
-            editFailure: editFailure
+            networkFailure: networkFailure
         )
     }
 }

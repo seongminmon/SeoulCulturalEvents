@@ -40,6 +40,7 @@ final class DetailPostViewModel: ViewModelType {
         let postDeleteSuccess: PublishSubject<Void>
         let editPost: PublishSubject<(PostModel)>
         let notMyPost: PublishSubject<Void>
+        let networkFailure: PublishSubject<String?>
     }
     
     func transform(input: Input) -> Output {
@@ -53,6 +54,7 @@ final class DetailPostViewModel: ViewModelType {
         let postDeleteSuccess = PublishSubject<Void>()
         let editPost = PublishSubject<(PostModel)>()
         let notMyPost = PublishSubject<Void>()
+        let networkFailure = PublishSubject<String?>()
         
         // MARK: - 후기 화면 데이터가 최신 상태가 아닐 수 있으므로 새롭게 통신
         // 특정 포스트 조회 통신
@@ -74,8 +76,8 @@ final class DetailPostViewModel: ViewModelType {
                     isLike.onNext(data.likes.contains(UserDefaultsManager.userID))
                     
                 case .failure(let error):
-                    print("특정 포스트 조회 통신 성공")
-                    print(error)
+                    print("특정 포스트 조회 통신 실패")
+                    networkFailure.onNext(error.errorDescription)
                 }
             }
             .disposed(by: disposeBag)
@@ -92,7 +94,7 @@ final class DetailPostViewModel: ViewModelType {
                     
                 case .failure(let error):
                     print("포스트 좋아요 통신 실패")
-                    print(error)
+                    networkFailure.onNext(error.errorDescription)
                 }
             }
             .disposed(by: disposeBag)
@@ -126,6 +128,14 @@ final class DetailPostViewModel: ViewModelType {
         // 포스트 삭제
         input.deleteAction
             .withLatestFrom(post)
+            .compactMap { value in
+                if value.creator.id == UserDefaultsManager.userID {
+                    return value
+                } else {
+                    notMyPost.onNext(())
+                    return nil
+                }
+            }
             .flatMap { post in
                 LSLPAPIManager.shared.callRequestWithRetry(api: PostRouter.deletePost(postID: post.postID))
             }
@@ -137,8 +147,7 @@ final class DetailPostViewModel: ViewModelType {
                     
                 case .failure(let error):
                     print("포스트 삭제 실패")
-                    print(error)
-                    notMyPost.onNext(())
+                    networkFailure.onNext(error.errorDescription)
                 }
             }
             .disposed(by: disposeBag)
@@ -153,7 +162,8 @@ final class DetailPostViewModel: ViewModelType {
             settingButtonTap: input.settingButtonTap,
             postDeleteSuccess: postDeleteSuccess,
             editPost: editPost,
-            notMyPost: notMyPost
+            notMyPost: notMyPost,
+            networkFailure: networkFailure
         )
     }
 }

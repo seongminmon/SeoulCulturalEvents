@@ -167,6 +167,12 @@ final class DetailPostViewController: BaseViewController {
                 owner.showToast("다른 사람의 후기입니다!")
             }
             .disposed(by: disposeBag)
+        
+        output.networkFailure
+            .subscribe(with: self) { owner, value in
+                owner.showToast(value)
+            }
+            .disposed(by: disposeBag)
     }
     
     override func setNavigationBar() {

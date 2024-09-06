@@ -137,7 +137,7 @@ final class EditPostViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
-        output.editFailure
+        output.networkFailure
             .bind(with: self) { owner, value in
                 owner.showToast(value)
             }

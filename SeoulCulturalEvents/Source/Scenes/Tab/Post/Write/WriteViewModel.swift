@@ -19,7 +19,7 @@ final class WriteViewModel: ViewModelType {
         let titleText: ControlProperty<String>
         let contentsText: ControlProperty<String>
         let imageList: BehaviorSubject<[Data?]>
-        let deleteTerms: PublishSubject<IndexPath>
+        let deleteImage: PublishSubject<IndexPath>
     }
     
     struct Output {
@@ -27,7 +27,7 @@ final class WriteViewModel: ViewModelType {
         let addImageButtonTap: ControlEvent<Void>
         let imageList: BehaviorSubject<[Data?]>
         let uploadSuccess: PublishSubject<Void>
-        let uploadFailure: PublishSubject<String>
+        let uploadFailure: PublishSubject<String?>
     }
     
     func transform(input: Input) -> Output {
@@ -35,7 +35,7 @@ final class WriteViewModel: ViewModelType {
         let completeButtonEnabled = BehaviorSubject<Bool>(value: false)
         let imageList = BehaviorSubject<[Data?]>(value: [])
         let uploadSuccess = PublishSubject<Void>()
-        let uploadFailure = PublishSubject<String>()
+        let uploadFailure = PublishSubject<String?>()
         let imageUploadSuccess = PublishSubject<[String]>()
         
         let allContents = Observable.combineLatest(input.imageList, input.titleText, input.contentsText)
@@ -68,8 +68,7 @@ final class WriteViewModel: ViewModelType {
                     
                 case .failure(let error):
                     print("포스트 이미지 업로드 실패")
-                    print(error)
-                    uploadFailure.onNext("이미지 업로드 실패")
+                    uploadFailure.onNext(error.errorDescription)
                 }
             }
             .disposed(by: disposeBag)
@@ -93,8 +92,7 @@ final class WriteViewModel: ViewModelType {
                     
                 case .failure(let error):
                     print("포스트 업로드 실패")
-                    print(error)
-                    uploadFailure.onNext("후기 업로드 실패")
+                    uploadFailure.onNext(error.errorDescription)
                 }
             }
             .disposed(by: disposeBag)
@@ -105,7 +103,7 @@ final class WriteViewModel: ViewModelType {
             }
             .disposed(by: disposeBag)
         
-        input.deleteTerms
+        input.deleteImage
             .withLatestFrom(imageList) { ($0, $1) }
             .subscribe(with: self) { owner, value in
                 var list = value.1

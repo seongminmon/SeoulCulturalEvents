@@ -27,12 +27,14 @@ final class PostViewModel: ViewModelType {
         let postList: BehaviorSubject<[PostModel]>
         let cellTap: ControlEvent<PostModel>
         let remainTime: PublishSubject<Void>
+        let networkFailure: PublishSubject<String?>
     }
     
     func transform(input: Input) -> Output {
         
         let postList = BehaviorSubject<[PostModel]>(value: [])
         let remainTime = PublishSubject<Void>()
+        let networkFailure = PublishSubject<String?>()
         
         // 포스트 조회 통신
         Observable.merge(input.viewDidLoad, input.refreshEvent.asObservable())
@@ -66,7 +68,7 @@ final class PostViewModel: ViewModelType {
                     
                 case .failure(let error):
                     print("포스트 조회 실패")
-                    print(error)
+                    networkFailure.onNext(error.errorDescription)
                 }
             }
             .disposed(by: disposeBag)
@@ -106,7 +108,7 @@ final class PostViewModel: ViewModelType {
                     
                 case .failure(let error):
                     print("포스트 조회 페이지네이션 실패")
-                    print(error)
+                    networkFailure.onNext(error.errorDescription)
                 }
             }
             .disposed(by: disposeBag)
@@ -114,7 +116,8 @@ final class PostViewModel: ViewModelType {
         return Output(
             postList: postList,
             cellTap: input.cellTap,
-            remainTime: remainTime
+            remainTime: remainTime,
+            networkFailure: networkFailure
         )
     }
 }

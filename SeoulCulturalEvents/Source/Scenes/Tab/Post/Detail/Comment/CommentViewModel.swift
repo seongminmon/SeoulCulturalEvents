@@ -31,6 +31,7 @@ final class CommentViewModel {
         let commentList: BehaviorSubject<[CommentModel]>
         let commentCreate: PublishSubject<Void>
         let notMyComment: PublishSubject<Void>
+        let networkFailure: PublishSubject<String?>
     }
     
     func transform(input: Input) -> Output {
@@ -39,6 +40,7 @@ final class CommentViewModel {
         let commentList = BehaviorSubject<[CommentModel]>(value: self.commentList)
         let commentCreate = PublishSubject<Void>()
         let notMyComment = PublishSubject<Void>()
+        let networkFailure = PublishSubject<String?>()
         
         // 특정 포스트 조회 -> 댓글 업데이트
         commentNetwork
@@ -55,7 +57,7 @@ final class CommentViewModel {
                     commentList.onNext(data.comments)
                 case .failure(let error):
                     print("댓글 갱신 실패")
-                    print(error)
+                    networkFailure.onNext(error.errorDescription)
                 }
             }
             .disposed(by: disposeBag)
@@ -79,13 +81,22 @@ final class CommentViewModel {
                     
                 case .failure(let error):
                     print("댓글 작성 실패")
-                    print(error)
+                    networkFailure.onNext(error.errorDescription)
                 }
             }
             .disposed(by: disposeBag)
         
         // 댓글 수정
         input.editAction
+            .compactMap { value in
+                let (comment, newText) = (value.0, value.1)
+                if comment.creator.id == UserDefaultsManager.userID {
+                    return value
+                } else {
+                    notMyComment.onNext(())
+                    return nil
+                }
+            }
             .flatMap { [weak self] value in
                 let (comment, newText) = (value.0, value.1)
                 return LSLPAPIManager.shared.callRequestWithRetry(
@@ -101,14 +112,21 @@ final class CommentViewModel {
                     
                 case .failure(let error):
                     print("댓글 수정 실패")
-                    print(error)
-                    notMyComment.onNext(())
+                    networkFailure.onNext(error.errorDescription)
                 }
             }
             .disposed(by: disposeBag)
         
         // 댓글 삭제
         input.deleteAction
+            .compactMap { comment in
+                if comment.creator.id == UserDefaultsManager.userID {
+                    return comment
+                } else {
+                    notMyComment.onNext(())
+                    return nil
+                }
+            }
             .flatMap { [weak self] comment in
                 LSLPAPIManager.shared.callRequestWithRetry(
                     api: CommentRouter.deleteComment(postID: self?.postID ?? "", commentID: comment.id)
@@ -122,8 +140,7 @@ final class CommentViewModel {
                     
                 case .failure(let error):
                     print("댓글 삭제 실패")
-                    print(error)
-                    notMyComment.onNext(())
+                    networkFailure.onNext(error.errorDescription)
                 }
             }
             .disposed(by: disposeBag)
@@ -131,7 +148,8 @@ final class CommentViewModel {
         return Output(
             commentList: commentList,
             commentCreate: commentCreate,
-            notMyComment: notMyComment
+            notMyComment: notMyComment,
+            networkFailure: networkFailure
         )
     }
 }

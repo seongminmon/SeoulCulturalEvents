@@ -64,7 +64,7 @@ final class WriteViewController: BaseViewController {
     
     override func bind() {
         
-        let deleteTerms = PublishSubject<IndexPath>()
+        let deleteImage = PublishSubject<IndexPath>()
         
         let input = WriteViewModel.Input(
             completeButtonTap: completeButton.rx.tap,
@@ -72,7 +72,7 @@ final class WriteViewController: BaseViewController {
             titleText: titleTextField.rx.text.orEmpty,
             contentsText: contentsTextView.rx.text.orEmpty,
             imageList: imageList,
-            deleteTerms: deleteTerms
+            deleteImage: deleteImage
         )
         let output = viewModel.transform(input: input)
         
@@ -101,7 +101,7 @@ final class WriteViewController: BaseViewController {
                 cell.deleteButton.rx.tap
                     .bind(with: self) { owner, _ in
                         if let indexPath = owner.collectionView.indexPath(for: cell) {
-                            deleteTerms.onNext(indexPath)
+                            deleteImage.onNext(indexPath)
                         }
                     }
                     .disposed(by: cell.disposeBag)
