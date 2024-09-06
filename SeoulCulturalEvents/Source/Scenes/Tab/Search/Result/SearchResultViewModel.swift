@@ -30,7 +30,7 @@ final class SearchResultViewModel: ViewModelType {
     struct Output {
         let navigationTitle: BehaviorSubject<String?>
         let cultureList: BehaviorSubject<[CulturalEvent]>
-        let networkFailure: PublishSubject<String>
+        let networkFailure: PublishSubject<String?>
         let cellTap: PublishSubject<CulturalEvent>
         let filterButtonTap: ControlEvent<Void>
         let scrollToTop: PublishSubject<Void>
@@ -40,7 +40,7 @@ final class SearchResultViewModel: ViewModelType {
         
         let navigationTitle = BehaviorSubject<String?>(value: nil)
         let cultureList = BehaviorSubject<[CulturalEvent]>(value: cultureResponse?.culturalEventInfo.list ?? [])
-        let networkFailure = PublishSubject<String>()
+        let networkFailure = PublishSubject<String?>()
         let cellTap = PublishSubject<CulturalEvent>()
         let scrollToTop = PublishSubject<Void>()
         
@@ -67,8 +67,7 @@ final class SearchResultViewModel: ViewModelType {
                     
                 case .failure(let error):
                     print("문화행사 검색 실패")
-                    print(error.errorDescription ?? "문화행사 검색 실패")
-                    networkFailure.onNext(error.localizedDescription)
+                    networkFailure.onNext(error.errorDescription)
                 }
             }
             .disposed(by: disposeBag)
@@ -108,7 +107,7 @@ final class SearchResultViewModel: ViewModelType {
                     
                 case .failure(let error):
                     print("문화 행사 통신 페이지네이션 실패")
-                    networkFailure.onNext(error.localizedDescription)
+                    networkFailure.onNext(error.errorDescription)
                 }
             }
             .disposed(by: disposeBag)
@@ -141,8 +140,7 @@ final class SearchResultViewModel: ViewModelType {
                     
                 case .failure(let error):
                     print("문화행사 필터 검색 실패")
-                    print(error.errorDescription ?? "문화행사 필터 검색 실패")
-                    networkFailure.onNext(error.localizedDescription)
+                    networkFailure.onNext(error.errorDescription)
                 }
             }
             .disposed(by: disposeBag)

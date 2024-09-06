@@ -11,7 +11,7 @@ import RxCocoa
 
 final class SearchViewModel: ViewModelType {
     
-    enum Section: String, CaseIterable {
+    private enum Section: String, CaseIterable {
         case recent = "최근 검색어"
         case category = "카테고리"
         
