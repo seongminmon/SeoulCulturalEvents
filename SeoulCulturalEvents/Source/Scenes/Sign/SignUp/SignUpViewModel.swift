@@ -37,37 +37,36 @@ final class SignUpViewModel: ViewModelType {
         // 가입하기 버튼 누를 시 사용자가 입력한 이메일, 패스워드, 닉네임으로 회원가입 통신
         input.signUpTap
             .debounce(.seconds(1), scheduler: MainScheduler.instance)
-            .withLatestFrom(Observable.combineLatest(input.emailText, input.passwordText, input.nicknameText))
+            .withLatestFrom(Observable.combineLatest(
+                input.emailText,
+                input.passwordText,
+                input.nicknameText
+            ))
             .map { SignUpQuery(email: $0.0, password: $0.1, nick: $0.2) }
-            .flatMap { query in
-                LSLPAPIManager.shared.callRequest(
+            .flatMap { query -> Single<(Result<SignUpModel, LSLPError>, String)> in
+                let result = LSLPAPIManager.shared.callRequest(
                     api: AuthRouter.signUp(query: query),
                     model: SignUpModel.self
                 )
+                return result.map { ($0, query.password) }
             }
-            .subscribe(with: self) { owner, result in
+            .flatMap { result, password in
                 switch result {
-                case .success(_):
+                case .success(let data):
                     print("회원 가입 성공")
-                    signUpSuccess.onNext(())
+                    // 회원 가입 성공 시 로그인까지 처리
+                    let query = SignInQuery(email: data.email, password: password)
+                    return LSLPAPIManager.shared.callRequest(
+                        api: AuthRouter.signIn(query: query),
+                        model: SignInModel.self
+                    )
                 case .failure(let error):
                     print("회원 가입 실패")
                     signUpFailure.onNext(error.errorDescription)
+                    return Single.just(.failure(error))
                 }
             }
-            .disposed(by: disposeBag)
-        
-        // 회원 가입 성공 시 로그인까지 처리
-        signUpSuccess
-            .withLatestFrom(Observable.combineLatest(input.emailText, input.passwordText))
-            .map { SignInQuery(email: $0.0, password: $0.1) }
-            .flatMap { query in
-                LSLPAPIManager.shared.callRequest(
-                    api: AuthRouter.signIn(query: query),
-                    model: SignInModel.self
-                )
-            }
-            .subscribe { result in
+            .subscribe(with: self) { owner, result in
                 switch result {
                 case .success(let data):
                     print("로그인 성공")
