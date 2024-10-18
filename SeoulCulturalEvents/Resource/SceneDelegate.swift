@@ -11,6 +11,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
     var errorWindow: UIWindow?
+    let networkMonitor = NetworkMonitor()
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
@@ -36,7 +37,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         
         // 네트워크 감지
-        NetworkMonitor.shared.startMonitoring { [weak self] isConnected in
+        networkMonitor.startMonitoring { [weak self] isConnected in
             guard let self else { return }
             if isConnected {
                 print("네트워크 연결됨")
@@ -49,7 +50,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func sceneDidDisconnect(_ scene: UIScene) {
-        NetworkMonitor.shared.stopMonitoring()
+        networkMonitor.stopMonitoring()
     }
 }
 

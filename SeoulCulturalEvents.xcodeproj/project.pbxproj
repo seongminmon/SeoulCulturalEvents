@@ -462,7 +462,7 @@
 			isa = PBXGroup;
 			children = (
 				241A57B02C85F23D00232D8B /* LikeRouter.swift */,
-				241A57C52C85F5B000232D8B /* RequestModel */,
+				24AB4BD52C7854750030558A /* LikeModel.swift */,
 			);
 			path = Like;
 			sourceTree = "<group>";
@@ -471,7 +471,6 @@
 			isa = PBXGroup;
 			children = (
 				241A57B22C85F2BA00232D8B /* FollowRouter.swift */,
-				241A57C82C85F60300232D8B /* RequestModel */,
 				241A57C72C85F5FC00232D8B /* ResponseModel */,
 			);
 			path = Follow;
@@ -497,27 +496,12 @@
 			path = Payment;
 			sourceTree = "<group>";
 		};
-		241A57C52C85F5B000232D8B /* RequestModel */ = {
-			isa = PBXGroup;
-			children = (
-				24AB4BD52C7854750030558A /* LikeModel.swift */,
-			);
-			path = RequestModel;
-			sourceTree = "<group>";
-		};
 		241A57C72C85F5FC00232D8B /* ResponseModel */ = {
 			isa = PBXGroup;
 			children = (
 				240784F82C7CBAD600E06A5E /* FollowModel.swift */,
 			);
 			path = ResponseModel;
-			sourceTree = "<group>";
-		};
-		241A57C82C85F60300232D8B /* RequestModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = RequestModel;
 			sourceTree = "<group>";
 		};
 		241A57C92C85F60B00232D8B /* ResponseModel */ = {

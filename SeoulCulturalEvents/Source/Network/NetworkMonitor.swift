@@ -7,11 +7,8 @@
 
 import Foundation
 import Network
-import UIKit
 
 final class NetworkMonitor {
-    static let shared = NetworkMonitor()
-    private init() {}
     
     private let queue = DispatchQueue.global()
     private let monitor = NWPathMonitor()
