@@ -79,9 +79,14 @@ final class EditPostViewModel: ViewModelType {
             }
             .disposed(by: disposeBag)
         
+        // TODO: - 처음에 사진과 제목이 false가 되어 완료 버튼이 활성화되지 않는 문제
         // 이미지, 타이틀, 컨텐츠 모두 있을 때만 완료 버튼 활성화
         allContents
             .subscribe(with: self) { owner, value in
+                print("완료버튼 유효성 검사")
+                print("사진: \(!value.0.isEmpty)")
+                print("제목: \(!value.1.isEmpty)")
+                print("내용: \(!value.2.isEmpty)")
                 let flag = !value.0.isEmpty && !value.1.isEmpty && !value.2.isEmpty
                 completeButtonEnabled.onNext(flag)
             }
