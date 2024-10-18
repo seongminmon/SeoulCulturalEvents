@@ -10,13 +10,13 @@
 - 최소 버전: iOS 15.0
 
 ## 기술 스택
-🎨 View Drawing - `UIKit`  
-🏛️ Architecture - `MVVM`  
-♻️ Asynchronous - `RxSwift`  
-📡 Network - `Moya`  
-🏞️ Image Loader - `Kingfisher`  
-🍎 Apple Framework - `MapKit` `WebKit` `PhotosUI`  
-🎸 기타 - `SnapKit` `Then` `Toast` `IQKeyboardManager`  
+- 🎨 View Drawing - `UIKit`  
+- 🏛️ Architecture - `MVVM`  
+- ♻️ Asynchronous - `RxSwift`  
+- 📡 Network - `Moya`  
+- 🏞️ Image Loader - `Kingfisher`  
+- 🍎 Apple Framework - `MapKit` `WebKit` `PhotosUI`  
+- 🎸 기타 - `SnapKit` `Then` `Toast` `IQKeyboardManager`  
 
 ## 주요 기능
 - **회원가입, 로그인** 기능
@@ -82,5 +82,5 @@
 네트워크 에러뷰를 제거할 때는 keyWindow의 최상단 뷰를 제거해주는 방식 사용
 - 제거 시 네트워크 에러뷰가 최상단이 아닐 경우, 다른 뷰를 제거하게 될 가능성이 있음
 - 네트워크 에러뷰가 더해진 errorWindow라는 별도의 윈도우를 만들어 기존 윈도우 위에 띄우는 방식을 선택
-동일한 window level에서는 window의 정렬이 보장되지 않기 때문에, errorWindow의 window level을 statusBar로 설정하여 항상 메인 윈도우보다 위에 보일 수 있도록 보장함
+동일한 window level에서는 window의 정렬이 보장되지 않기 때문에, errorWindow의 window level을 statusBar로 설정하여 항상 메인 윈도우보다 위에 보일 수 있도록 보장함  
 재연결 감지 시 errorWindow를 화면에서 제거하고 nil로 설정하여 리소스를 제거함
