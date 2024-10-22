@@ -10,13 +10,13 @@
 - 최소 버전: iOS 15.0
 
 ## 기술 스택
-- 🎨 View Drawing - `UIKit`  
-- 🏛️ Architecture - `MVVM`  
-- ♻️ Asynchronous - `RxSwift`  
-- 📡 Network - `Moya`  
-- 🏞️ Image Loader - `Kingfisher`  
-- 🍎 Apple Framework - `MapKit` `WebKit` `PhotosUI`  
-- 🎸 기타 - `SnapKit` `Then` `Toast` `IQKeyboardManager`  
+- 🎨 View Drawing: `UIKit`  
+- 🏛️ Architecture: `MVVM`  
+- ♻️ Asynchronous: `RxSwift`  
+- 📡 Network: `Moya`  
+- 🏞️ Image Loader: `Kingfisher`  
+- 🍎 Apple Framework: `MapKit` `WebKit` `PhotosUI`  
+- 🎸 기타: `SnapKit` `Then` `Toast` `IQKeyboardManager`  
 
 ## 주요 기능
 - **회원가입, 로그인** 기능
