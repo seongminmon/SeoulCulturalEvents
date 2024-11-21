@@ -9,7 +9,6 @@ import Foundation
 import Alamofire
 import RxSwift
 import RxCocoa
-import Kingfisher
 
 final class EditProfileViewModel: ViewModelType {
     
